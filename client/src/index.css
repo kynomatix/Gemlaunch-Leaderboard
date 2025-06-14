@@ -3,19 +3,24 @@
 @tailwind utilities;
 
 :root {
-  /* Exact Gemlaunch brand colors from the website */
-  --gem-background: #0a1f1c;
-  --gem-sidebar: #081814;
-  --gem-card: #1a2f2a;
-  --gem-card-hover: #213b35;
-  --gem-primary: #00d4aa;
-  --gem-primary-hover: #00b896;
-  --gem-accent: #4df4d0;
+  /* Exact Gemlaunch brand colors extracted from source */
+  --gem-background: #0c1713;
+  --gem-sidebar: #081612;
+  --gem-card: #1c2b26;
+  --gem-card-hover: #253632;
+  --gem-form-bg: #1a2925;
+  --gem-input-bg: #0f1a16;
+  --gem-primary: #26d0ce;
+  --gem-primary-hover: #1bb6b4;
+  --gem-accent: #00d4aa;
   --gem-text: #ffffff;
   --gem-text-muted: #9ca3af;
-  --gem-border: #2d4a42;
+  --gem-text-secondary: #6b7280;
+  --gem-border: #2d453f;
+  --gem-border-light: #374d47;
   --gem-success: #10b981;
   --gem-warning: #f59e0b;
+  --gem-error: #ef4444;
   
   --background: var(--gem-background);
   --foreground: var(--gem-text);
@@ -26,14 +31,14 @@
   --card: var(--gem-card);
   --card-foreground: var(--gem-text);
   --border: var(--gem-border);
-  --input: var(--gem-card);
+  --input: var(--gem-input-bg);
   --primary: var(--gem-primary);
-  --primary-foreground: var(--gem-sidebar);
+  --primary-foreground: var(--gem-background);
   --secondary: var(--gem-card);
   --secondary-foreground: var(--gem-text);
-  --accent: var(--gem-card);
+  --accent: var(--gem-card-hover);
   --accent-foreground: var(--gem-text);
-  --destructive: #ef4444;
+  --destructive: var(--gem-error);
   --destructive-foreground: var(--gem-text);
   --ring: var(--gem-primary);
   --radius: 0.5rem;

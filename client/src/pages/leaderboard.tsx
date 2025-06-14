@@ -116,18 +116,20 @@ export default function Leaderboard() {
 
         {/* Page Content */}
         <div className="flex-1 p-6">
-          {/* Page Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-white mb-2">
-              Rewards Leaderboard
-            </h1>
-            <p className="text-muted-foreground">
-              Earn points for every action on GemLaunch. Create tokens, fund launches, refer friends, and climb the leaderboard for exclusive airdrops!
-            </p>
-          </div>
+          {/* Main Content Container - Centered like Gemlaunch forms */}
+          <div className="max-w-5xl mx-auto">
+            {/* Page Header */}
+            <div className="mb-8">
+              <h1 className="text-3xl font-bold text-white mb-2">
+                Rewards Leaderboard
+              </h1>
+              <p className="text-muted-foreground">
+                Innovating the BNB ecosystem through the Gem Launchpad rewards system.
+              </p>
+            </div>
 
-          {/* Stats Overview */}
-          <StatsOverview />
+            {/* Stats Overview */}
+            <StatsOverview />
 
           {/* Main Content Tabs */}
           <Tabs defaultValue="leaderboard" className="w-full">
@@ -147,37 +149,42 @@ export default function Leaderboard() {
             </TabsList>
 
             <TabsContent value="leaderboard" className="mt-8">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div className="lg:col-span-2">
-                  <LeaderboardTable />
-                </div>
-                <div className="space-y-6">
+              {/* Main Form Container - Like Gemlaunch Create Token */}
+              <div className="bg-[var(--gem-form-bg)] rounded-lg p-8 border border-[var(--gem-border)]">
+                <LeaderboardTable />
+              </div>
+              
+              {/* Bottom Grid */}
+              <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="bg-[var(--gem-form-bg)] rounded-lg p-6 border border-[var(--gem-border)]">
                   <AccoladesPanel />
-                  
-                  {/* Point Multipliers */}
-                  <Card className="bg-card border-border">
-                    <CardHeader>
-                      <CardTitle className="text-lg font-bold flex items-center">
-                        <TrendingUp className="h-5 w-5 mr-2 text-primary" />
-                        Active Multipliers
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm">Base Rate</span>
-                        <span className="text-primary font-medium">1.0x</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm">Accolades Bonus</span>
-                        <span className="text-green-400 font-medium">+0.15x</span>
-                      </div>
-                      <div className="h-px bg-border my-2" />
-                      <div className="flex justify-between items-center font-bold">
-                        <span>Total Multiplier</span>
-                        <span className="text-primary">1.15x</span>
-                      </div>
-                    </CardContent>
-                  </Card>
+                </div>
+                <div className="bg-[var(--gem-form-bg)] rounded-lg p-6 border border-[var(--gem-border)]">
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold text-white">Latest Pools</h3>
+                    <div className="space-y-3">
+                      {[
+                        { name: 'LaunchPad', token: 'neom' },
+                        { name: 'LaunchPad', token: 'ACC' },
+                        { name: 'LaunchPad', token: 'SON' }
+                      ].map((pool, i) => (
+                        <div key={i} className="flex items-center justify-between p-3 bg-[var(--gem-input-bg)] rounded-lg border border-[var(--gem-border-light)]">
+                          <div className="flex items-center space-x-3">
+                            <div className="w-8 h-8 bg-[var(--gem-primary)] rounded-full flex items-center justify-center">
+                              <span className="text-xs font-bold text-[var(--gem-background)]">{pool.token[0]}</span>
+                            </div>
+                            <div>
+                              <div className="text-sm font-medium text-white">{pool.name}</div>
+                              <div className="text-xs text-[var(--gem-text-muted)]">{pool.token}</div>
+                            </div>
+                          </div>
+                          <button className="text-[var(--gem-primary)] text-sm hover:text-[var(--gem-primary-hover)] transition-colors">
+                            View
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             </TabsContent>
@@ -190,6 +197,7 @@ export default function Leaderboard() {
               <ActivitiesPanel />
             </TabsContent>
           </Tabs>
+          </div>
         </div>
       </div>
     </div>
