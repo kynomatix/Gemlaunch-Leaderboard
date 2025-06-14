@@ -133,3 +133,9 @@ Changelog:
   - Displays all 22 achievements with icons, unlock criteria, point rewards, and rarity levels
   - Updated Gemlaunch Pioneer to reflect exclusive first 50 users status (uncommon rarity)
   - Fixed all remaining "GemLaunch" spelling to correct "Gemlaunch" throughout codebase
+- June 14, 2025: Accolade display system overhaul and Pioneer badge correction
+  - Fixed "Unknown Accolade" error by adding missing accolade definitions to ACCOLADES array
+  - Replaced confusing expand/collapse system with intuitive inline display (first 2 icons + clean "+X" badge)
+  - Corrected Gemlaunch Pioneer distribution - awarded to first 2 users who joined before current user
+  - Updated point totals to include all accolade bonuses (2500pts, 1575pts, 300pts)
+  - Enhanced tooltips show specific accolade names, descriptions, and point values
