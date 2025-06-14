@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Crown, Trophy, Medal, User, Clock } from "lucide-react";
 
 export default function LeaderboardTable() {
@@ -26,34 +27,36 @@ export default function LeaderboardTable() {
 
   const getAccoladeIcon = (type: string) => {
     switch (type) {
-      case 'launch_pioneer': return '🚀';
+      case 'gemlaunch_pioneer': return '🚀';
+      case 'launch_pioneer': return '⭐';
       case 'referral_champion': return '🏆';
       case 'volume_trader': return '💎';
-      default: return '⭐';
+      default: return '🎖️';
     }
   };
 
   const getAccoladeName = (type: string) => {
     switch (type) {
-      case 'launch_pioneer': return 'Launch Pioneer';
-      case 'referral_champion': return 'Referral Champion';
-      case 'volume_trader': return 'Volume Trader';
-      default: return 'Achievement';
+      case 'gemlaunch_pioneer': return 'Gemlaunch Pioneer - First 50 users to join the platform';
+      case 'launch_pioneer': return 'Launch Pioneer - Successfully launched a token';
+      case 'referral_champion': return 'Referral Champion - Brought multiple users to the platform';
+      case 'volume_trader': return 'Volume Trader - High trading volume achievements';
+      default: return 'Special Achievement';
     }
   };
 
   return (
-    <Card className="bg-[#253935] border-[#26d0ce]/20 overflow-hidden">
-      <CardHeader className="border-b border-[#26d0ce]/20">
+    <Card className="bg-[#253935] border-[#22cda6]/20 overflow-hidden">
+      <CardHeader className="border-b border-[#22cda6]/20">
         <CardTitle className="text-xl font-bold text-white flex items-center justify-between">
           <div className="flex items-center">
-            <Crown className="h-6 w-6 text-[#26d0ce] mr-3" />
+            <Crown className="h-6 w-6 text-[#22cda6] mr-3" />
             Global Leaderboard
           </div>
           <div className="flex items-center space-x-2 text-sm text-gray-400">
             <Clock className="h-4 w-4" />
             <span>Live Updates</span>
-            <div className="w-2 h-2 bg-[#26d0ce] rounded-full animate-pulse" />
+            <div className="w-2 h-2 bg-[#22cda6] rounded-full animate-pulse" />
           </div>
         </CardTitle>
       </CardHeader>
@@ -71,7 +74,7 @@ export default function LeaderboardTable() {
                 <div className="font-bold text-sm truncate text-white">
                   {topThree[1].walletAddress.slice(0, 6)}...{topThree[1].walletAddress.slice(-4)}
                 </div>
-                <div className="text-[#26d0ce] text-xs font-medium">
+                <div className="text-[#22cda6] text-xs font-medium">
                   {topThree[1].totalPoints.toLocaleString()} pts
                 </div>
                 <div className="text-xs text-gray-400 mt-1">Rank #{topThree[1].rank}</div>
@@ -85,11 +88,11 @@ export default function LeaderboardTable() {
               <div className="w-20 h-20 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center mb-3 mx-auto">
                 <Crown className="h-6 w-6 text-yellow-800" />
               </div>
-              <div className="bg-[#26d0ce]/20 border border-[#26d0ce] rounded-lg p-4 min-h-[100px] flex flex-col justify-center">
+              <div className="bg-[#22cda6]/20 border border-[#22cda6] rounded-lg p-4 min-h-[100px] flex flex-col justify-center">
                 <div className="font-bold text-white">
                   {topThree[0].walletAddress.slice(0, 6)}...{topThree[0].walletAddress.slice(-4)}
                 </div>
-                <div className="text-[#26d0ce] font-bold">
+                <div className="text-[#22cda6] font-bold">
                   {topThree[0].totalPoints.toLocaleString()} pts
                 </div>
                 <div className="text-xs text-gray-400 mt-1">👑 Champion</div>
@@ -107,7 +110,7 @@ export default function LeaderboardTable() {
                 <div className="font-bold text-sm truncate text-white">
                   {topThree[2].walletAddress.slice(0, 6)}...{topThree[2].walletAddress.slice(-4)}
                 </div>
-                <div className="text-[#26d0ce] text-xs font-medium">
+                <div className="text-[#22cda6] text-xs font-medium">
                   {topThree[2].totalPoints.toLocaleString()} pts
                 </div>
                 <div className="text-xs text-gray-400 mt-1">Rank #{topThree[2].rank}</div>
@@ -119,14 +122,14 @@ export default function LeaderboardTable() {
 
       {/* Complete Rankings List - Top 10+ */}
       <div className="bg-[#253935]">
-        <div className="p-4 border-b border-[#26d0ce]/20">
+        <div className="p-4 border-b border-[#22cda6]/20">
           <h3 className="text-lg font-semibold text-white flex items-center">
-            <Trophy className="h-5 w-5 text-[#26d0ce] mr-2" />
+            <Trophy className="h-5 w-5 text-[#22cda6] mr-2" />
             Complete Rankings
           </h3>
         </div>
         
-        <div className="divide-y divide-[#26d0ce]/10">
+        <div className="divide-y divide-[#22cda6]/10">
           {/* Show all users in leaderboard */}
           {users.map((user: any, index: number) => (
             <div 
@@ -138,15 +141,15 @@ export default function LeaderboardTable() {
                   {/* Rank Badge */}
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold ${
                     user.rank <= 3 
-                      ? 'bg-gradient-to-br from-[#26d0ce] to-[#1a9b99] text-black' 
-                      : 'bg-[#1a2b21] text-[#26d0ce] border border-[#26d0ce]/30'
+                      ? 'bg-gradient-to-br from-[#22cda6] to-[#1a9b99] text-black' 
+                      : 'bg-[#1a2b21] text-[#22cda6] border border-[#22cda6]/30'
                   }`}>
                     {user.rank}
                   </div>
                   
                   {/* User Avatar */}
                   <Avatar className="w-10 h-10">
-                    <AvatarFallback className="bg-[#1a2b21] text-[#26d0ce] text-sm font-medium">
+                    <AvatarFallback className="bg-[#1a2b21] text-[#22cda6] text-sm font-medium">
                       {user.walletAddress.slice(2, 4).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
@@ -158,17 +161,24 @@ export default function LeaderboardTable() {
                         {user.walletAddress.slice(0, 6)}...{user.walletAddress.slice(-4)}
                       </span>
                       
-                      {/* Accolades Inline */}
+                      {/* Accolades Inline - Icons Only with Tooltips */}
                       <div className="flex items-center space-x-1">
                         {user.accolades && user.accolades.length > 0 && user.accolades.map((accolade: any, idx: number) => (
-                          <Badge 
-                            key={idx} 
-                            variant="secondary" 
-                            className="bg-[#26d0ce]/20 text-[#26d0ce] border-[#26d0ce]/30 text-xs px-2 py-0.5"
-                          >
-                            {getAccoladeIcon(accolade.accoladeType)} {getAccoladeName(accolade.accoladeType)}
-                            {accolade.level > 1 && ` L${accolade.level}`}
-                          </Badge>
+                          <TooltipProvider key={idx}>
+                            <Tooltip>
+                              <TooltipTrigger>
+                                <span className="text-lg hover:scale-110 transition-transform cursor-help">
+                                  {getAccoladeIcon(accolade.accoladeType)}
+                                </span>
+                              </TooltipTrigger>
+                              <TooltipContent className="bg-[#253935] border-[#22cda6] text-white max-w-xs">
+                                <p className="font-medium">{getAccoladeName(accolade.accoladeType)}</p>
+                                {accolade.level > 1 && (
+                                  <p className="text-sm text-[#22cda6]">Level {accolade.level}</p>
+                                )}
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
                         ))}
                       </div>
                     </div>
