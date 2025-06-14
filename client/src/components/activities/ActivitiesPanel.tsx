@@ -207,8 +207,11 @@ export default function ActivitiesPanel() {
             })}
           </CardContent>
         </Card>
+      </div>
 
-        {/* Accolades Earned - Moved to main content */}
+      {/* Sidebar */}
+      <div className="space-y-6">
+        {/* Accolades Earned */}
         <Card className="bg-gem-slate border-primary/20">
           <CardHeader>
             <CardTitle className="text-lg font-bold flex items-center">
@@ -250,10 +253,6 @@ export default function ActivitiesPanel() {
             )}
           </CardContent>
         </Card>
-      </div>
-
-      {/* Sidebar */}
-      <div className="space-y-6">
 
         {/* Recent Activity */}
         <Card className="bg-gem-slate border-primary/20">
