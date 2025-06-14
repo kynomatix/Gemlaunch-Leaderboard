@@ -19,7 +19,7 @@ import {
   type InsertBlockchainEvent
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc, sql, sum, count, and } from "drizzle-orm";
+import { eq, desc, sql, sum, count, and, inArray } from "drizzle-orm";
 
 export interface IStorage {
   // User operations
@@ -88,8 +88,9 @@ export class DatabaseStorage implements IStorage {
       .where(eq(users.id, userId));
   }
 
-  async getLeaderboard(limit = 100): Promise<Array<User & { rank: number }>> {
-    const result = await db
+  async getLeaderboard(limit = 100): Promise<Array<User & { rank: number; accolades: Accolade[] }>> {
+    // First get the ranked users
+    const rankedUsers = await db
       .select({
         ...users,
         rank: sql<number>`ROW_NUMBER() OVER (ORDER BY ${users.totalPoints} DESC)`.as('rank')
@@ -98,7 +99,27 @@ export class DatabaseStorage implements IStorage {
       .orderBy(desc(users.totalPoints))
       .limit(limit);
     
-    return result as Array<User & { rank: number }>;
+    // Then get accolades for each user
+    const userIds = rankedUsers.map(user => user.id);
+    const userAccolades = await db
+      .select()
+      .from(accolades)
+      .where(inArray(accolades.userId, userIds));
+    
+    // Group accolades by user ID
+    const accoladesByUser = userAccolades.reduce((acc, accolade) => {
+      if (!acc[accolade.userId]) {
+        acc[accolade.userId] = [];
+      }
+      acc[accolade.userId].push(accolade);
+      return acc;
+    }, {} as Record<number, Accolade[]>);
+    
+    // Combine users with their accolades
+    return rankedUsers.map(user => ({
+      ...user,
+      accolades: accoladesByUser[user.id] || []
+    }));
   }
 
   async getUserRank(userId: number): Promise<number> {
