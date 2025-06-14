@@ -120,7 +120,7 @@ export default function Leaderboard() {
                       Welcome to GemLaunch Rewards Program!
                     </h2>
                     <p className="text-base text-[#9ca3af] mb-3">
-                      Earn points for every on-chain activity: token creation, fair launches, presales, volume trading, and referrals. 
+                      Earn points for every on-chain activity: token creation, fair launches, presales, contributing to project funding, and referrals. 
                       Build your ranking for exclusive airdrops and rewards.
                     </p>
                     <div className="flex items-center space-x-4 text-sm text-[#22cda6]">
@@ -138,13 +138,6 @@ export default function Leaderboard() {
                       </span>
                     </div>
                   </div>
-                </div>
-                <div className="text-right">
-                  <button className="bg-[#22cda6] hover:bg-[#1fb898] text-black px-6 py-3 rounded-lg font-bold transition-colors duration-200 flex items-center space-x-2">
-                    <Zap className="h-5 w-5" />
-                    <span>Connect Wallet</span>
-                  </button>
-                  <div className="text-xs text-[#9ca3af] mt-2">Start Earning Points</div>
                 </div>
               </div>
             </div>
