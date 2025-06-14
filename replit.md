@@ -127,3 +127,4 @@ Changelog:
   - Added support for "accolade_earned" and "welcome_bonus" activity types
   - Enhanced activity display to show "Gemlaunch Pioneer Earned" for accolade activities
   - Cleaned up admin panel organization by moving blockchain controls from user-facing Activities section
+  - Removed test activities from user wallet to ensure clean slate for real platform usage
