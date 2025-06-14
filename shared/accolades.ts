@@ -170,24 +170,24 @@ export const ACCOLADES: AccoladeDefinition[] = [
   {
     id: 'referrer',
     name: 'Referrer',
-    description: 'Refer your first friend to Gemlaunch.',
+    description: 'Successfully refer 5 friends to join Gemlaunch.',
     icon: 'Handshake',
     category: 'social',
     level: 1,
-    criteria: 'Refer 1 friend',
-    pointsBonus: 100,
-    rarity: 'common'
+    criteria: 'Refer 5 friends who join and connect wallets',
+    pointsBonus: 500,
+    rarity: 'uncommon'
   },
   {
     id: 'referral_rookie',
-    name: 'Referral Rookie',
-    description: 'Made your first successful referral.',
+    name: 'Referral Master',
+    description: 'Built a strong referral network of 10+ active users.',
     icon: 'Users',
     category: 'social',
-    level: 1,
-    criteria: 'Make 1 successful referral',
-    pointsBonus: 100,
-    rarity: 'common'
+    level: 2,
+    criteria: 'Refer 10 friends who join and earn points',
+    pointsBonus: 1500,
+    rarity: 'rare'
   },
   {
     id: 'community_builder',
