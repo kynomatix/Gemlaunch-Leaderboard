@@ -116,23 +116,6 @@ export default function Leaderboard() {
         {/* Page Content */}
         <div className="flex-1 p-6">
           <div className="max-w-7xl mx-auto space-y-6">
-            {/* Hero Section - Like Gemlaunch homepage */}
-            <div className="bg-[#253935] rounded-lg p-8 border border-[#3d5c4d]">
-              <div className="flex justify-between items-center">
-                <div>
-                  <h1 className="text-3xl font-bold text-white mb-2">
-                    Innovating the BNB ecosystem through the Gem Launchpad
-                  </h1>
-                  <p className="text-[#9ca3af]">
-                    By virtue of its efficient and user-friendly interface, Gemlaunch enables projects to create tokens presales.
-                  </p>
-                </div>
-                <Button className="bg-[#26d0ce] hover:bg-[#1bb6b4] text-black font-medium px-8 py-2 rounded-lg">
-                  Create
-                </Button>
-              </div>
-            </div>
-
             {/* Main Content Grid - Three Column Layout */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Latest Pools */}
