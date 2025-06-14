@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Crown, Star, Trophy, Users, Zap, TrendingUp } from "lucide-react";
+import * as LucideIcons from "lucide-react";
 import { ACCOLADES, RARITY_COLORS, CATEGORY_NAMES, AccoladeDefinition } from "@shared/accolades";
 
 export default function Accolades() {
@@ -19,15 +19,23 @@ export default function Accolades() {
 
   const earnedAccoladeIds = new Set((userAccolades || []).map((a: any) => a.accoladeId));
 
+  const renderIcon = (iconName: string, className?: string) => {
+    const IconComponent = (LucideIcons as any)[iconName];
+    if (IconComponent) {
+      return <IconComponent className={className || "w-5 h-5"} />;
+    }
+    return <LucideIcons.Award className={className || "w-5 h-5"} />;
+  };
+
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case 'pioneer': return <Star className="h-5 w-5" />;
-      case 'trading': return <TrendingUp className="h-5 w-5" />;
-      case 'social': return <Users className="h-5 w-5" />;
-      case 'creator': return <Trophy className="h-5 w-5" />;
-      case 'elite': return <Crown className="h-5 w-5" />;
-      case 'streak': return <Zap className="h-5 w-5" />;
-      default: return <Star className="h-5 w-5" />;
+      case 'pioneer': return renderIcon('Star', 'h-5 w-5');
+      case 'trading': return renderIcon('TrendingUp', 'h-5 w-5');
+      case 'social': return renderIcon('Users', 'h-5 w-5');
+      case 'creator': return renderIcon('Trophy', 'h-5 w-5');
+      case 'elite': return renderIcon('Crown', 'h-5 w-5');
+      case 'streak': return renderIcon('Zap', 'h-5 w-5');
+      default: return renderIcon('Star', 'h-5 w-5');
     }
   };
 
@@ -45,7 +53,7 @@ export default function Accolades() {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold mb-4 flex items-center justify-center">
-            <Crown className="h-8 w-8 mr-3 text-[#22cda6]" />
+            {renderIcon('Crown', 'h-8 w-8 mr-3 text-[#22cda6]')}
             Accolades & Achievements
           </h1>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
@@ -130,7 +138,7 @@ export default function Accolades() {
                         <div className="flex items-start justify-between">
                           <div className="flex items-center space-x-3">
                             <div className={`text-2xl ${isEarned ? '' : 'grayscale opacity-50'}`}>
-                              {accolade.icon}
+                              {renderIcon(accolade.icon, 'w-8 h-8')}
                             </div>
                             <div>
                               <CardTitle className={`text-lg ${isEarned ? 'text-[#22cda6]' : 'text-gray-300'}`}>
@@ -155,7 +163,7 @@ export default function Accolades() {
                           </div>
                           {isEarned && (
                             <div className="text-[#22cda6]">
-                              <Crown className="h-5 w-5" />
+                              {renderIcon('Crown', 'h-5 w-5')}
                             </div>
                           )}
                         </div>
@@ -196,7 +204,7 @@ export default function Accolades() {
               
               {getFilteredAccolades(category).length === 0 && (
                 <div className="text-center py-12 text-gray-400">
-                  <Crown className="h-16 w-16 mx-auto mb-4 opacity-50" />
+                  {renderIcon('Crown', 'h-16 w-16 mx-auto mb-4 opacity-50')}
                   <h3 className="text-xl font-medium mb-2">No accolades found</h3>
                   <p>
                     {category === 'earned' 
