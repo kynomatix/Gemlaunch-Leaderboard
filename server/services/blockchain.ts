@@ -45,27 +45,24 @@ class BlockchainService {
     if (this.isMonitoring) return;
     
     this.isMonitoring = true;
-    console.log("Starting blockchain monitoring...");
-
-    // Process existing unprocessed events
-    await this.processEvents();
-
-    // Set up periodic monitoring
-    setInterval(async () => {
-      try {
-        await this.processEvents();
-        await this.updateBlockNumber();
-        
-        if (updateCallback) {
-          updateCallback({
-            status: this.status,
-            type: "status_update"
-          });
-        }
-      } catch (error) {
-        console.error("Error in blockchain monitoring:", error);
+    console.log("Blockchain monitoring initialized - paused to avoid rate limits");
+    
+    // Temporarily disable aggressive scanning to prevent rate limit errors
+    // For production deployment, enable with specific Gemlaunch contract addresses
+    // and premium RPC endpoint to properly monitor on-chain activities
+    
+    // Process existing unprocessed events only (no periodic scanning)
+    try {
+      const unprocessedEvents = await storage.getUnprocessedEvents();
+      for (const event of unprocessedEvents) {
+        await this.processBlockchainEvent(event);
+        await storage.markEventProcessed(event.id);
+        this.status.eventsProcessed++;
       }
-    }, 30000); // Check every 30 seconds
+      this.status.lastUpdate = new Date();
+    } catch (error) {
+      console.log("Blockchain monitoring paused due to rate limits");
+    }
   }
 
   public async processEvents() {

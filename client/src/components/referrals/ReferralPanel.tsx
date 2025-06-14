@@ -22,10 +22,10 @@ export default function ReferralPanel() {
   };
 
   const mockRecentReferrals = [
-    { id: 1, username: "User_7x9a2", joinedAt: "2 days ago", pointsEarned: 500 },
-    { id: 2, username: "CryptoNinja", joinedAt: "1 week ago", pointsEarned: 500 },
-    { id: 3, username: "TokenHunter", joinedAt: "2 weeks ago", pointsEarned: 500 },
-    { id: 4, username: "DeFiExplorer", joinedAt: "3 weeks ago", pointsEarned: 500 }
+    { id: 1, walletAddress: "0x1234567890123456789012345678901234567890", joinedAt: "2 days ago", pointsEarned: 500 },
+    { id: 2, walletAddress: "0x0987654321098765432109876543210987654321", joinedAt: "1 week ago", pointsEarned: 500 },
+    { id: 3, walletAddress: "0xabcdef1234567890abcdef1234567890abcdef12", joinedAt: "2 weeks ago", pointsEarned: 500 },
+    { id: 4, walletAddress: "0x9876543210987654321098765432109876543210", joinedAt: "3 weeks ago", pointsEarned: 500 }
   ];
 
   const copyReferralLink = async () => {
@@ -155,7 +155,9 @@ export default function ReferralPanel() {
                 {mockRecentReferrals.map((referral) => (
                   <div key={referral.id} className="flex items-center justify-between py-2">
                     <div>
-                      <div className="font-medium text-sm">{referral.username}</div>
+                      <div className="font-medium text-sm font-mono">
+                        {referral.walletAddress.slice(0, 6)}...{referral.walletAddress.slice(-4)}
+                      </div>
                       <div className="text-xs text-gray-400">{referral.joinedAt}</div>
                     </div>
                     <Badge variant="outline" className="border-green-400 text-green-400">
