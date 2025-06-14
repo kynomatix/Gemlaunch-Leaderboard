@@ -22,7 +22,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     category: 'pioneer',
     level: 1,
     criteria: 'Be among the first 50 users to connect your wallet',
-    pointsBonus: 100,
+    pointsBonus: 500,
     rarity: 'uncommon'
   },
   {
@@ -33,7 +33,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     category: 'pioneer',
     level: 2,
     criteria: 'Be among the first 1,000 users',
-    pointsBonus: 500,
+    pointsBonus: 100,
     rarity: 'uncommon'
   },
   {
