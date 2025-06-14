@@ -102,6 +102,38 @@ export default function Leaderboard() {
         {/* Page Content */}
         <div className="flex-1 p-6">
           <div className="max-w-7xl mx-auto space-y-6">
+            {/* Welcome section with Gemmy */}
+            <div className="bg-gradient-to-r from-[#253935] to-[#1a2b21] rounded-lg p-6 border border-[#26d0ce]/20 mb-6">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center">
+                    <svg viewBox="0 0 64 64" className="w-12 h-12">
+                      <circle cx="32" cy="28" r="14" fill="#4a90e2" stroke="#2563eb" strokeWidth="2"/>
+                      <circle cx="27" cy="25" r="3" fill="#26d0ce"/>
+                      <circle cx="37" cy="25" r="3" fill="#26d0ce"/>
+                      <path d="M 26 32 Q 32 36 38 32" stroke="#26d0ce" strokeWidth="2" fill="none"/>
+                      <line x1="32" y1="14" x2="32" y2="8" stroke="#2563eb" strokeWidth="2"/>
+                      <circle cx="32" cy="8" r="2" fill="#26d0ce"/>
+                      <rect x="24" y="40" width="16" height="20" rx="4" fill="#4a90e2" stroke="#2563eb" strokeWidth="2"/>
+                      <polygon points="32,46 35,49 32,52 29,49" fill="#26d0ce"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-bold text-[#26d0ce] mb-1">
+                      Welcome to GemLaunch Leaderboard!
+                    </h2>
+                    <p className="text-sm text-[#9ca3af]">
+                      Track your on-chain activities and climb the ranks for upcoming airdrops
+                    </p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-bold text-[#26d0ce]">🚀</div>
+                  <div className="text-xs text-[#9ca3af]">Earn Points</div>
+                </div>
+              </div>
+            </div>
+
             {/* Leaderboard Section */}
             <Tabs defaultValue="leaderboard" className="w-full">
               <TabsList className="grid w-full max-w-md grid-cols-3 bg-[#253935]">
