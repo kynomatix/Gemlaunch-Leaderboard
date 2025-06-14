@@ -74,6 +74,22 @@ export default function ActivitiesPanel() {
       description: "Each user who joins via your link",
       icon: Users,
       color: "blue"
+    },
+    {
+      type: "welcome_bonus",
+      title: "Welcome Bonus",
+      points: 1000,
+      description: "First-time registration bonus",
+      icon: Crown,
+      color: "primary"
+    },
+    {
+      type: "accolade_earned",
+      title: "Accolade Earned",
+      points: 0,
+      description: "Achievement unlocked",
+      icon: Crown,
+      color: "yellow"
     }
   ];
 
@@ -183,9 +199,9 @@ export default function ActivitiesPanel() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            {mockRecentActivities.length > 0 ? (
+            {recentActivities && recentActivities.length > 0 ? (
               <div className="space-y-3">
-                {mockRecentActivities.map((activity) => {
+                {recentActivities.map((activity) => {
                   const IconComponent = getActivityIcon(activity.activityType);
                   const formattedTime = new Date(activity.createdAt).toLocaleDateString();
                   
@@ -196,7 +212,10 @@ export default function ActivitiesPanel() {
                       }`} />
                       <div className="flex-1">
                         <div className="text-sm capitalize">
-                          {activity.activityType.replace('_', ' ')}
+                          {activity.activityType === 'accolade_earned' && activity.metadata?.description
+                            ? 'Gemlaunch Pioneer Earned'
+                            : activity.activityType.replace('_', ' ')
+                          }
                         </div>
                         <div className="text-xs text-gray-400">{formattedTime}</div>
                       </div>

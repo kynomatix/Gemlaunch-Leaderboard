@@ -121,3 +121,9 @@ Changelog:
   - Added Gemlaunch Pioneer accolade system for early users
   - Updated all referral links to use production domain https://gemlaunch.io/
   - Established real data flow between frontend and backend with authentic user tracking
+- June 14, 2025: Anti-sybil notice and accolades system enhancement
+  - Moved anti-sybil farming notice to Activities panel as collapsible button with Shield icon
+  - Connected Activities panel to real API data instead of mock data
+  - Added support for "accolade_earned" and "welcome_bonus" activity types
+  - Enhanced activity display to show "Gemlaunch Pioneer Earned" for accolade activities
+  - Cleaned up admin panel organization by moving blockchain controls from user-facing Activities section
