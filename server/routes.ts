@@ -144,6 +144,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get current user's accolades
+  app.get("/api/user/accolades", async (req, res) => {
+    try {
+      const walletAddress = req.query.wallet as string;
+      if (!walletAddress) {
+        return res.json([]);
+      }
+
+      const user = await storage.getUserByWalletAddress(walletAddress);
+      if (!user) {
+        return res.json([]);
+      }
+
+      const accolades = await storage.getUserAccolades(user.id);
+      res.json(accolades);
+    } catch (error) {
+      console.error("Error fetching user accolades:", error);
+      res.status(500).json({ error: "Failed to fetch accolades" });
+    }
+  });
+
   // Point configuration routes (admin)
   app.get("/api/point-configs", async (req, res) => {
     try {

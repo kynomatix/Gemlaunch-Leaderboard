@@ -16,24 +16,35 @@ import {
   ChevronDown,
   ChevronUp
 } from "lucide-react";
+import { web3Service } from "@/lib/web3";
 
 export default function ActivitiesPanel() {
   const [showAntiSybilNotice, setShowAntiSybilNotice] = useState(false);
   
+  const connectedWallet = web3Service.getAccount();
+  
   const { data: recentActivities } = useQuery({
-    queryKey: ["/api/activities/recent"],
+    queryKey: ["/api/activities/recent", connectedWallet],
+    queryFn: () => {
+      if (!connectedWallet) return Promise.resolve([]);
+      return fetch(`/api/activities/recent?wallet=${connectedWallet}`).then(res => res.json());
+    },
     refetchInterval: 30000,
   });
 
   const { data: userAccolades } = useQuery({
-    queryKey: ["/api/user/accolades"],
+    queryKey: ["/api/user/accolades", connectedWallet],
+    queryFn: () => {
+      if (!connectedWallet) return Promise.resolve([]);
+      return fetch(`/api/user/accolades?wallet=${connectedWallet}`).then(res => res.json());
+    },
     refetchInterval: 30000,
   });
 
-  // Filter out accolade activities from recent activities
-  const pointActivities = recentActivities?.filter(activity => 
-    activity.activityType !== 'accolade_earned'
-  ) || [];
+  // Filter out accolade activities from recent activities - only show point-earning activities
+  const pointActivities = Array.isArray(recentActivities) 
+    ? recentActivities.filter((activity: any) => activity.activityType !== 'accolade_earned')
+    : [];
 
   const activityTypes = [
     {
