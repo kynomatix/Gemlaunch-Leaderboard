@@ -24,17 +24,17 @@ export default function LeaderboardTable() {
   const remaining = leaderboard?.slice(3) || [];
 
   return (
-    <Card className="bg-gem-slate border-primary/20 overflow-hidden">
-      <CardHeader className="border-b border-primary/20">
+    <Card className="bg-card border-border overflow-hidden">
+      <CardHeader className="border-b border-border">
         <CardTitle className="text-xl font-bold flex items-center justify-between">
           <div className="flex items-center">
             <Crown className="h-6 w-6 text-yellow-400 mr-3" />
             Global Leaderboard
           </div>
-          <div className="flex items-center space-x-2 text-sm text-gray-400">
+          <div className="flex items-center space-x-2 text-sm text-muted-foreground">
             <Clock className="h-4 w-4" />
             <span>Live Updates</span>
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+            <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
           </div>
         </CardTitle>
       </CardHeader>
