@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Trophy, Users, Rocket, TrendingUp } from "lucide-react";
-import gemmyMascotPath from "@assets/Gemmy_Mascot_1749879808880.png";
 
 export default function StatsOverview() {
   // These would normally come from API calls based on connected wallet
@@ -21,7 +20,7 @@ export default function StatsOverview() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <img 
-                src={gemmyMascotPath} 
+                src="/gemmy-mascot.png" 
                 alt="Gemmy Mascot" 
                 className="w-16 h-16 rounded-lg"
               />
