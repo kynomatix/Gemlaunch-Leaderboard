@@ -4,12 +4,20 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Crown, Trophy, Medal, User, Clock } from "lucide-react";
+import { web3Service } from "@/lib/web3";
 
 export default function LeaderboardTable() {
   const { data: leaderboard, isLoading } = useQuery({
     queryKey: ["/api/leaderboard"],
     refetchInterval: 30000, // Refresh every 30 seconds
   });
+
+  const connectedWallet = web3Service.getAccount();
+  
+  // Find current user in leaderboard data
+  const currentUser = connectedWallet 
+    ? leaderboard?.find((user: any) => user.walletAddress.toLowerCase() === connectedWallet.toLowerCase())
+    : null;
 
   if (isLoading) {
     return (
@@ -203,12 +211,12 @@ export default function LeaderboardTable() {
             </div>
           ))}
 
-          {/* Current User Position Placeholder */}
+          {/* Current User Position */}
           <div className="p-4 bg-[#22cda6]/10 border border-[#22cda6]/30">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
                 <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-black bg-[#22cda6]">
-                  ?
+                  {currentUser ? currentUser.rank : '?'}
                 </div>
                 <Avatar className="w-10 h-10">
                   <AvatarFallback className="bg-[#22cda6] text-black">
@@ -217,16 +225,35 @@ export default function LeaderboardTable() {
                 </Avatar>
                 <div>
                   <div className="font-medium text-white flex items-center">
-                    Connect Wallet to See Your Rank
+                    {currentUser 
+                      ? `${currentUser.walletAddress.slice(0, 6)}...${currentUser.walletAddress.slice(-4)}`
+                      : 'Connect Wallet to See Your Rank'
+                    }
+                    {currentUser?.accolades?.length > 0 && (
+                      <div className="ml-2 flex space-x-1">
+                        {currentUser.accolades.map((accolade: any, index: number) => (
+                          <span key={index} className="text-sm">
+                            {getAccoladeIcon(accolade.accoladeType)}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
                   <div className="text-xs text-gray-400">
-                    Track your progress and earn accolades
+                    {currentUser 
+                      ? `${currentUser.accolades?.length || 0} accolades earned`
+                      : 'Track your progress and earn accolades'
+                    }
                   </div>
                 </div>
               </div>
               <div className="text-right">
-                <div className="font-bold text-[#22cda6] text-lg">-- pts</div>
-                <div className="text-xs text-gray-400">Rank --</div>
+                <div className="font-bold text-[#22cda6] text-lg">
+                  {currentUser ? `${currentUser.totalPoints.toLocaleString()} pts` : '-- pts'}
+                </div>
+                <div className="text-xs text-gray-400">
+                  Rank {currentUser ? `#${currentUser.rank}` : '--'}
+                </div>
               </div>
             </div>
           </div>
