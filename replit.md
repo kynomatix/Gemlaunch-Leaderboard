@@ -152,3 +152,10 @@ Changelog:
   - Added missing accolades for user #3: Genesis Member, Early Adopter (now has all 3 pioneer accolades)
   - Updated user points to 7800 total reflecting proper accolade bonuses
   - Fixed Accolades Earned display to show proper names and point values instead of outdated level system
+- June 14, 2025: Complete accolade terminology overhaul and tooltip fixes
+  - Systematically replaced all trading terminology with funding/launching concepts throughout accolade system
+  - Updated TypeScript category definitions from 'trading' to 'funding' category
+  - Created funding-focused accolades: Funding Veteran, Whale Funder, Launch Loyalist, Presale Participant
+  - Updated CATEGORY_NAMES mapping to display "Funding" instead of "Trading"
+  - Fixed tooltip rendering bug where accolade icons displayed as text instead of Lucide React icons
+  - All 22 accolades now properly reflect Gemlaunch's launchpad focus with authentic funding terminology

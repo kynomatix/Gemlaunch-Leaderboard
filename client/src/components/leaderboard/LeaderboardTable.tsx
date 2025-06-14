@@ -109,7 +109,7 @@ export default function LeaderboardTable() {
                       const data = getAccoladeData(accolade.accoladeType);
                       return (
                         <div key={idx} className="flex items-center gap-1">
-                          <span>{data.icon}</span>
+                          {renderIcon(data.icon, "w-4 h-4 text-[#22cda6]")}
                           <span>{data.name}</span>
                         </div>
                       );
