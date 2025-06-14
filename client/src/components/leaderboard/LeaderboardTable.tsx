@@ -50,7 +50,7 @@ export default function LeaderboardTable() {
               </div>
               <div className="bg-gem-slate rounded-lg p-3 min-h-[80px] flex flex-col justify-center">
                 <div className="font-bold text-sm truncate">
-                  {topThree[1].username || `User_${topThree[1].walletAddress.slice(-4)}`}
+                  {topThree[1].walletAddress.slice(0, 6)}...{topThree[1].walletAddress.slice(-4)}
                 </div>
                 <div className="text-primary text-xs font-medium">
                   {topThree[1].totalPoints.toLocaleString()} pts
@@ -68,7 +68,7 @@ export default function LeaderboardTable() {
               <div className="gradient-border">
                 <div className="bg-primary/20 border border-primary rounded-lg p-4 min-h-[100px] flex flex-col justify-center">
                   <div className="font-bold">
-                    {topThree[0].username || `User_${topThree[0].walletAddress.slice(-4)}`}
+                    {topThree[0].walletAddress.slice(0, 6)}...{topThree[0].walletAddress.slice(-4)}
                   </div>
                   <div className="text-primary font-bold">
                     {topThree[0].totalPoints.toLocaleString()} pts
@@ -87,7 +87,7 @@ export default function LeaderboardTable() {
               </div>
               <div className="bg-gem-slate rounded-lg p-3 min-h-[80px] flex flex-col justify-center">
                 <div className="font-bold text-sm truncate">
-                  {topThree[2].username || `User_${topThree[2].walletAddress.slice(-4)}`}
+                  {topThree[2].walletAddress.slice(0, 6)}...{topThree[2].walletAddress.slice(-4)}
                 </div>
                 <div className="text-primary text-xs font-medium">
                   {topThree[2].totalPoints.toLocaleString()} pts
@@ -112,15 +112,15 @@ export default function LeaderboardTable() {
                 </div>
                 <Avatar className="w-8 h-8">
                   <AvatarFallback className="bg-primary/20 text-primary text-xs">
-                    {(user.username || user.walletAddress.slice(2, 4)).toUpperCase()}
+                    {user.walletAddress.slice(2, 4).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
                 <div>
                   <div className="font-medium">
-                    {user.username || `User_${user.walletAddress.slice(-4)}`}
+                    {user.walletAddress.slice(0, 6)}...{user.walletAddress.slice(-4)}
                   </div>
                   <div className="text-xs text-gray-400">
-                    Wallet: {user.walletAddress.slice(0, 6)}...{user.walletAddress.slice(-4)}
+                    {user.totalPoints.toLocaleString()} total points
                   </div>
                 </div>
               </div>
