@@ -209,6 +209,51 @@ export default function ActivitiesPanel() {
             })}
           </CardContent>
         </Card>
+
+        {/* Available Accolades Section */}
+        <Card className="bg-[#253935]/80 border border-[#22cda6]/30">
+          <CardHeader>
+            <CardTitle className="text-lg font-bold flex items-center text-[#22cda6]">
+              <Trophy className="h-5 w-5 mr-2" />
+              Available Accolades
+            </CardTitle>
+            <p className="text-sm text-gray-400">Achievements you can unlock with your activities</p>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {ACCOLADES.map((accolade) => (
+                <div key={accolade.id} className="flex items-center justify-between p-3 rounded-lg bg-[#0f1713]/50 border border-[#22cda6]/20">
+                  <div className="flex items-center space-x-3">
+                    <div className="text-xl" title={accolade.name}>
+                      {accolade.icon}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-2">
+                        <h4 className="text-sm font-medium text-white">{accolade.name}</h4>
+                        <span className={`px-2 py-1 text-xs rounded-full ${
+                          accolade.rarity === 'legendary' ? 'bg-orange-500/20 text-orange-300' :
+                          accolade.rarity === 'epic' ? 'bg-purple-500/20 text-purple-300' :
+                          accolade.rarity === 'rare' ? 'bg-blue-500/20 text-blue-300' :
+                          accolade.rarity === 'uncommon' ? 'bg-green-500/20 text-green-300' :
+                          'bg-gray-500/20 text-gray-300'
+                        }`}>
+                          {accolade.rarity}
+                        </span>
+                      </div>
+                      <p className="text-xs text-gray-400 mt-1">{accolade.criteria}</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-sm font-medium text-[#22cda6]">+{accolade.pointsBonus} pts</div>
+                    {accolade.multiplier && (
+                      <div className="text-xs text-yellow-400">{accolade.multiplier}x multiplier</div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Sidebar */}
@@ -299,51 +344,6 @@ export default function ActivitiesPanel() {
                 <p className="text-xs mt-1">Start using Gemlaunch to earn points!</p>
               </div>
             )}
-          </CardContent>
-        </Card>
-
-        {/* Available Accolades Section */}
-        <Card className="bg-[#253935]/80 border border-[#22cda6]/30">
-          <CardHeader>
-            <CardTitle className="text-lg font-bold flex items-center text-[#22cda6]">
-              <Trophy className="h-5 w-5 mr-2" />
-              Available Accolades
-            </CardTitle>
-            <p className="text-sm text-gray-400">Achievements you can unlock with your activities</p>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {ACCOLADES.map((accolade) => (
-                <div key={accolade.id} className="flex items-center justify-between p-3 rounded-lg bg-[#0f1713]/50 border border-[#22cda6]/20">
-                  <div className="flex items-center space-x-3">
-                    <div className="text-xl" title={accolade.name}>
-                      {accolade.icon}
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2">
-                        <h4 className="text-sm font-medium text-white">{accolade.name}</h4>
-                        <span className={`px-2 py-1 text-xs rounded-full ${
-                          accolade.rarity === 'legendary' ? 'bg-orange-500/20 text-orange-300' :
-                          accolade.rarity === 'epic' ? 'bg-purple-500/20 text-purple-300' :
-                          accolade.rarity === 'rare' ? 'bg-blue-500/20 text-blue-300' :
-                          accolade.rarity === 'uncommon' ? 'bg-green-500/20 text-green-300' :
-                          'bg-gray-500/20 text-gray-300'
-                        }`}>
-                          {accolade.rarity}
-                        </span>
-                      </div>
-                      <p className="text-xs text-gray-400 mt-1">{accolade.criteria}</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-sm font-medium text-[#22cda6]">+{accolade.pointsBonus} pts</div>
-                    {accolade.multiplier && (
-                      <div className="text-xs text-yellow-400">{accolade.multiplier}x multiplier</div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
           </CardContent>
         </Card>
 
