@@ -116,87 +116,168 @@ export default function Leaderboard() {
 
         {/* Page Content */}
         <div className="flex-1 p-6">
-          {/* Main Content Container - Centered like Gemlaunch forms */}
-          <div className="max-w-5xl mx-auto">
-            {/* Page Header */}
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold text-white mb-2">
-                Rewards Leaderboard
-              </h1>
-              <p className="text-muted-foreground">
-                Innovating the BNB ecosystem through the Gem Launchpad rewards system.
-              </p>
+          <div className="max-w-7xl mx-auto space-y-6">
+            {/* Hero Section - Like Gemlaunch homepage */}
+            <div className="bg-[var(--gem-form-bg)] rounded-lg p-8 border border-[var(--gem-border)]">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h1 className="text-3xl font-bold text-white mb-2">
+                    Innovating the BNB ecosystem through the Gem Launchpad
+                  </h1>
+                  <p className="text-[var(--gem-text-muted)]">
+                    By virtue of its efficient and user-friendly interface, Gemlaunch enables projects to create tokens presales.
+                  </p>
+                </div>
+                <Button className="bg-[var(--gem-primary)] hover:bg-[var(--gem-primary-hover)] text-black font-medium px-8 py-2 rounded-lg">
+                  Create
+                </Button>
+              </div>
             </div>
 
-            {/* Stats Overview */}
-            <StatsOverview />
-
-            {/* Main Content Tabs */}
-            <Tabs defaultValue="leaderboard" className="w-full">
-            <TabsList className="grid w-full max-w-md grid-cols-3 bg-card">
-              <TabsTrigger value="leaderboard" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-                <Trophy className="h-4 w-4 mr-2" />
-                Leaderboard
-              </TabsTrigger>
-              <TabsTrigger value="referrals" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-                <Users className="h-4 w-4 mr-2" />
-                Referrals
-              </TabsTrigger>
-              <TabsTrigger value="activities" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-                <TrendingUp className="h-4 w-4 mr-2" />
-                Activities
-              </TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="leaderboard" className="mt-8">
-              {/* Main Form Container - Like Gemlaunch Create Token */}
-              <div className="bg-[var(--gem-form-bg)] rounded-lg p-8 border border-[var(--gem-border)]">
-                <LeaderboardTable />
-              </div>
-              
-              {/* Bottom Grid */}
-              <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="bg-[var(--gem-form-bg)] rounded-lg p-6 border border-[var(--gem-border)]">
-                  <AccoladesPanel />
+            {/* Main Content Grid - Three Column Layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Latest Pools */}
+              <div className="bg-[var(--gem-form-bg)] rounded-lg p-6 border border-[var(--gem-border)]">
+                <div className="flex items-center space-x-2 mb-4">
+                  <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+                    <span className="text-xs">🔥</span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-white">Latest Pools</h3>
                 </div>
-                <div className="bg-[var(--gem-form-bg)] rounded-lg p-6 border border-[var(--gem-border)]">
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-semibold text-white">Latest Pools</h3>
-                    <div className="space-y-3">
-                      {[
-                        { name: 'LaunchPad', token: 'neom' },
-                        { name: 'LaunchPad', token: 'ACC' },
-                        { name: 'LaunchPad', token: 'SON' }
-                      ].map((pool, i) => (
-                        <div key={i} className="flex items-center justify-between p-3 bg-[var(--gem-input-bg)] rounded-lg border border-[var(--gem-border-light)]">
-                          <div className="flex items-center space-x-3">
-                            <div className="w-8 h-8 bg-[var(--gem-primary)] rounded-full flex items-center justify-center">
-                              <span className="text-xs font-bold text-[var(--gem-background)]">{pool.token[0]}</span>
-                            </div>
-                            <div>
-                              <div className="text-sm font-medium text-white">{pool.name}</div>
-                              <div className="text-xs text-[var(--gem-text-muted)]">{pool.token}</div>
-                            </div>
-                          </div>
-                          <button className="text-[var(--gem-primary)] text-sm hover:text-[var(--gem-primary-hover)] transition-colors">
-                            View
-                          </button>
+                <div className="space-y-3">
+                  {[
+                    { name: 'LaunchPad', token: 'neom' },
+                    { name: 'LaunchPad', token: 'ACC' },
+                    { name: 'LaunchPad', token: 'SON' }
+                  ].map((pool, i) => (
+                    <div key={i} className="flex items-center justify-between p-3 bg-[var(--gem-input-bg)] rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-[var(--gem-primary)] rounded-full flex items-center justify-center">
+                          <span className="text-xs font-bold text-black">{pool.token[0]}</span>
                         </div>
-                      ))}
+                        <div>
+                          <div className="text-sm font-medium text-white">{pool.name}</div>
+                          <div className="text-xs text-[var(--gem-text-muted)]">{pool.token}</div>
+                        </div>
+                      </div>
+                      <button className="text-[var(--gem-primary)] text-sm hover:underline">
+                        View
+                      </button>
                     </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Private Sales */}
+              <div className="bg-[var(--gem-form-bg)] rounded-lg p-6 border border-[var(--gem-border)]">
+                <div className="flex items-center space-x-2 mb-4">
+                  <div className="w-5 h-5 bg-yellow-500 rounded-full flex items-center justify-center">
+                    <span className="text-xs">💰</span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-white">Private Sales</h3>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 bg-[var(--gem-input-bg)] rounded-lg">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 bg-[var(--gem-primary)] rounded-full flex items-center justify-center">
+                        <span className="text-xs font-bold text-black">M</span>
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium text-white">mainnet priv...</div>
+                        <div className="text-xs text-[var(--gem-text-muted)]">BNB</div>
+                      </div>
+                    </div>
+                    <button className="text-[var(--gem-primary)] text-sm hover:underline">
+                      View
+                    </button>
                   </div>
                 </div>
               </div>
-            </TabsContent>
 
-            <TabsContent value="referrals" className="mt-8">
-              <ReferralPanel />
-            </TabsContent>
+              {/* New Tokens */}
+              <div className="bg-[var(--gem-form-bg)] rounded-lg p-6 border border-[var(--gem-border)]">
+                <div className="flex items-center space-x-2 mb-4">
+                  <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
+                    <span className="text-xs">⭐</span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-white">New Tokens</h3>
+                </div>
+                <div className="space-y-3">
+                  {[
+                    { name: 'neomind', token: 'neom' },
+                    { name: 'AccessToken', token: 'ACC' },
+                    { name: 'SonicToken', token: 'SON' }
+                  ].map((token, i) => (
+                    <div key={i} className="flex items-center justify-between p-3 bg-[var(--gem-input-bg)] rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-gray-500 rounded-full flex items-center justify-center">
+                          <span className="text-xs font-bold text-white">{token.token[0]}</span>
+                        </div>
+                        <div>
+                          <div className="text-sm font-medium text-white">{token.name}</div>
+                          <div className="text-xs text-[var(--gem-text-muted)]">{token.token}</div>
+                        </div>
+                      </div>
+                      <button className="text-[var(--gem-primary)] text-sm hover:underline">
+                        View
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
 
-            <TabsContent value="activities" className="mt-8">
-              <ActivitiesPanel />
-            </TabsContent>
-          </Tabs>
+            {/* Leaderboard Section */}
+            <Tabs defaultValue="leaderboard" className="w-full">
+              <TabsList className="grid w-full max-w-md grid-cols-3 bg-[var(--gem-card)]">
+                <TabsTrigger value="leaderboard" className="data-[state=active]:bg-[var(--gem-primary)] data-[state=active]:text-black">
+                  <Trophy className="h-4 w-4 mr-2" />
+                  Leaderboard
+                </TabsTrigger>
+                <TabsTrigger value="referrals" className="data-[state=active]:bg-[var(--gem-primary)] data-[state=active]:text-black">
+                  <Users className="h-4 w-4 mr-2" />
+                  Referrals
+                </TabsTrigger>
+                <TabsTrigger value="activities" className="data-[state=active]:bg-[var(--gem-primary)] data-[state=active]:text-black">
+                  <TrendingUp className="h-4 w-4 mr-2" />
+                  Activities
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="leaderboard" className="mt-6">
+                <div className="bg-[var(--gem-form-bg)] rounded-lg p-6 border border-[var(--gem-border)]">
+                  <LeaderboardTable />
+                </div>
+              </TabsContent>
+
+              <TabsContent value="referrals" className="mt-6">
+                <div className="bg-[var(--gem-form-bg)] rounded-lg p-6 border border-[var(--gem-border)]">
+                  <ReferralPanel />
+                </div>
+              </TabsContent>
+
+              <TabsContent value="activities" className="mt-6">
+                <div className="bg-[var(--gem-form-bg)] rounded-lg p-6 border border-[var(--gem-border)]">
+                  <ActivitiesPanel />
+                </div>
+              </TabsContent>
+            </Tabs>
+
+            {/* Bottom Statistics Cards - Like Gemlaunch */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-[var(--gem-form-bg)] rounded-lg p-6 border border-[var(--gem-border)] text-center">
+                <h3 className="text-[var(--gem-text-muted)] text-sm font-medium mb-2">Funded Projects</h3>
+                <p className="text-4xl font-bold text-[var(--gem-primary)]">5</p>
+              </div>
+              <div className="bg-[var(--gem-form-bg)] rounded-lg p-6 border border-[var(--gem-border)] text-center">
+                <h3 className="text-[var(--gem-text-muted)] text-sm font-medium mb-2">Raised Contribution</h3>
+                <p className="text-4xl font-bold text-[var(--gem-primary)]">$39.76</p>
+              </div>
+              <div className="bg-[var(--gem-form-bg)] rounded-lg p-6 border border-[var(--gem-border)] text-center">
+                <h3 className="text-[var(--gem-text-muted)] text-sm font-medium mb-2">Unique Participants</h3>
+                <p className="text-4xl font-bold text-[var(--gem-primary)]">2</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
