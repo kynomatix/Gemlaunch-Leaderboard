@@ -222,8 +222,8 @@ export default function ActivitiesPanel() {
           <CardContent>
             {userAccolades && userAccolades.length > 0 ? (
               <div className="space-y-3">
-                {userAccolades.map((accolade) => {
-                  const formattedDate = new Date(accolade.createdAt).toLocaleDateString();
+                {userAccolades.map((accolade: any) => {
+                  const formattedDate = new Date(accolade.unlockedAt || accolade.unlocked_at).toLocaleDateString();
                   
                   return (
                     <div key={accolade.id} className="flex items-start space-x-3 py-2">
