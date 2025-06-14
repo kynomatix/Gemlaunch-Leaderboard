@@ -159,3 +159,9 @@ Changelog:
   - Updated CATEGORY_NAMES mapping to display "Funding" instead of "Trading"
   - Fixed tooltip rendering bug where accolade icons displayed as text instead of Lucide React icons
   - All 22 accolades now properly reflect Gemlaunch's launchpad focus with authentic funding terminology
+- June 14, 2025: User accolade restoration and legitimate activity recognition
+  - Restored earned accolades for users with actual on-chain activity that were incorrectly removed
+  - User 4: 10,600 points with 7 accolades including token creation, fair launch, funding veteran achievements
+  - User 5: 3,800 points with 5 accolades including token creation, first funding, referral achievements
+  - Preserved all legitimate on-chain activity records while updating terminology to funding-focused concepts
+  - Blockchain monitoring system properly structured for real contract address integration
