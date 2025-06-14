@@ -1,0 +1,48 @@
+Can you look at this page
+
+https://gemlaunch.io/create-launchpad
+
+I need the exact style used as a reference, we need a referral and leaderboard pages.
+
+I need to also make sure to have it track every action on the gemlaunch platform
+
+I need to look at all the smart contracts and think about which functions acumulate what amount of points.
+
+For example simply making a token, would be fewer points than funding a fair-launch or presale.
+Also monetary based and volume based contributions would contribute to a users points.
+
+Also referrals would give points and a very small % of all the points acrued by rederees, this can be sybil farmed though so it can't be too much.
+
+rather than starting with mock data can you check on-chain for the wallets that have s far interacted with Gemlaunch? What would you need?
+
+I want build this for real and not just create a mock up for someone else to build.
+
+It will be a sidebar page in among the existing pages.
+
+We have a mascot too, please make sure it is easy add images, since Replit has isues with this.
+
+My developers will integrate this into the gemlaunch website if you do a good job with this.
+
+I need hidden page for adjusting the points for given tasks.
+
+Please look at all the things a user can do
+https://gems-organization-1.gitbook.io/gemlaunch
+
+This is the docs, showing all the features.
+
+Remember this leaderboard will be used to calculate an airdrop.
+
+
+Make the leaderboard look cool but make sure it is on brand.
+
+We need to add acolades for points boosters, like x number of sucusful token launches via presale/fairlaunch/dutch action. Accolades give a bulk points bonus and a toniy % boost ongoing.
+
+Points are rounded to the nearest 1
+
+Top 10 at the end will be awarded additionally so.
+
+We want to encourage communities to come on board, their leader if you will will join from their referral links.
+
+It is all about brining new communities to gemlaunch and encourage people to start using the platform and reward them in a few months when we release the token.
+
+This is why on-chain tracking is needed. we need to watch all in-app on chain transactions or interactions on the BNB chain so you will need to integrate on-chain tracking functionality
