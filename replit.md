@@ -173,9 +173,10 @@ Changelog:
   - Generated complete database export (database_export.sql) with schema, data, and indexes
   - Created environment template (.env.template) for easy deployment configuration
   - Enhanced referral accolades difficulty: now requires 5+ successful referrals instead of 1
-- June 14, 2025: Complete migration to self-hosted PostgreSQL database
-  - Provisioned new PostgreSQL instance within Replit environment using create_postgresql_database_tool
-  - Successfully migrated all existing data: users, activities, accolades, and relationships
-  - Verified data integrity: User #4 (10,600 pts), User #3 (7,800 pts), User #5 (3,700 pts) with all accolades preserved
-  - Enhanced database performance with improved connection pooling and error handling
-  - Application now running on dedicated self-hosted PostgreSQL with full data preservation
+- June 14, 2025: Complete migration to self-hosted SQLite database
+  - Converted entire schema from PostgreSQL to SQLite with proper data type handling
+  - Created database.db file directly in project source code as true self-hosted solution
+  - Successfully migrated all existing data: 3 users, 8 activities, 14 accolades with perfect data integrity
+  - Fixed SQLite compatibility issues with date handling, JSON metadata, and numeric types
+  - Application now running on embedded SQLite database file that lives in source code repository
+  - Database file size optimized and portable with the codebase for deployment
