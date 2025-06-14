@@ -128,3 +128,8 @@ Changelog:
   - Enhanced activity display to show "Gemlaunch Pioneer Earned" for accolade activities
   - Cleaned up admin panel organization by moving blockchain controls from user-facing Activities section
   - Removed test activities from user wallet to ensure clean slate for real platform usage
+- June 14, 2025: Available Accolades section and Pioneer badge refinement
+  - Added comprehensive "Available Accolades" section below Point Earning Activities
+  - Displays all 22 achievements with icons, unlock criteria, point rewards, and rarity levels
+  - Updated Gemlaunch Pioneer to reflect exclusive first 50 users status (uncommon rarity)
+  - Fixed all remaining "GemLaunch" spelling to correct "Gemlaunch" throughout codebase

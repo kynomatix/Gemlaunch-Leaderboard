@@ -17,13 +17,13 @@ export const ACCOLADES: AccoladeDefinition[] = [
   {
     id: 'gemlaunch_pioneer',
     name: 'Gemlaunch Pioneer',
-    description: 'Welcome to the Gemlaunch ecosystem! Earned by connecting your wallet.',
+    description: 'One of the first 50 users to join the Gemlaunch ecosystem!',
     icon: '🚀',
     category: 'pioneer',
     level: 1,
-    criteria: 'Connect your wallet for the first time',
+    criteria: 'Be among the first 50 users to connect your wallet',
     pointsBonus: 100,
-    rarity: 'common'
+    rarity: 'uncommon'
   },
   {
     id: 'early_adopter',
