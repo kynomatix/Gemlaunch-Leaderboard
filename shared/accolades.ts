@@ -21,7 +21,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     icon: '🚀',
     category: 'pioneer',
     level: 1,
-    criteria: { type: 'special', requirement: 1, specialRequirement: 'first_connect' },
+    criteria: 'Connect your wallet for the first time',
     pointsBonus: 100,
     rarity: 'common'
   },
@@ -32,7 +32,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     icon: '⭐',
     category: 'pioneer',
     level: 2,
-    criteria: { type: 'special', requirement: 'user_number_under_1000' },
+    criteria: 'Be among the first 1,000 users',
     pointsBonus: 500,
     rarity: 'uncommon'
   },
@@ -43,7 +43,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     icon: '👑',
     category: 'pioneer',
     level: 3,
-    criteria: { type: 'special', requirement: 'user_number_under_100' },
+    criteria: 'Be among the first 100 users',
     pointsBonus: 2000,
     rarity: 'rare'
   },
@@ -56,7 +56,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     icon: '💱',
     category: 'trading',
     level: 1,
-    criteria: { type: 'activities', requirement: 1, timeframe: 'all-time' },
+    criteria: 'Complete 1 trade',
     pointsBonus: 50,
     rarity: 'common'
   },
@@ -67,7 +67,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     icon: '📈',
     category: 'trading',
     level: 2,
-    criteria: { type: 'volume', requirement: 1000 },
+    criteria: 'Generate $1,000+ in trading volume',
     pointsBonus: 300,
     rarity: 'uncommon'
   },
@@ -78,7 +78,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     icon: '🐋',
     category: 'trading',
     level: 3,
-    criteria: { type: 'volume', requirement: 10000 },
+    criteria: 'Generate $10,000+ in trading volume',
     pointsBonus: 1500,
     multiplier: 1.1,
     rarity: 'rare'
@@ -90,7 +90,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     icon: '💎',
     category: 'trading',
     level: 2,
-    criteria: { type: 'special', requirement: 'hold_30_days' },
+    criteria: 'Hold tokens for 30+ days without selling',
     pointsBonus: 750,
     multiplier: 1.05,
     rarity: 'uncommon'
@@ -104,7 +104,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     icon: '🎯',
     category: 'creator',
     level: 1,
-    criteria: { type: 'tokens_created', requirement: 1 },
+    criteria: 'Create 1 token',
     pointsBonus: 200,
     rarity: 'common'
   },
@@ -115,7 +115,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     icon: '🏭',
     category: 'creator',
     level: 2,
-    criteria: { type: 'tokens_created', requirement: 5 },
+    criteria: 'Create 5+ tokens',
     pointsBonus: 1000,
     multiplier: 1.15,
     rarity: 'uncommon'
@@ -127,7 +127,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     icon: '🏆',
     category: 'creator',
     level: 3,
-    criteria: { type: 'special', requirement: 'successful_launch_10k' },
+    criteria: 'Launch a token that reaches $10K+ market cap',
     pointsBonus: 5000,
     multiplier: 1.25,
     rarity: 'epic'
@@ -141,7 +141,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     icon: '🤝',
     category: 'social',
     level: 1,
-    criteria: { type: 'referrals', requirement: 1 },
+    criteria: 'Refer 1 friend',
     pointsBonus: 100,
     rarity: 'common'
   },
@@ -152,7 +152,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     icon: '🌟',
     category: 'social',
     level: 2,
-    criteria: { type: 'referrals', requirement: 10 },
+    criteria: 'Refer 10+ friends',
     pointsBonus: 1500,
     multiplier: 1.1,
     rarity: 'uncommon'
@@ -164,7 +164,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     icon: '📢',
     category: 'social',
     level: 3,
-    criteria: { type: 'referrals', requirement: 50 },
+    criteria: 'Refer 50+ friends',
     pointsBonus: 10000,
     multiplier: 1.2,
     rarity: 'rare'
@@ -178,7 +178,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     icon: '🔥',
     category: 'streak',
     level: 1,
-    criteria: { type: 'streak', requirement: 7, timeframe: 'daily' },
+    criteria: 'Be active for 7 consecutive days',
     pointsBonus: 250,
     rarity: 'common'
   },
@@ -189,7 +189,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     icon: '⚡',
     category: 'streak',
     level: 2,
-    criteria: { type: 'streak', requirement: 30, timeframe: 'daily' },
+    criteria: 'Be active for 30 consecutive days',
     pointsBonus: 1000,
     multiplier: 1.05,
     rarity: 'uncommon'
@@ -201,7 +201,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     icon: '🎖️',
     category: 'streak',
     level: 3,
-    criteria: { type: 'streak', requirement: 100, timeframe: 'daily' },
+    criteria: 'Be active for 100 consecutive days',
     pointsBonus: 5000,
     multiplier: 1.15,
     rarity: 'rare'
@@ -215,7 +215,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     icon: '💰',
     category: 'elite',
     level: 1,
-    criteria: { type: 'points', requirement: 1000 },
+    criteria: 'Accumulate 1,000+ total points',
     pointsBonus: 200,
     rarity: 'common'
   },
@@ -226,7 +226,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     icon: '💎',
     category: 'elite',
     level: 2,
-    criteria: { type: 'points', requirement: 10000 },
+    criteria: 'Accumulate 10,000+ total points',
     pointsBonus: 2000,
     multiplier: 1.1,
     rarity: 'uncommon'
@@ -238,7 +238,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     icon: '👑',
     category: 'elite',
     level: 3,
-    criteria: { type: 'points', requirement: 100000 },
+    criteria: 'Accumulate 100,000+ total points',
     pointsBonus: 25000,
     multiplier: 1.25,
     rarity: 'epic'
@@ -250,7 +250,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     icon: '🏅',
     category: 'elite',
     level: 4,
-    criteria: { type: 'special', requirement: 'top_10_leaderboard' },
+    criteria: 'Reach top 10 on the leaderboard',
     pointsBonus: 10000,
     multiplier: 1.3,
     rarity: 'legendary'
@@ -262,7 +262,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     icon: '👑',
     category: 'elite',
     level: 5,
-    criteria: { type: 'special', requirement: 'rank_1_leaderboard' },
+    criteria: 'Reach #1 on the leaderboard',
     pointsBonus: 50000,
     multiplier: 1.5,
     rarity: 'legendary'
@@ -275,54 +275,6 @@ export const getAccoladesByCategory = (category: AccoladeDefinition['category'])
 
 export const getAccoladeById = (id: string) => {
   return ACCOLADES.find(accolade => accolade.id === id);
-};
-
-export const checkAccoladeEligibility = (
-  accolade: AccoladeDefinition,
-  userStats: {
-    totalPoints: number;
-    totalActivities: number;
-    totalReferrals: number;
-    tokensCreated: number;
-    tradingVolume: number;
-    dayStreak: number;
-    rank: number;
-    userNumber: number;
-  }
-): boolean => {
-  const { criteria } = accolade;
-  
-  switch (criteria.type) {
-    case 'points':
-      return userStats.totalPoints >= criteria.requirement;
-    case 'activities':
-      return userStats.totalActivities >= criteria.requirement;
-    case 'referrals':
-      return userStats.totalReferrals >= criteria.requirement;
-    case 'tokens_created':
-      return userStats.tokensCreated >= criteria.requirement;
-    case 'volume':
-      return userStats.tradingVolume >= criteria.requirement;
-    case 'streak':
-      return userStats.dayStreak >= criteria.requirement;
-    case 'special':
-      switch (criteria.requirement) {
-        case 'first_connect':
-          return true; // Always eligible when connecting
-        case 'user_number_under_1000':
-          return userStats.userNumber <= 1000;
-        case 'user_number_under_100':
-          return userStats.userNumber <= 100;
-        case 'top_10_leaderboard':
-          return userStats.rank <= 10;
-        case 'rank_1_leaderboard':
-          return userStats.rank === 1;
-        default:
-          return false;
-      }
-    default:
-      return false;
-  }
 };
 
 export const RARITY_COLORS = {

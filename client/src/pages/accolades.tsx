@@ -17,7 +17,7 @@ export default function Accolades() {
     queryKey: ['/api/user/stats'],
   });
 
-  const earnedAccoladeIds = new Set(userAccolades?.map((a: any) => a.accoladeId) || []);
+  const earnedAccoladeIds = new Set((userAccolades || []).map((a: any) => a.accoladeId));
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
@@ -37,45 +37,7 @@ export default function Accolades() {
     return ACCOLADES.filter(a => a.category === category);
   };
 
-  const formatCriteria = (accolade: AccoladeDefinition) => {
-    const { criteria } = accolade;
-    
-    switch (criteria.type) {
-      case 'points':
-        return `Accumulate ${criteria.requirement.toLocaleString()} total points`;
-      case 'activities':
-        return `Complete ${criteria.requirement} activities`;
-      case 'referrals':
-        return `Refer ${criteria.requirement} friend${criteria.requirement > 1 ? 's' : ''}`;
-      case 'tokens_created':
-        return `Create ${criteria.requirement} token${criteria.requirement > 1 ? 's' : ''}`;
-      case 'volume':
-        return `Generate $${criteria.requirement.toLocaleString()} in trading volume`;
-      case 'streak':
-        return `Be active for ${criteria.requirement} consecutive days`;
-      case 'special':
-        switch (criteria.requirement) {
-          case 'first_connect':
-            return 'Connect your wallet for the first time';
-          case 'user_number_under_1000':
-            return 'Be among the first 1,000 users';
-          case 'user_number_under_100':
-            return 'Be among the first 100 users';
-          case 'top_10_leaderboard':
-            return 'Reach top 10 on the leaderboard';
-          case 'rank_1_leaderboard':
-            return 'Reach #1 on the leaderboard';
-          case 'hold_30_days':
-            return 'Hold tokens for 30+ days without selling';
-          case 'successful_launch_10k':
-            return 'Launch a token that reaches $10K+ market cap';
-          default:
-            return 'Special requirement';
-        }
-      default:
-        return 'Unknown requirement';
-    }
-  };
+
 
   return (
     <div className="min-h-screen bg-[#0a0f0c] text-white">
@@ -120,7 +82,7 @@ export default function Accolades() {
           <Card className="bg-[#253935] border-[#3d5c4d]">
             <CardContent className="p-6 text-center">
               <div className="text-3xl font-bold text-[#22cda6] mb-2">
-                {userAccolades?.reduce((sum: number, a: any) => sum + (ACCOLADES.find(accolade => accolade.id === a.accoladeId)?.pointsBonus || 0), 0) || 0}
+                {(userAccolades || []).reduce((sum: number, a: any) => sum + (ACCOLADES.find(accolade => accolade.id === a.accoladeId)?.pointsBonus || 0), 0)}
               </div>
               <div className="text-sm text-gray-400">Bonus Points Earned</div>
             </CardContent>
@@ -208,7 +170,7 @@ export default function Accolades() {
                             HOW TO UNLOCK:
                           </div>
                           <div className="text-sm text-gray-300">
-                            {formatCriteria(accolade)}
+                            {accolade.criteria}
                           </div>
                         </div>
 
