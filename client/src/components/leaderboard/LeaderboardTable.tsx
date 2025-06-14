@@ -275,7 +275,7 @@ export default function LeaderboardTable() {
                 </div>
                 <Avatar className="w-10 h-10">
                   <AvatarFallback className="bg-[#22cda6] text-black">
-                    <User className="h-5 w-5" />
+                    {renderIcon('User', 'h-5 w-5')}
                   </AvatarFallback>
                 </Avatar>
                 <div>
