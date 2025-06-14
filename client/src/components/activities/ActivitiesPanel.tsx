@@ -148,10 +148,10 @@ export default function ActivitiesPanel() {
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
       {/* Point Sources */}
       <div className="lg:col-span-2">
-        <Card className="bg-gem-slate border-primary/20">
+        <Card className="bg-[#253935] border-[#3d5c4d]">
           <CardHeader>
-            <CardTitle className="text-xl font-bold flex items-center">
-              <TrendingUp className="h-6 w-6 text-primary mr-3" />
+            <CardTitle className="text-xl font-bold text-white flex items-center">
+              <TrendingUp className="h-6 w-6 text-[#22cda6] mr-3" />
               Point Earning Activities
             </CardTitle>
           </CardHeader>
@@ -162,111 +162,104 @@ export default function ActivitiesPanel() {
               return (
                 <div
                   key={activity.type}
-                  className={`bg-gem-dark rounded-lg p-4 border transition-all hover:border-opacity-60 ${
-                    activity.color === "primary" ? "border-primary/20" :
-                    activity.color === "green" ? "border-green-400/20" :
-                    activity.color === "yellow" ? "border-yellow-400/20" :
-                    activity.color === "purple" ? "border-purple-400/20" :
-                    activity.color === "blue" ? "border-blue-400/20" :
-                    "border-primary/20"
-                  }`}
+                  className="bg-[#0f1713] rounded-lg p-4 border border-[#3d5c4d] hover:border-[#22cda6]/30 transition-all"
                 >
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center">
-                      <IconComponent className={`h-5 w-5 mr-3 ${getActivityColor(activity.type)}`} />
-                      <span className="font-medium">{activity.title}</span>
+                      <IconComponent className="h-5 w-5 mr-3 text-[#22cda6]" />
+                      <span className="font-medium text-white">{activity.title}</span>
                     </div>
                     <Badge
                       variant="outline"
-                      className={`font-bold ${
-                        activity.color === "primary" ? "border-primary text-primary" :
-                        activity.color === "green" ? "border-green-400 text-green-400" :
-                        activity.color === "yellow" ? "border-yellow-400 text-yellow-400" :
-                        activity.color === "purple" ? "border-purple-400 text-purple-400" :
-                        activity.color === "blue" ? "border-blue-400 text-blue-400" :
-                        "border-primary text-primary"
-                      }`}
+                      className="border-[#22cda6] text-[#22cda6] font-bold"
                     >
                       {activity.points} {activity.suffix || "pts"}
                     </Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-gray-400">
                     {activity.description}
                   </p>
                 </div>
               );
             })}
 
-            {/* Anti-Sybil Notice */}
-            <div className="mt-6">
-              <Button
-                variant="outline"
-                onClick={() => setShowAntiSybilNotice(!showAntiSybilNotice)}
-                className="w-full bg-gem-dark border-muted text-muted-foreground hover:bg-gem-slate hover:border-primary/30 flex items-center justify-between"
-              >
-                <div className="flex items-center">
-                  <Shield className="h-4 w-4 mr-2 text-primary" />
-                  <span>Fair Distribution Notice</span>
-                </div>
-                {showAntiSybilNotice ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-              </Button>
-              
-              {showAntiSybilNotice && (
-                <div className="mt-3 p-4 bg-gem-dark border border-muted rounded-lg">
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    To ensure fair distribution, our system employs advanced anti-sybil measures. 
-                    Activities from suspicious accounts may be flagged and excluded from airdrop eligibility. 
-                    Play fair, earn genuine rewards.
-                  </p>
-                </div>
-              )}
+
+          </CardContent>
+        </Card>
+
+        {/* Available Accolades Section */}
+        <Card className="bg-[#253935] border-[#3d5c4d] mt-8">
+          <CardHeader>
+            <CardTitle className="text-xl font-bold text-white flex items-center">
+              <Trophy className="h-6 w-6 text-[#22cda6] mr-3" />
+              Available Accolades
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {ACCOLADES.map((accolade) => {
+                const isEarned = earnedAccolades.some((earned: any) => earned.accoladeType === accolade.id);
+                
+                return (
+                  <div
+                    key={accolade.id}
+                    className={`bg-[#0f1713] rounded-lg p-4 border transition-all ${
+                      isEarned 
+                        ? 'border-[#22cda6] shadow-lg shadow-[#22cda6]/20' 
+                        : 'border-[#3d5c4d] opacity-75'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center space-x-3">
+                        <div className={`text-2xl ${isEarned ? '' : 'grayscale opacity-50'}`}>
+                          <Trophy className="w-8 h-8 text-[#22cda6]" />
+                        </div>
+                        <div>
+                          <h3 className={`text-lg font-semibold ${isEarned ? 'text-[#22cda6]' : 'text-gray-300'}`}>
+                            {accolade.name}
+                          </h3>
+                          <div className="flex items-center space-x-2 mt-1">
+                            <Badge 
+                              variant="outline" 
+                              className={`text-xs border-[#22cda6] text-[#22cda6]`}
+                            >
+                              {accolade.rarity}
+                            </Badge>
+                            <Badge 
+                              variant="outline" 
+                              className="text-xs border-yellow-400 text-yellow-400"
+                            >
+                              +{accolade.pointsBonus} pts
+                            </Badge>
+                          </div>
+                        </div>
+                      </div>
+                      {isEarned && (
+                        <div className="text-[#22cda6]">
+                          <Crown className="h-5 w-5" />
+                        </div>
+                      )}
+                    </div>
+                    
+                    <p className="text-sm text-gray-400 mb-3">
+                      {accolade.description}
+                    </p>
+                    
+                    <div className="space-y-2">
+                      <div className="text-xs text-gray-500 font-medium">
+                        HOW TO UNLOCK:
+                      </div>
+                      <div className="text-sm text-gray-300">
+                        {accolade.criteria}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </CardContent>
         </Card>
 
-        {/* Accolades Earned Section */}
-        <Card className="bg-gem-slate border-primary/20 mt-8">
-          <CardHeader>
-            <CardTitle className="text-xl font-bold flex items-center">
-              <Crown className="h-6 w-6 text-primary mr-3" />
-              Accolades Earned
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {earnedAccolades.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {earnedAccolades.map((userAccolade: any) => {
-                  const accolade = getAccoladeInfo(userAccolade.accoladeType);
-                  return (
-                    <div
-                      key={userAccolade.id}
-                      className="bg-gem-dark rounded-lg p-4 border border-primary/20 hover:border-primary/40 transition-all"
-                    >
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center">
-                          <Trophy className="h-5 w-5 mr-3 text-primary" />
-                          <span className="font-medium text-primary">{accolade.name}</span>
-                        </div>
-                        <Badge className="bg-primary/10 text-primary border-primary">
-                          Level 1
-                        </Badge>
-                      </div>
-                      <p className="text-sm text-muted-foreground">
-                        Earned on {formatDate(userAccolade.earnedAt)}
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
-              <div className="text-center py-8 text-muted-foreground">
-                <Crown className="h-16 w-16 mx-auto mb-4 opacity-50" />
-                <h3 className="text-lg font-medium mb-2">No accolades earned yet</h3>
-                <p>Complete activities to unlock achievements and earn special recognition!</p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
       </div>
 
       {/* Activity Feed */}
@@ -310,6 +303,73 @@ export default function ActivitiesPanel() {
                 <Activity className="h-16 w-16 mx-auto mb-4 opacity-50" />
                 <h3 className="text-lg font-medium mb-2">No recent activity</h3>
                 <p>Start participating in Gemlaunch to earn points and see your activity here!</p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Anti-Sybil Notice */}
+        <div className="mt-6">
+          <Button
+            variant="outline"
+            onClick={() => setShowAntiSybilNotice(!showAntiSybilNotice)}
+            className="w-full bg-[#0f1713] border-[#3d5c4d] text-gray-300 hover:bg-[#253935] hover:border-[#22cda6]/30 flex items-center justify-between"
+          >
+            <div className="flex items-center">
+              <Shield className="h-4 w-4 mr-2 text-[#22cda6]" />
+              <span>Fair Distribution Notice</span>
+            </div>
+            {showAntiSybilNotice ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+          </Button>
+          
+          {showAntiSybilNotice && (
+            <div className="mt-3 p-4 bg-[#0f1713] border border-[#3d5c4d] rounded-lg">
+              <p className="text-sm text-gray-300 leading-relaxed">
+                To ensure fair distribution, our system employs advanced anti-sybil measures. 
+                Activities from suspicious accounts may be flagged and excluded from airdrop eligibility. 
+                Play fair, earn genuine rewards.
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* Accolades Earned Section */}
+        <Card className="bg-[#253935] border-[#3d5c4d] mt-6">
+          <CardHeader>
+            <CardTitle className="text-lg font-bold text-white flex items-center">
+              <Crown className="h-5 w-5 text-[#22cda6] mr-2" />
+              Accolades Earned
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {earnedAccolades.length > 0 ? (
+              <div className="space-y-3">
+                {earnedAccolades.map((userAccolade: any) => {
+                  const accolade = getAccoladeInfo(userAccolade.accoladeType);
+                  return (
+                    <div
+                      key={userAccolade.id}
+                      className="bg-[#0f1713] rounded-lg p-3 border border-[#22cda6]/30 flex items-center"
+                    >
+                      <div className="flex items-center flex-1">
+                        <Trophy className="h-5 w-5 mr-3 text-[#22cda6]" />
+                        <div>
+                          <span className="font-medium text-[#22cda6] text-sm">{accolade.name}</span>
+                          <p className="text-xs text-gray-400">{formatDate(userAccolade.earnedAt)}</p>
+                        </div>
+                      </div>
+                      <Badge className="bg-[#22cda6]/10 text-[#22cda6] border-[#22cda6] text-xs">
+                        Level 1
+                      </Badge>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="text-center py-6 text-gray-400">
+                <div className="mb-2"><Crown className="h-8 w-8 mx-auto opacity-50" /></div>
+                <p className="text-sm">No accolades earned yet</p>
+                <p className="text-xs mt-1">Complete activities to unlock achievements</p>
               </div>
             )}
           </CardContent>
