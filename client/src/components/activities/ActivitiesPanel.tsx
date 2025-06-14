@@ -25,6 +25,16 @@ export default function ActivitiesPanel() {
     refetchInterval: 30000,
   });
 
+  const { data: userAccolades } = useQuery({
+    queryKey: ["/api/user/accolades"],
+    refetchInterval: 30000,
+  });
+
+  // Filter out accolade activities from recent activities
+  const pointActivities = recentActivities?.filter(activity => 
+    activity.activityType !== 'accolade_earned'
+  ) || [];
+
   const activityTypes = [
     {
       type: "token_creation",
@@ -190,6 +200,49 @@ export default function ActivitiesPanel() {
 
       {/* Sidebar */}
       <div className="space-y-6">
+        {/* Accolades Earned */}
+        <Card className="bg-gem-slate border-primary/20">
+          <CardHeader>
+            <CardTitle className="text-lg font-bold flex items-center">
+              <Crown className="h-5 w-5 mr-2 text-[#22cda6]" />
+              Accolades Earned
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {userAccolades && userAccolades.length > 0 ? (
+              <div className="space-y-3">
+                {userAccolades.map((accolade) => {
+                  const formattedDate = new Date(accolade.createdAt).toLocaleDateString();
+                  
+                  return (
+                    <div key={accolade.id} className="flex items-start space-x-3 py-2">
+                      <div className="text-2xl">🚀</div>
+                      <div className="flex-1">
+                        <div className="text-sm font-medium text-[#22cda6]">
+                          Gemlaunch Pioneer
+                        </div>
+                        <div className="text-xs text-gray-400">{formattedDate}</div>
+                      </div>
+                      <Badge 
+                        variant="outline" 
+                        className="text-sm font-medium text-[#22cda6] border-[#22cda6]"
+                      >
+                        Level {accolade.level}
+                      </Badge>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="text-center py-6 text-gray-400">
+                <Crown className="h-10 w-10 mx-auto mb-2 opacity-50" />
+                <p className="text-sm">No accolades yet</p>
+                <p className="text-xs mt-1">Achieve milestones to earn recognition!</p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
         {/* Recent Activity */}
         <Card className="bg-gem-slate border-primary/20">
           <CardHeader>
@@ -199,9 +252,9 @@ export default function ActivitiesPanel() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            {recentActivities && recentActivities.length > 0 ? (
+            {pointActivities && pointActivities.length > 0 ? (
               <div className="space-y-3">
-                {recentActivities.map((activity) => {
+                {pointActivities.map((activity) => {
                   const IconComponent = getActivityIcon(activity.activityType);
                   const formattedTime = new Date(activity.createdAt).toLocaleDateString();
                   
@@ -212,10 +265,7 @@ export default function ActivitiesPanel() {
                       }`} />
                       <div className="flex-1">
                         <div className="text-sm capitalize">
-                          {activity.activityType === 'accolade_earned' && activity.metadata?.description
-                            ? 'Gemlaunch Pioneer Earned'
-                            : activity.activityType.replace('_', ' ')
-                          }
+                          {activity.activityType.replace('_', ' ')}
                         </div>
                         <div className="text-xs text-gray-400">{formattedTime}</div>
                       </div>
@@ -232,7 +282,7 @@ export default function ActivitiesPanel() {
             ) : (
               <div className="text-center py-8 text-gray-400">
                 <Activity className="h-12 w-12 mx-auto mb-3 opacity-50" />
-                <p className="text-sm">No activities yet</p>
+                <p className="text-sm">No point activities yet</p>
                 <p className="text-xs mt-1">Start using GemLaunch to earn points!</p>
               </div>
             )}

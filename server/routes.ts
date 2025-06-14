@@ -86,6 +86,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/activities/recent", async (req, res) => {
     try {
       const limit = parseInt(req.query.limit as string) || 20;
+      
+      // Only show activities for connected wallet if specified
+      const walletAddress = req.query.wallet as string;
+      if (walletAddress) {
+        const user = await storage.getUserByWalletAddress(walletAddress);
+        if (user) {
+          const activities = await storage.getUserActivities(user.id, limit);
+          // Filter out accolade activities to show only point-earning activities
+          const pointActivities = activities.filter(activity => 
+            activity.activityType !== 'accolade_earned'
+          );
+          return res.json(pointActivities.map(activity => ({
+            ...activity,
+            user: user
+          })));
+        }
+      }
+      
+      // Fallback to global activities if no wallet specified
       const activities = await storage.getRecentActivities(limit);
       res.json(activities);
     } catch (error) {
