@@ -87,7 +87,7 @@ export class DatabaseStorage implements IStorage {
           userId: user.id,
           accoladeType: 'gemlaunch_pioneer',
           level: 1,
-          multiplier: '1.10'
+          multiplier: 1.10
         });
 
         // Create activity for receiving the accolade
@@ -95,10 +95,10 @@ export class DatabaseStorage implements IStorage {
           userId: user.id,
           activityType: 'accolade_earned',
           points: 100,
-          metadata: { 
+          metadata: JSON.stringify({ 
             accoladeType: 'gemlaunch_pioneer', 
             description: 'Earned Gemlaunch Pioneer status as one of the first 50 users!' 
-          }
+          })
         });
       } catch (error) {
         console.error('Error creating Gemlaunch Pioneer accolade:', error);

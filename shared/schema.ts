@@ -1,68 +1,69 @@
-import { pgTable, text, serial, integer, boolean, timestamp, decimal, jsonb } from "drizzle-orm/pg-core";
-import { relations } from "drizzle-orm";
+import { sqliteTable, text, integer, real } from "drizzle-orm/sqlite-core";
+import { relations, sql } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-export const users = pgTable("users", {
-  id: serial("id").primaryKey(),
+export const users = sqliteTable("users", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   walletAddress: text("wallet_address").notNull().unique(),
   username: text("username"),
   totalPoints: integer("total_points").default(0).notNull(),
   referralCode: text("referral_code").unique(),
   referredBy: integer("referred_by"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  createdAt: text("created_at").default(sql`CURRENT_TIMESTAMP`).notNull(),
+  updatedAt: text("updated_at").default(sql`CURRENT_TIMESTAMP`).notNull(),
 });
 
-export const activities = pgTable("activities", {
-  id: serial("id").primaryKey(),
+export const activities = sqliteTable("activities", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   userId: integer("user_id").notNull(),
   activityType: text("activity_type").notNull(), // 'token_creation', 'fair_launch', 'presale', 'dutch_auction', 'volume_contribution', 'referral'
   points: integer("points").notNull(),
   transactionHash: text("transaction_hash"),
   blockNumber: integer("block_number"),
-  metadata: jsonb("metadata"), // Additional activity-specific data
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+  metadata: text("metadata"), // JSON string for additional activity-specific data
+  createdAt: text("created_at").default(sql`CURRENT_TIMESTAMP`).notNull(),
 });
 
-export const referrals = pgTable("referrals", {
-  id: serial("id").primaryKey(),
+export const referrals = sqliteTable("referrals", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   referrerId: integer("referrer_id").notNull(),
   refereeId: integer("referee_id").notNull(),
   pointsEarned: integer("points_earned").default(0).notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+  createdAt: text("created_at").default(sql`CURRENT_TIMESTAMP`).notNull(),
 });
 
-export const accolades = pgTable("accolades", {
-  id: serial("id").primaryKey(),
+export const accolades = sqliteTable("accolades", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   userId: integer("user_id").notNull(),
   accoladeType: text("accolade_type").notNull(), // 'launch_pioneer', 'referral_champion', 'volume_trader'
   level: integer("level").default(1).notNull(),
-  multiplier: decimal("multiplier", { precision: 3, scale: 2 }).default("0.00").notNull(),
-  unlockedAt: timestamp("unlocked_at").defaultNow().notNull(),
+  multiplier: real("multiplier").default(0.00).notNull(),
+  unlockedAt: text("unlocked_at").default(sql`CURRENT_TIMESTAMP`).notNull(),
 });
 
-export const pointConfigs = pgTable("point_configs", {
-  id: serial("id").primaryKey(),
+export const pointConfigs = sqliteTable("point_configs", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   activityType: text("activity_type").notNull().unique(),
   basePoints: integer("base_points").notNull(),
   description: text("description"),
-  isActive: boolean("is_active").default(true).notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  isActive: integer("is_active", { mode: 'boolean' }).default(true).notNull(),
+  createdAt: text("created_at").default(sql`CURRENT_TIMESTAMP`).notNull(),
+  updatedAt: text("updated_at").default(sql`CURRENT_TIMESTAMP`).notNull(),
 });
 
-export const blockchainEvents = pgTable("blockchain_events", {
-  id: serial("id").primaryKey(),
-  transactionHash: text("transaction_hash").notNull().unique(),
-  blockNumber: integer("block_number").notNull(),
+export const blockchainEvents = sqliteTable("blockchain_events", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   eventType: text("event_type").notNull(),
-  contractAddress: text("contract_address").notNull(),
+  transactionHash: text("transaction_hash").notNull(),
+  blockNumber: integer("block_number").notNull(),
   userAddress: text("user_address").notNull(),
-  processed: boolean("processed").default(false).notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+  metadata: text("metadata"), // JSON string
+  processed: integer("processed", { mode: 'boolean' }).default(false).notNull(),
+  createdAt: text("created_at").default(sql`CURRENT_TIMESTAMP`).notNull(),
 });
 
-// Relations
+// Relations remain the same
 export const usersRelations = relations(users, ({ many, one }) => ({
   activities: many(activities),
   referralsGiven: many(referrals, { relationName: "referrer" }),
@@ -125,6 +126,7 @@ export const insertAccoladeSchema = createInsertSchema(accolades).omit({
 
 export const insertPointConfigSchema = createInsertSchema(pointConfigs).omit({
   id: true,
+  createdAt: true,
   updatedAt: true,
 });
 
