@@ -60,7 +60,6 @@ export default function LeaderboardTable() {
           </div>
         </CardTitle>
       </CardHeader>
-
       {/* Top 3 Podium */}
       <div className="p-6 bg-gradient-to-br from-[#253935] to-[#1a2b21]">
         <div className="flex justify-center items-end space-x-4 mb-6">
@@ -119,7 +118,6 @@ export default function LeaderboardTable() {
           )}
         </div>
       </div>
-
       {/* Complete Rankings List - Top 10+ */}
       <div className="bg-[#253935]">
         <div className="p-4 border-b border-[#22cda6]/20">
@@ -209,7 +207,7 @@ export default function LeaderboardTable() {
           <div className="p-4 bg-[#26d0ce]/10 border border-[#26d0ce]/30">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 bg-[#26d0ce] rounded-full flex items-center justify-center text-sm font-bold text-black">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-black bg-[22cda6]">
                   ?
                 </div>
                 <Avatar className="w-10 h-10">
