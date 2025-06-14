@@ -168,7 +168,7 @@ export default function Leaderboard() {
               </div>
 
               {/* Private Sales */}
-              <div className="bg-[var(--gem-form-bg)] rounded-lg p-6 border border-[var(--gem-border)]">
+              <div className="rounded-lg p-6 border border-[var(--gem-border)] bg-[#253935]">
                 <div className="flex items-center space-x-2 mb-4">
                   <div className="w-5 h-5 bg-yellow-500 rounded-full flex items-center justify-center">
                     <span className="text-xs">💰</span>
@@ -250,7 +250,7 @@ export default function Leaderboard() {
               </TabsContent>
 
               <TabsContent value="referrals" className="mt-6">
-                <div className="rounded-lg p-6 border border-[var(--gem-border)] bg-[253935]">
+                <div className="rounded-lg p-6 border border-[var(--gem-border)] bg-[#253935]">
                   <ReferralPanel />
                 </div>
               </TabsContent>
