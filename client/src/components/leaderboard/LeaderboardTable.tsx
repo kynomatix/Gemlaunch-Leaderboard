@@ -204,14 +204,14 @@ export default function LeaderboardTable() {
           ))}
 
           {/* Current User Position Placeholder */}
-          <div className="p-4 bg-[#26d0ce]/10 border border-[#26d0ce]/30">
+          <div className="p-4 bg-[#22cda6]/10 border border-[#22cda6]/30">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-black bg-[22cda6]">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-black bg-[#22cda6]">
                   ?
                 </div>
                 <Avatar className="w-10 h-10">
-                  <AvatarFallback className="bg-[#26d0ce] text-black">
+                  <AvatarFallback className="bg-[#22cda6] text-black">
                     <User className="h-5 w-5" />
                   </AvatarFallback>
                 </Avatar>
@@ -225,7 +225,7 @@ export default function LeaderboardTable() {
                 </div>
               </div>
               <div className="text-right">
-                <div className="font-bold text-[#26d0ce] text-lg">-- pts</div>
+                <div className="font-bold text-[#22cda6] text-lg">-- pts</div>
                 <div className="text-xs text-gray-400">Rank --</div>
               </div>
             </div>
