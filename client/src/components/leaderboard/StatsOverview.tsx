@@ -13,63 +13,30 @@ export default function StatsOverview() {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-      <Card className="bg-gem-slate border-primary/20">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <Card className="bg-card border-border">
         <CardContent className="p-6">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-gray-400 text-sm">Your Points</h3>
-            <Trophy className="h-5 w-5 text-primary" />
-          </div>
-          <div className="text-2xl font-bold text-primary">
-            {userStats.totalPoints.toLocaleString()}
-          </div>
-          <div className="text-xs text-gray-500 mt-1">
-            {userStats.rank > 0 ? `Rank #${userStats.rank}` : "Connect wallet"}
+          <div className="text-center">
+            <div className="text-3xl font-bold text-primary mb-2">5</div>
+            <div className="text-sm text-muted-foreground">Funded Projects</div>
           </div>
         </CardContent>
       </Card>
       
-      <Card className="bg-gem-slate border-primary/20">
+      <Card className="bg-card border-border">
         <CardContent className="p-6">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-gray-400 text-sm">Referrals</h3>
-            <Users className="h-5 w-5 text-primary" />
-          </div>
-          <div className="text-2xl font-bold">
-            {userStats.referralCount}
-          </div>
-          <div className="text-xs text-green-400 mt-1">
-            Connect wallet to track
+          <div className="text-center">
+            <div className="text-3xl font-bold text-primary mb-2">$39.76</div>
+            <div className="text-sm text-muted-foreground">Raised Contribution</div>
           </div>
         </CardContent>
       </Card>
 
-      <Card className="bg-gem-slate border-primary/20">
+      <Card className="bg-card border-border">
         <CardContent className="p-6">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-gray-400 text-sm">Launches</h3>
-            <Rocket className="h-5 w-5 text-primary" />
-          </div>
-          <div className="text-2xl font-bold">
-            {userStats.launchCount}
-          </div>
-          <div className="text-xs text-gray-500 mt-1">
-            0 successful
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="bg-gem-slate border-primary/20">
-        <CardContent className="p-6">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-gray-400 text-sm">Volume</h3>
-            <TrendingUp className="h-5 w-5 text-primary" />
-          </div>
-          <div className="text-2xl font-bold">
-            ${userStats.volumeContributed.toLocaleString()}
-          </div>
-          <div className="text-xs text-gray-400 mt-1">
-            Connect wallet to track
+          <div className="text-center">
+            <div className="text-3xl font-bold text-primary mb-2">2</div>
+            <div className="text-sm text-muted-foreground">Unique Participants</div>
           </div>
         </CardContent>
       </Card>
