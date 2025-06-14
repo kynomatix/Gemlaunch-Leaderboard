@@ -162,6 +162,14 @@ Changelog:
 - June 14, 2025: User accolade restoration and legitimate activity recognition
   - Restored earned accolades for users with actual on-chain activity that were incorrectly removed
   - User 4: 10,600 points with 7 accolades including token creation, fair launch, funding veteran achievements
-  - User 5: 3,800 points with 5 accolades including token creation, first funding, referral achievements
+  - User 5: 3,700 points with 4 accolades including token creation, first funding achievements (removed false referral)
   - Preserved all legitimate on-chain activity records while updating terminology to funding-focused concepts
   - Blockchain monitoring system properly structured for real contract address integration
+- June 14, 2025: PostgreSQL migration and self-hosted database setup
+  - Successfully migrated from Neon serverless to standard PostgreSQL with enhanced connection pooling
+  - Updated database configuration with proper SSL support and error handling for production environments
+  - Created comprehensive migration guide with database setup, security configurations, and monitoring
+  - Added database health check endpoint at /api/health/database for system monitoring
+  - Generated complete database export (database_export.sql) with schema, data, and indexes
+  - Created environment template (.env.template) for easy deployment configuration
+  - Enhanced referral accolades difficulty: now requires 5+ successful referrals instead of 1
