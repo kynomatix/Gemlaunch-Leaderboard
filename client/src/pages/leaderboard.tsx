@@ -108,7 +108,7 @@ export default function Leaderboard() {
             <div className="bg-gradient-to-r from-[#253935] to-[#1a2b21] rounded-lg p-8 border border-[#22cda6]/20 mt-[20px] mb-[20px]">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-6">
-                  <div className="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
+                  <div className="w-32 h-32 rounded-lg overflow-hidden flex-shrink-0">
                     <img 
                       src={Gemmy_Mascot} 
                       alt="Gemmy Mascot" 
