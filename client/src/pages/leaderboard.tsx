@@ -177,7 +177,7 @@ export default function Leaderboard() {
               </div>
               <div className="bg-[#253935] rounded-lg p-6 border border-[#3d5c4d] text-center">
                 <h3 className="text-[#9ca3af] text-sm font-medium mb-2">Unique Participants</h3>
-                <p className="text-4xl font-bold text-[22cda6]">2</p>
+                <p className="text-4xl font-bold text-[#22cda6]">2</p>
               </div>
             </div>
           </div>
