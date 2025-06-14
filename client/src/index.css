@@ -10,23 +10,23 @@
 }
 
 :root {
-  /* Exact Gemlaunch brand colors extracted from source */
-  --gem-background: #0c1713;
-  --gem-sidebar: #081612;
-  --gem-card: #1c2b26;
-  --gem-card-hover: #253632;
-  --gem-form-bg: #1a2925;
-  --gem-input-bg: #0f1a16;
-  --gem-primary: #26d0ce;
-  --gem-primary-hover: #1bb6b4;
-  --gem-accent: #00d4aa;
+  /* Exact Gemlaunch colors from website CSS */
+  --gem-background: #0f181a;
+  --gem-sidebar: #090909;
+  --gem-card: #0b0b0b;
+  --gem-card-hover: #161616;
+  --gem-form-bg: #0b0b0b;
+  --gem-input-bg: #000000;
+  --gem-primary: #22cda6;
+  --gem-primary-hover: #22cdc5;
+  --gem-accent: #16abff;
   --gem-text: #ffffff;
-  --gem-text-muted: #9ca3af;
-  --gem-text-secondary: #6b7280;
-  --gem-border: #2d453f;
-  --gem-border-light: #374d47;
-  --gem-success: #10b981;
-  --gem-warning: #f59e0b;
+  --gem-text-muted: #e5e7eb;
+  --gem-text-secondary: #9ca3af;
+  --gem-border: #333333;
+  --gem-border-light: #444444;
+  --gem-success: #22cda6;
+  --gem-warning: #54d6ff;
   --gem-error: #ef4444;
   
   --background: var(--gem-background);
