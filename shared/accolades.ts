@@ -15,15 +15,26 @@ export interface AccoladeDefinition {
 export const ACCOLADES: AccoladeDefinition[] = [
   // PIONEER CATEGORY
   {
+    id: 'genesis_member',
+    name: 'Genesis Member',
+    description: 'Among the first 10 users on Gemlaunch.',
+    icon: 'Crown',
+    category: 'pioneer',
+    level: 1,
+    criteria: 'Be among the first 10 users',
+    pointsBonus: 5000,
+    rarity: 'legendary'
+  },
+  {
     id: 'gemlaunch_pioneer',
     name: 'Gemlaunch Pioneer',
     description: 'One of the first 50 users to join the Gemlaunch ecosystem!',
     icon: 'Rocket',
     category: 'pioneer',
-    level: 1,
+    level: 2,
     criteria: 'Be among the first 50 users to connect your wallet',
-    pointsBonus: 500,
-    rarity: 'uncommon'
+    pointsBonus: 2000,
+    rarity: 'rare'
   },
   {
     id: 'early_adopter',
@@ -31,44 +42,33 @@ export const ACCOLADES: AccoladeDefinition[] = [
     description: 'Among the first 1000 users on Gemlaunch.',
     icon: 'Star',
     category: 'pioneer',
-    level: 2,
+    level: 3,
     criteria: 'Be among the first 1,000 users',
-    pointsBonus: 100,
+    pointsBonus: 500,
     rarity: 'uncommon'
   },
-  {
-    id: 'genesis_member',
-    name: 'Genesis Member',
-    description: 'Among the first 100 users on Gemlaunch.',
-    icon: 'Crown',
-    category: 'pioneer',
-    level: 3,
-    criteria: 'Be among the first 100 users',
-    pointsBonus: 2000,
-    rarity: 'rare'
-  },
 
-  // TRADING CATEGORY
+  // FUNDING CATEGORY
   {
-    id: 'first_trade',
-    name: 'First Trade',
-    description: 'Complete your first token trade on any DEX.',
-    icon: 'ArrowLeftRight',
+    id: 'first_funding',
+    name: 'First Funder',
+    description: 'Fund your first token launch on Gemlaunch.',
+    icon: 'Coins',
     category: 'trading',
     level: 1,
-    criteria: 'Complete 1 trade',
-    pointsBonus: 50,
+    criteria: 'Participate in 1 token funding',
+    pointsBonus: 200,
     rarity: 'common'
   },
   {
-    id: 'volume_trader',
-    name: 'Volume Trader',
-    description: 'Generate $1,000+ in trading volume.',
+    id: 'launch_supporter',
+    name: 'Launch Supporter',
+    description: 'Support multiple token launches with funding.',
     icon: 'TrendingUp',
     category: 'trading',
     level: 2,
-    criteria: 'Generate $1,000+ in trading volume',
-    pointsBonus: 300,
+    criteria: 'Fund 5+ different token launches',
+    pointsBonus: 800,
     rarity: 'uncommon'
   },
   {
