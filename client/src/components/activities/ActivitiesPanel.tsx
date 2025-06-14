@@ -14,9 +14,11 @@ import {
   Activity,
   Shield,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Trophy
 } from "lucide-react";
 import { web3Service } from "@/lib/web3";
+import { ACCOLADES } from "@shared/accolades";
 
 export default function ActivitiesPanel() {
   const [showAntiSybilNotice, setShowAntiSybilNotice] = useState(false);
