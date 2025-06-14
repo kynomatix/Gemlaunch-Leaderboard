@@ -1,36 +1,63 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Link, Copy, Users, TrendingUp, ExternalLink } from "lucide-react";
+import { Link, Copy, Users, TrendingUp, ExternalLink, Wallet } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { web3Service } from "@/lib/web3";
 
 export default function ReferralPanel() {
   const [copied, setCopied] = useState(false);
+  const [connectedWallet, setConnectedWallet] = useState<string | null>(null);
   const { toast } = useToast();
 
-  // Mock referral data
-  const referralData = {
-    referralLink: "https://gemlaunch.io?ref=ABC123XYZ",
-    totalClicks: 234,
-    conversions: 12,
-    weeklyReferrals: 3,
-    monthlyReferrals: 8,
-    totalEarned: 6840
+  // Check wallet connection on component mount
+  useEffect(() => {
+    const account = web3Service.getAccount();
+    setConnectedWallet(account);
+  }, []);
+
+  // Fetch user's referral data
+  const { data: referralStats } = useQuery({
+    queryKey: ["/api/referrals/stats", connectedWallet],
+    queryFn: () => fetch(`/api/referrals/stats/${connectedWallet}`).then(res => res.json()),
+    enabled: !!connectedWallet,
+    staleTime: 30000,
+  });
+
+  // Fetch user's recent referrals
+  const { data: recentReferrals = [] } = useQuery({
+    queryKey: ["/api/referrals/recent", connectedWallet],
+    queryFn: () => fetch(`/api/referrals/recent/${connectedWallet}`).then(res => res.json()),
+    enabled: !!connectedWallet,
+    staleTime: 30000,
+  });
+
+  const connectWallet = async () => {
+    try {
+      const account = await web3Service.connectWallet();
+      setConnectedWallet(account);
+      toast({
+        title: "Wallet Connected",
+        description: `Connected to ${account?.slice(0, 6)}...${account?.slice(-4)}`,
+      });
+    } catch (error) {
+      toast({
+        title: "Connection Failed",
+        description: "Please try again or check your wallet",
+        variant: "destructive"
+      });
+    }
   };
 
-  const mockRecentReferrals = [
-    { id: 1, walletAddress: "0x1234567890123456789012345678901234567890", joinedAt: "2 days ago", pointsEarned: 500 },
-    { id: 2, walletAddress: "0x0987654321098765432109876543210987654321", joinedAt: "1 week ago", pointsEarned: 500 },
-    { id: 3, walletAddress: "0xabcdef1234567890abcdef1234567890abcdef12", joinedAt: "2 weeks ago", pointsEarned: 500 },
-    { id: 4, walletAddress: "0x9876543210987654321098765432109876543210", joinedAt: "3 weeks ago", pointsEarned: 500 }
-  ];
-
   const copyReferralLink = async () => {
+    if (!connectedWallet || !referralStats?.referralCode) return;
+    
+    const referralLink = `${window.location.origin}?ref=${referralStats.referralCode}`;
     try {
-      await navigator.clipboard.writeText(referralData.referralLink);
+      await navigator.clipboard.writeText(referralLink);
       setCopied(true);
       toast({
         title: "Copied!",
@@ -40,29 +67,55 @@ export default function ReferralPanel() {
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to copy referral link",
-        variant: "destructive",
+        title: "Failed to copy",
+        description: "Please copy the link manually",
+        variant: "destructive"
       });
     }
   };
 
+  // Show wallet connection prompt if no wallet connected
+  if (!connectedWallet) {
+    return (
+      <div className="space-y-6">
+        <Card className="bg-[#253935] border-[#22cda6]/20">
+          <CardContent className="pt-6">
+            <div className="text-center py-8">
+              <Wallet className="h-16 w-16 mx-auto mb-4 text-[#22cda6]/50" />
+              <h3 className="text-xl font-bold text-[#22cda6] mb-2">Connect Your Wallet</h3>
+              <p className="text-[#9ca3af] mb-6">
+                Connect your wallet to access your referral program and start earning rewards.
+              </p>
+              <Button 
+                onClick={connectWallet}
+                className="bg-[#22cda6] hover:bg-[#1fb898] text-black font-bold px-6 py-2"
+              >
+                <Wallet className="h-5 w-5 mr-2" />
+                Connect Wallet
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
       {/* Referral Link Generator */}
-      <Card className="bg-gem-slate border-primary/20">
+      <Card className="bg-[#253935] border-[#22cda6]/20">
         <CardHeader>
           <CardTitle className="text-xl font-bold flex items-center">
-            <Link className="h-6 w-6 text-primary mr-3" />
+            <Link className="h-6 w-6 text-[#22cda6] mr-3" />
             Your Referral Link
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-4">
-            <div className="bg-gem-dark rounded-lg p-4 border border-primary/30">
+            <div className="bg-[#0f1713] rounded-lg p-4 border border-[#22cda6]/30">
               <div className="flex items-center justify-between">
                 <div className="font-mono text-sm text-gray-300 truncate mr-4">
-                  {referralData.referralLink}
+                  {referralStats?.referralCode ? `${window.location.origin}?ref=${referralStats.referralCode}` : 'Loading...'}
                 </div>
                 <Button
                   onClick={copyReferralLink}
@@ -70,8 +123,9 @@ export default function ReferralPanel() {
                   className={`${
                     copied 
                       ? "bg-green-600 hover:bg-green-700" 
-                      : "bg-primary hover:bg-primary/90"
-                  } text-primary-foreground`}
+                      : "bg-[#22cda6] hover:bg-[#1fb898]"
+                  } text-black`}
+                  disabled={!referralStats?.referralCode}
                 >
                   {copied ? "Copied!" : <Copy className="h-4 w-4" />}
                 </Button>
@@ -80,20 +134,20 @@ export default function ReferralPanel() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary">
-                  {referralData.totalClicks}
+                <div className="text-2xl font-bold text-[#22cda6]">
+                  {referralStats?.totalReferrals || 0}
                 </div>
-                <div className="text-sm text-gray-400">Total Clicks</div>
+                <div className="text-sm text-gray-400">Total Referrals</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-green-400">
-                  {referralData.conversions}
+                  {referralStats?.totalEarned || 0}
                 </div>
-                <div className="text-sm text-gray-400">Conversions</div>
+                <div className="text-sm text-gray-400">Points Earned</div>
               </div>
             </div>
 
-            <div className="bg-gem-dark rounded-lg p-4">
+            <div className="bg-[#0f1713] rounded-lg p-4">
               <h4 className="font-medium mb-2">Referral Rewards</h4>
               <div className="text-sm text-gray-400 space-y-1">
                 <div>• 500 points per successful referral</div>
@@ -107,58 +161,60 @@ export default function ReferralPanel() {
 
       {/* Referral Stats and Recent Activity */}
       <div className="space-y-6">
-        <Card className="bg-gem-slate border-primary/20">
+        <Card className="bg-[#253935] border-[#22cda6]/20">
           <CardHeader>
             <CardTitle className="text-lg font-bold flex items-center">
-              <TrendingUp className="h-5 w-5 mr-2 text-primary" />
+              <TrendingUp className="h-5 w-5 mr-2 text-[#22cda6]" />
               Referral Performance
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex justify-between items-center">
               <span>This Week</span>
-              <Badge variant="outline" className="border-primary text-primary">
-                +{referralData.weeklyReferrals} referrals
+              <Badge variant="outline" className="border-[#22cda6] text-[#22cda6]">
+                +{referralStats?.weeklyReferrals || 0} referrals
               </Badge>
             </div>
             <div className="flex justify-between items-center">
               <span>This Month</span>
-              <Badge variant="outline" className="border-primary text-primary">
-                +{referralData.monthlyReferrals} referrals
+              <Badge variant="outline" className="border-[#22cda6] text-[#22cda6]">
+                +{referralStats?.monthlyReferrals || 0} referrals
               </Badge>
             </div>
             <div className="flex justify-between items-center">
               <span>Total Earned</span>
               <span className="text-green-400 font-medium">
-                {referralData.totalEarned.toLocaleString()} points
+                {(referralStats?.totalEarned || 0).toLocaleString()} points
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span>Conversion Rate</span>
-              <span className="text-primary font-medium">
-                {((referralData.conversions / referralData.totalClicks) * 100).toFixed(1)}%
+              <span>Total Referrals</span>
+              <span className="text-[#22cda6] font-medium">
+                {referralStats?.totalReferrals || 0}
               </span>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-gem-slate border-primary/20">
+        <Card className="bg-[#253935] border-[#22cda6]/20">
           <CardHeader>
             <CardTitle className="text-lg font-bold flex items-center">
-              <Users className="h-5 w-5 mr-2 text-primary" />
+              <Users className="h-5 w-5 mr-2 text-[#22cda6]" />
               Recent Referrals
             </CardTitle>
           </CardHeader>
           <CardContent>
-            {mockRecentReferrals.length > 0 ? (
+            {recentReferrals.length > 0 ? (
               <div className="space-y-3">
-                {mockRecentReferrals.map((referral) => (
+                {recentReferrals.map((referral: any) => (
                   <div key={referral.id} className="flex items-center justify-between py-2">
                     <div>
                       <div className="font-medium text-sm font-mono">
-                        {referral.walletAddress.slice(0, 6)}...{referral.walletAddress.slice(-4)}
+                        {referral.referee.walletAddress.slice(0, 6)}...{referral.referee.walletAddress.slice(-4)}
                       </div>
-                      <div className="text-xs text-gray-400">{referral.joinedAt}</div>
+                      <div className="text-xs text-gray-400">
+                        {new Date(referral.createdAt).toLocaleDateString()}
+                      </div>
                     </div>
                     <Badge variant="outline" className="border-green-400 text-green-400">
                       +{referral.pointsEarned} pts

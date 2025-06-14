@@ -170,6 +170,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get user referral stats
+  app.get("/api/referrals/stats/:walletAddress", async (req, res) => {
+    try {
+      const { walletAddress } = req.params;
+      const user = await storage.getUserByWalletAddress(walletAddress);
+      
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      const referralStats = await storage.getReferralStats(user.id);
+      res.json({
+        referralCode: user.referralCode,
+        totalEarned: referralStats.totalPoints,
+        totalReferrals: referralStats.count,
+        weeklyReferrals: 0,
+        monthlyReferrals: 0,
+      });
+    } catch (error) {
+      console.error("Error fetching referral stats:", error);
+      res.status(500).json({ error: "Failed to fetch referral stats" });
+    }
+  });
+
+  // Get user recent referrals
+  app.get("/api/referrals/recent/:walletAddress", async (req, res) => {
+    try {
+      const { walletAddress } = req.params;
+      const user = await storage.getUserByWalletAddress(walletAddress);
+      
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      const recentReferrals = await storage.getUserReferrals(user.id);
+      res.json(recentReferrals);
+    } catch (error) {
+      console.error("Error fetching recent referrals:", error);
+      res.status(500).json({ error: "Failed to fetch recent referrals" });
+    }
+  });
+
   const httpServer = createServer(app);
 
   // WebSocket setup for real-time updates
