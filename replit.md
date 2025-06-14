@@ -146,3 +146,9 @@ Changelog:
   - Deleted separate accolades page (/accolades route) and consolidated all accolade functionality into Activities page
   - Added dynamic icon rendering system with proper #22cda6 brand colors and earned/unearned states
   - Created tile-based grid layout showing all 22 achievements with icons, descriptions, unlock criteria, and point rewards
+- June 14, 2025: Accolade system corrections and user data updates
+  - Fixed illogical point allocations: Genesis Member (10 users, 5000pts), Gemlaunch Pioneer (50 users, 2000pts), Early Adopter (1000 users, 500pts)
+  - Replaced trading-focused accolades with launchpad-relevant ones: First Funder, Launch Supporter
+  - Added missing accolades for user #3: Genesis Member, Early Adopter (now has all 3 pioneer accolades)
+  - Updated user points to 7800 total reflecting proper accolade bonuses
+  - Fixed Accolades Earned display to show proper names and point values instead of outdated level system

@@ -239,13 +239,16 @@ export default function ActivitiesPanel() {
               <div className="space-y-3">
                 {userAccolades.map((accolade: any) => {
                   const formattedDate = new Date(accolade.unlockedAt || accolade.unlocked_at).toLocaleDateString();
+                  const accoladeData = ACCOLADES.find(a => a.id === accolade.accoladeType);
                   
                   return (
                     <div key={accolade.id} className="flex items-start space-x-3 py-2">
-                      <div className="text-2xl">🚀</div>
+                      <div className="text-2xl">
+                        {accoladeData ? renderIcon(accoladeData.icon, 'w-6 h-6') : renderIcon('Award', 'w-6 h-6')}
+                      </div>
                       <div className="flex-1">
                         <div className="text-sm font-medium text-[#22cda6]">
-                          Gemlaunch Pioneer
+                          {accoladeData?.name || 'Unknown Accolade'}
                         </div>
                         <div className="text-xs text-gray-400">{formattedDate}</div>
                       </div>
@@ -253,7 +256,7 @@ export default function ActivitiesPanel() {
                         variant="outline" 
                         className="text-sm font-medium text-[#22cda6] border-[#22cda6]"
                       >
-                        Level {accolade.level}
+                        +{accoladeData?.pointsBonus || 0} pts
                       </Badge>
                     </div>
                   );
