@@ -83,33 +83,18 @@ export default function Leaderboard() {
       </div>
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
-        {/* Top Bar */}
-        <div className="bg-card border-b border-border px-6 py-4">
+        {/* Top Bar - Network Selection & Wallet */}
+        <div className="bg-[#253935] border-b border-[#3d5c4d] px-6 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-4">
-              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30 rounded-full">
-                ? Not Connected
-              </Badge>
-              {/* Trending Bar */}
-              <div className="hidden md:flex items-center space-x-4 bg-card rounded-lg px-4 py-2 border border-border">
-                <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 bg-orange-500 rounded-full flex items-center justify-center">
-                    <span className="text-xs">🔥</span>
-                  </div>
-                  <span className="text-sm font-medium">Trending:</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  {['neom', 'ACC', 'BSC', 'BSC', 'BSC', 'BSC', 'KRO', 'Karen', 'NTT'].map((token, i) => (
-                    <span key={i} className="text-sm text-muted-foreground hover:text-primary cursor-pointer">
-                      {token}
-                    </span>
-                  ))}
-                </div>
+              <div className="bg-[#26d0ce] text-black px-4 py-2 rounded-full flex items-center space-x-2">
+                <div className="w-4 h-4 bg-green-500 rounded-full"></div>
+                <span className="text-sm font-medium">BSC Mainnet</span>
               </div>
             </div>
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-6">
-              Connecting...
-            </Button>
+            <div className="bg-[#0f1713] border border-[#3d5c4d] px-4 py-2 rounded-full">
+              <span className="text-[#26d0ce] text-sm font-mono">0x23d9b...7592</span>
+            </div>
           </div>
         </div>
 
