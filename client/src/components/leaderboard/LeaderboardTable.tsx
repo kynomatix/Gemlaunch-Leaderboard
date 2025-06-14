@@ -13,7 +13,7 @@ export default function LeaderboardTable() {
 
   if (isLoading) {
     return (
-      <Card className="bg-[#253935] border-[#26d0ce]/20">
+      <Card className="bg-[#253935] border-[#22cda6]/20">
         <CardContent className="p-6">
           <div className="text-center py-8 text-white">Loading leaderboard...</div>
         </CardContent>
@@ -194,7 +194,7 @@ export default function LeaderboardTable() {
                 
                 {/* Points & Rank */}
                 <div className="text-right">
-                  <div className="font-bold text-[#26d0ce] text-lg">
+                  <div className="font-bold text-[#22cda6] text-lg">
                     {user.totalPoints.toLocaleString()}
                   </div>
                   <div className="text-xs text-gray-400">
