@@ -139,9 +139,3 @@ Changelog:
   - Corrected Gemlaunch Pioneer distribution - awarded to first 2 users who joined before current user
   - Updated point totals to include all accolade bonuses (2500pts, 1575pts, 300pts)
   - Enhanced tooltips show specific accolade names, descriptions, and point values
-- June 14, 2025: Activities panel accolades integration
-  - Added "Available Accolades" section under Point Earning Activities showing all 22 accolade cards
-  - Added "Accolades Earned" section in right column under Recent Activity and Fair Distribution Notice
-  - Maintained original Point Earning Activities and Recent Activity sections with proper Gemlaunch styling
-  - Removed separate accolades page, consolidating all functionality into unified Activities interface
-  - Applied exact brand colors (#22cda6, #253935, #0f1713) throughout entire Activities panel
