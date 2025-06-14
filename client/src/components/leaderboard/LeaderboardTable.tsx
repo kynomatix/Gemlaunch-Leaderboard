@@ -244,25 +244,9 @@ export default function LeaderboardTable() {
                         {user.walletAddress.slice(0, 6)}...{user.walletAddress.slice(-4)}
                       </span>
                       
-                      {/* Accolades Inline - Icons Only with Tooltips */}
-                      <div className="flex items-center space-x-1">
-                        {user.accolades && user.accolades.length > 0 && user.accolades.map((accolade: any, idx: number) => (
-                          <TooltipProvider key={idx}>
-                            <Tooltip>
-                              <TooltipTrigger>
-                                <span className="text-lg hover:scale-110 transition-transform cursor-help">
-                                  {getAccoladeIcon(accolade.accoladeType)}
-                                </span>
-                              </TooltipTrigger>
-                              <TooltipContent className="bg-[#253935] border-[#22cda6] text-white max-w-xs">
-                                <p className="font-medium">{getAccoladeName(accolade.accoladeType)}</p>
-                                {accolade.level > 1 && (
-                                  <p className="text-sm text-[#22cda6]">Level {accolade.level}</p>
-                                )}
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        ))}
+                      {/* Accolades Display */}
+                      <div className="mt-1">
+                        {renderAccolades(user.accolades || [], user.id.toString())}
                       </div>
                     </div>
                     
@@ -307,12 +291,8 @@ export default function LeaderboardTable() {
                       : 'Connect Wallet to See Your Rank'
                     }
                     {currentUser?.accolades?.length > 0 && (
-                      <div className="ml-2 flex space-x-1">
-                        {currentUser.accolades.map((accolade: any, index: number) => (
-                          <span key={index} className="text-sm">
-                            {getAccoladeIcon(accolade.accoladeType)}
-                          </span>
-                        ))}
+                      <div className="ml-2">
+                        {renderAccolades(currentUser.accolades, currentUser.id.toString())}
                       </div>
                     )}
                   </div>
