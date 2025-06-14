@@ -6,14 +6,14 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Leaderboard from "@/pages/leaderboard";
 import Admin from "@/pages/admin";
-import Accolades from "@/pages/accolades";
+
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Leaderboard} />
       <Route path="/leaderboard" component={Leaderboard} />
-      <Route path="/accolades" component={Accolades} />
+
       <Route path="/admin" component={Admin} />
       <Route component={NotFound} />
     </Switch>

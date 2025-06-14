@@ -172,9 +172,9 @@ export default function ActivitiesPanel() {
     <div className="space-y-8">
       {/* First Row: Point Earning Activities and Sidebar */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      {/* Point Sources */}
-      <div className="lg:col-span-2">
-        <Card className="bg-gem-slate border-primary/20">
+        {/* Point Sources */}
+        <div className="lg:col-span-2">
+          <Card className="bg-gem-slate border-primary/20">
           <CardHeader>
             <CardTitle className="text-xl font-bold flex items-center">
               <TrendingUp className="h-6 w-6 text-primary mr-3" />

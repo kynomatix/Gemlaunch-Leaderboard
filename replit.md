@@ -139,3 +139,10 @@ Changelog:
   - Corrected Gemlaunch Pioneer distribution - awarded to first 2 users who joined before current user
   - Updated point totals to include all accolade bonuses (2500pts, 1575pts, 300pts)
   - Enhanced tooltips show specific accolade names, descriptions, and point values
+- June 14, 2025: Activities page reorganization and accolades integration
+  - Removed broken Available Accolades section with text-based icons from Activities page
+  - Integrated full-width Available Accolades section with working Lucide React icons below Point Earning Activities
+  - Maintained existing layout: Point Earning Activities, Accolades Earned, Recent Activity, Fair Distribution Notice
+  - Deleted separate accolades page (/accolades route) and consolidated all accolade functionality into Activities page
+  - Added dynamic icon rendering system with proper #22cda6 brand colors and earned/unearned states
+  - Created tile-based grid layout showing all 22 achievements with icons, descriptions, unlock criteria, and point rewards
