@@ -89,34 +89,39 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getLeaderboard(limit = 100): Promise<Array<User & { rank: number; accolades: Accolade[] }>> {
-    // First get the ranked users
+    // Get all users ordered by points
     const rankedUsers = await db
-      .select({
-        ...users,
-        rank: sql<number>`ROW_NUMBER() OVER (ORDER BY ${users.totalPoints} DESC)`.as('rank')
-      })
+      .select()
       .from(users)
       .orderBy(desc(users.totalPoints))
       .limit(limit);
     
-    // Then get accolades for each user
-    const userIds = rankedUsers.map(user => user.id);
-    const userAccolades = await db
-      .select()
-      .from(accolades)
-      .where(inArray(accolades.userId, userIds));
+    // Add rank numbers
+    const rankedUsersWithRank = rankedUsers.map((user, index) => ({
+      ...user,
+      rank: index + 1
+    }));
+    
+    // Get all accolades for these users
+    let userAccolades: Accolade[] = [];
+    
+    if (rankedUsers.length > 0) {
+      userAccolades = await db
+        .select()
+        .from(accolades);
+    }
     
     // Group accolades by user ID
-    const accoladesByUser = userAccolades.reduce((acc, accolade) => {
-      if (!acc[accolade.userId]) {
-        acc[accolade.userId] = [];
+    const accoladesByUser: Record<number, Accolade[]> = {};
+    userAccolades.forEach(accolade => {
+      if (!accoladesByUser[accolade.userId]) {
+        accoladesByUser[accolade.userId] = [];
       }
-      acc[accolade.userId].push(accolade);
-      return acc;
-    }, {} as Record<number, Accolade[]>);
+      accoladesByUser[accolade.userId].push(accolade);
+    });
     
     // Combine users with their accolades
-    return rankedUsers.map(user => ({
+    return rankedUsersWithRank.map(user => ({
       ...user,
       accolades: accoladesByUser[user.id] || []
     }));
