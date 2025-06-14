@@ -88,13 +88,13 @@ export default function Leaderboard() {
         <div className="bg-[#253935] border-b border-[#3d5c4d] px-6 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-4">
-              <div className="bg-[#26d0ce] text-black px-4 py-2 rounded-full flex items-center space-x-2">
+              <div className="bg-[#22cda6] text-black px-4 py-2 rounded-full flex items-center space-x-2">
                 <div className="w-4 h-4 bg-green-500 rounded-full"></div>
                 <span className="text-sm font-medium">BSC Mainnet</span>
               </div>
             </div>
             <div className="bg-[#0f1713] border border-[#3d5c4d] px-4 py-2 rounded-full">
-              <span className="text-[#26d0ce] text-sm font-mono">0x23d9b...7592</span>
+              <span className="text-[#22cda6] text-sm font-mono">0x23d9b...7592</span>
             </div>
           </div>
         </div>
@@ -103,7 +103,7 @@ export default function Leaderboard() {
         <div className="flex-1 p-6">
           <div className="max-w-7xl mx-auto space-y-6">
             {/* Welcome section with Gemmy */}
-            <div className="bg-gradient-to-r from-[#253935] to-[#1a2b21] rounded-lg p-6 border border-[#26d0ce]/20 mb-6">
+            <div className="bg-gradient-to-r from-[#253935] to-[#1a2b21] rounded-lg p-6 border border-[#22cda6]/20 mb-6">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
                   <div className="w-16 h-16 rounded-lg overflow-hidden">
@@ -114,7 +114,7 @@ export default function Leaderboard() {
                     />
                   </div>
                   <div>
-                    <h2 className="text-xl font-bold text-[#26d0ce] mb-1">
+                    <h2 className="text-xl font-bold text-[#22cda6] mb-1">
                       Welcome to GemLaunch Leaderboard!
                     </h2>
                     <p className="text-sm text-[#9ca3af]">
@@ -123,7 +123,7 @@ export default function Leaderboard() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-2xl font-bold text-[#26d0ce]">🚀</div>
+                  <div className="text-2xl font-bold text-[#22cda6]">🚀</div>
                   <div className="text-xs text-[#9ca3af]">Earn Points</div>
                 </div>
               </div>
@@ -132,15 +132,15 @@ export default function Leaderboard() {
             {/* Leaderboard Section */}
             <Tabs defaultValue="leaderboard" className="w-full">
               <TabsList className="grid w-full max-w-md grid-cols-3 bg-[#253935]">
-                <TabsTrigger value="leaderboard" className="data-[state=active]:bg-[#26d0ce] data-[state=active]:text-black">
+                <TabsTrigger value="leaderboard" className="data-[state=active]:bg-[#22cda6] data-[state=active]:text-black">
                   <Trophy className="h-4 w-4 mr-2" />
                   Leaderboard
                 </TabsTrigger>
-                <TabsTrigger value="referrals" className="data-[state=active]:bg-[#26d0ce] data-[state=active]:text-black">
+                <TabsTrigger value="referrals" className="data-[state=active]:bg-[#22cda6] data-[state=active]:text-black">
                   <Users className="h-4 w-4 mr-2" />
                   Referrals
                 </TabsTrigger>
-                <TabsTrigger value="activities" className="data-[state=active]:bg-[#26d0ce] data-[state=active]:text-black">
+                <TabsTrigger value="activities" className="data-[state=active]:bg-[#22cda6] data-[state=active]:text-black">
                   <TrendingUp className="h-4 w-4 mr-2" />
                   Activities
                 </TabsTrigger>
