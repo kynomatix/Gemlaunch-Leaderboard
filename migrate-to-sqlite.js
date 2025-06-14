@@ -1,6 +1,7 @@
 // Migration script to transfer data from PostgreSQL to SQLite
-const Database = require('better-sqlite3');
-const { Client } = require('pg');
+import Database from 'better-sqlite3';
+import pg from 'pg';
+const { Client } = pg;
 
 async function migrateData() {
   // Connect to PostgreSQL
