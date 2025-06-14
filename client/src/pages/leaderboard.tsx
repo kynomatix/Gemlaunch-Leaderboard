@@ -117,17 +117,17 @@ export default function Leaderboard() {
         <div className="flex-1 p-6">
           <div className="max-w-7xl mx-auto space-y-6">
             {/* Hero Section - Like Gemlaunch homepage */}
-            <div className="bg-[var(--gem-form-bg)] rounded-lg p-8 border border-[var(--gem-border)]">
+            <div className="bg-[#253935] rounded-lg p-8 border border-[#3d5c4d]">
               <div className="flex justify-between items-center">
                 <div>
                   <h1 className="text-3xl font-bold text-white mb-2">
                     Innovating the BNB ecosystem through the Gem Launchpad
                   </h1>
-                  <p className="text-[var(--gem-text-muted)]">
+                  <p className="text-[#9ca3af]">
                     By virtue of its efficient and user-friendly interface, Gemlaunch enables projects to create tokens presales.
                   </p>
                 </div>
-                <Button className="bg-[var(--gem-primary)] hover:bg-[var(--gem-primary-hover)] text-black font-medium px-8 py-2 rounded-lg">
+                <Button className="bg-[#26d0ce] hover:bg-[#1bb6b4] text-black font-medium px-8 py-2 rounded-lg">
                   Create
                 </Button>
               </div>
@@ -136,7 +136,7 @@ export default function Leaderboard() {
             {/* Main Content Grid - Three Column Layout */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Latest Pools */}
-              <div className="bg-[var(--gem-form-bg)] rounded-lg p-6 border border-[var(--gem-border)]">
+              <div className="bg-[#253935] rounded-lg p-6 border border-[#3d5c4d]">
                 <div className="flex items-center space-x-2 mb-4">
                   <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
                     <span className="text-xs">🔥</span>
@@ -149,17 +149,17 @@ export default function Leaderboard() {
                     { name: 'LaunchPad', token: 'ACC' },
                     { name: 'LaunchPad', token: 'SON' }
                   ].map((pool, i) => (
-                    <div key={i} className="flex items-center justify-between p-3 bg-[var(--gem-input-bg)] rounded-lg">
+                    <div key={i} className="flex items-center justify-between p-3 bg-[#0f1713] rounded-lg">
                       <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 bg-[var(--gem-primary)] rounded-full flex items-center justify-center">
+                        <div className="w-8 h-8 bg-[#26d0ce] rounded-full flex items-center justify-center">
                           <span className="text-xs font-bold text-black">{pool.token[0]}</span>
                         </div>
                         <div>
                           <div className="text-sm font-medium text-white">{pool.name}</div>
-                          <div className="text-xs text-[var(--gem-text-muted)]">{pool.token}</div>
+                          <div className="text-xs text-[#9ca3af]">{pool.token}</div>
                         </div>
                       </div>
-                      <button className="text-[var(--gem-primary)] text-sm hover:underline">
+                      <button className="text-[#26d0ce] text-sm hover:underline">
                         View
                       </button>
                     </div>
@@ -168,7 +168,7 @@ export default function Leaderboard() {
               </div>
 
               {/* Private Sales */}
-              <div className="rounded-lg p-6 border border-[var(--gem-border)] bg-[#253935]">
+              <div className="rounded-lg p-6 border border-[#3d5c4d] bg-[#253935]">
                 <div className="flex items-center space-x-2 mb-4">
                   <div className="w-5 h-5 bg-yellow-500 rounded-full flex items-center justify-center">
                     <span className="text-xs">💰</span>
@@ -176,17 +176,17 @@ export default function Leaderboard() {
                   <h3 className="text-lg font-semibold text-white">Private Sales</h3>
                 </div>
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-[var(--gem-input-bg)] rounded-lg">
+                  <div className="flex items-center justify-between p-3 bg-[#0f1713] rounded-lg">
                     <div className="flex items-center space-x-3">
-                      <div className="w-8 h-8 bg-[var(--gem-primary)] rounded-full flex items-center justify-center">
+                      <div className="w-8 h-8 bg-[#26d0ce] rounded-full flex items-center justify-center">
                         <span className="text-xs font-bold text-black">M</span>
                       </div>
                       <div>
                         <div className="text-sm font-medium text-white">mainnet priv...</div>
-                        <div className="text-xs text-[var(--gem-text-muted)]">BNB</div>
+                        <div className="text-xs text-[#9ca3af]">BNB</div>
                       </div>
                     </div>
-                    <button className="text-[var(--gem-primary)] text-sm hover:underline">
+                    <button className="text-[#26d0ce] text-sm hover:underline">
                       View
                     </button>
                   </div>
@@ -194,7 +194,7 @@ export default function Leaderboard() {
               </div>
 
               {/* New Tokens */}
-              <div className="bg-[var(--gem-form-bg)] rounded-lg p-6 border border-[var(--gem-border)]">
+              <div className="bg-[#253935] rounded-lg p-6 border border-[#3d5c4d]">
                 <div className="flex items-center space-x-2 mb-4">
                   <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
                     <span className="text-xs">⭐</span>
@@ -207,17 +207,17 @@ export default function Leaderboard() {
                     { name: 'AccessToken', token: 'ACC' },
                     { name: 'SonicToken', token: 'SON' }
                   ].map((token, i) => (
-                    <div key={i} className="flex items-center justify-between p-3 bg-[var(--gem-input-bg)] rounded-lg">
+                    <div key={i} className="flex items-center justify-between p-3 bg-[#0f1713] rounded-lg">
                       <div className="flex items-center space-x-3">
                         <div className="w-8 h-8 bg-gray-500 rounded-full flex items-center justify-center">
                           <span className="text-xs font-bold text-white">{token.token[0]}</span>
                         </div>
                         <div>
                           <div className="text-sm font-medium text-white">{token.name}</div>
-                          <div className="text-xs text-[var(--gem-text-muted)]">{token.token}</div>
+                          <div className="text-xs text-[#9ca3af]">{token.token}</div>
                         </div>
                       </div>
-                      <button className="text-[var(--gem-primary)] text-sm hover:underline">
+                      <button className="text-[#26d0ce] text-sm hover:underline">
                         View
                       </button>
                     </div>
@@ -228,35 +228,35 @@ export default function Leaderboard() {
 
             {/* Leaderboard Section */}
             <Tabs defaultValue="leaderboard" className="w-full">
-              <TabsList className="grid w-full max-w-md grid-cols-3 bg-[var(--gem-card)]">
-                <TabsTrigger value="leaderboard" className="data-[state=active]:bg-[var(--gem-primary)] data-[state=active]:text-black">
+              <TabsList className="grid w-full max-w-md grid-cols-3 bg-[#253935]">
+                <TabsTrigger value="leaderboard" className="data-[state=active]:bg-[#26d0ce] data-[state=active]:text-black">
                   <Trophy className="h-4 w-4 mr-2" />
                   Leaderboard
                 </TabsTrigger>
-                <TabsTrigger value="referrals" className="data-[state=active]:bg-[var(--gem-primary)] data-[state=active]:text-black">
+                <TabsTrigger value="referrals" className="data-[state=active]:bg-[#26d0ce] data-[state=active]:text-black">
                   <Users className="h-4 w-4 mr-2" />
                   Referrals
                 </TabsTrigger>
-                <TabsTrigger value="activities" className="data-[state=active]:bg-[var(--gem-primary)] data-[state=active]:text-black">
+                <TabsTrigger value="activities" className="data-[state=active]:bg-[#26d0ce] data-[state=active]:text-black">
                   <TrendingUp className="h-4 w-4 mr-2" />
                   Activities
                 </TabsTrigger>
               </TabsList>
 
               <TabsContent value="leaderboard" className="mt-6">
-                <div className="bg-[var(--gem-form-bg)] rounded-lg p-6 border border-[var(--gem-border)]">
+                <div className="bg-[#253935] rounded-lg p-6 border border-[#3d5c4d]">
                   <LeaderboardTable />
                 </div>
               </TabsContent>
 
               <TabsContent value="referrals" className="mt-6">
-                <div className="rounded-lg p-6 border border-[var(--gem-border)] bg-[#253935]">
+                <div className="rounded-lg p-6 border border-[#3d5c4d] bg-[#253935]">
                   <ReferralPanel />
                 </div>
               </TabsContent>
 
               <TabsContent value="activities" className="mt-6">
-                <div className="bg-[var(--gem-form-bg)] rounded-lg p-6 border border-[var(--gem-border)]">
+                <div className="bg-[#253935] rounded-lg p-6 border border-[#3d5c4d]">
                   <ActivitiesPanel />
                 </div>
               </TabsContent>
@@ -264,17 +264,17 @@ export default function Leaderboard() {
 
             {/* Bottom Statistics Cards - Like Gemlaunch */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-[var(--gem-form-bg)] rounded-lg p-6 border border-[var(--gem-border)] text-center">
-                <h3 className="text-[var(--gem-text-muted)] text-sm font-medium mb-2">Funded Projects</h3>
-                <p className="text-4xl font-bold text-[var(--gem-primary)]">5</p>
+              <div className="bg-[#253935] rounded-lg p-6 border border-[#3d5c4d] text-center">
+                <h3 className="text-[#9ca3af] text-sm font-medium mb-2">Funded Projects</h3>
+                <p className="text-4xl font-bold text-[#26d0ce]">5</p>
               </div>
-              <div className="bg-[var(--gem-form-bg)] rounded-lg p-6 border border-[var(--gem-border)] text-center">
-                <h3 className="text-[var(--gem-text-muted)] text-sm font-medium mb-2">Raised Contribution</h3>
-                <p className="text-4xl font-bold text-[var(--gem-primary)]">$39.76</p>
+              <div className="bg-[#253935] rounded-lg p-6 border border-[#3d5c4d] text-center">
+                <h3 className="text-[#9ca3af] text-sm font-medium mb-2">Raised Contribution</h3>
+                <p className="text-4xl font-bold text-[#26d0ce]">$39.76</p>
               </div>
-              <div className="bg-[var(--gem-form-bg)] rounded-lg p-6 border border-[var(--gem-border)] text-center">
-                <h3 className="text-[var(--gem-text-muted)] text-sm font-medium mb-2">Unique Participants</h3>
-                <p className="text-4xl font-bold text-[var(--gem-primary)]">2</p>
+              <div className="bg-[#253935] rounded-lg p-6 border border-[#3d5c4d] text-center">
+                <h3 className="text-[#9ca3af] text-sm font-medium mb-2">Unique Participants</h3>
+                <p className="text-4xl font-bold text-[#26d0ce]">2</p>
               </div>
             </div>
           </div>
