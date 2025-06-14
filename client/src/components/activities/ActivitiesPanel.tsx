@@ -96,7 +96,7 @@ export default function ActivitiesPanel() {
       type: "volume_contribution",
       title: "Volume Contribution",
       points: 1,
-      description: "Earn points based on trading volume",
+      description: "Earn points based on funding volume",
       icon: DollarSign,
       color: "primary",
       suffix: "pt / $1"
