@@ -3,11 +3,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Button } from "@/components/ui/button";
-import { Crown, Trophy, Medal, User, Clock, ChevronDown, ChevronUp } from "lucide-react";
+import { Crown, Trophy, Medal, User, Clock } from "lucide-react";
 import { web3Service } from "@/lib/web3";
 import { ACCOLADES } from "@shared/accolades";
-import { useState } from "react";
 
 export default function LeaderboardTable() {
   const { data: leaderboard, isLoading } = useQuery({
@@ -18,8 +16,9 @@ export default function LeaderboardTable() {
   const connectedWallet = web3Service.getAccount();
   
   // Find current user in leaderboard data
+  const users = Array.isArray(leaderboard) ? leaderboard : [];
   const currentUser = connectedWallet 
-    ? leaderboard?.find((user: any) => user.walletAddress.toLowerCase() === connectedWallet.toLowerCase())
+    ? users.find((user: any) => user.walletAddress.toLowerCase() === connectedWallet.toLowerCase())
     : null;
 
   if (isLoading) {
@@ -32,7 +31,6 @@ export default function LeaderboardTable() {
     );
   }
 
-  const users = Array.isArray(leaderboard) ? leaderboard : [];
   const topThree = users.slice(0, 3);
   const remaining = users.slice(3);
 
@@ -53,31 +51,26 @@ export default function LeaderboardTable() {
     };
   };
 
-  const toggleAccolades = (userId: string) => {
-    setExpandedAccolades(prev => ({
-      ...prev,
-      [userId]: !prev[userId]
-    }));
-  };
+
 
   const renderAccolades = (accolades: any[]) => {
     if (!accolades || accolades.length === 0) {
       return <span className="text-xs text-gray-400">No accolades yet</span>;
     }
 
-    // Show first 3 accolades as icons, then count for remaining
-    const displayedAccolades = accolades.slice(0, 3);
-    const remainingCount = accolades.length - 3;
+    // Show first 2 accolades as icons inline, then a badge count for the rest
+    const visibleAccolades = accolades.slice(0, 2);
+    const hiddenCount = accolades.length - 2;
 
     return (
-      <div className="flex items-center gap-1 flex-wrap">
-        {displayedAccolades.map((accolade: any, index: number) => {
+      <div className="flex items-center gap-1">
+        {visibleAccolades.map((accolade: any, index: number) => {
           const accoladeData = getAccoladeData(accolade.accoladeType);
           return (
             <TooltipProvider key={index}>
               <Tooltip>
                 <TooltipTrigger>
-                  <span className="text-base hover:scale-110 transition-transform cursor-help">
+                  <span className="text-sm hover:scale-110 transition-transform cursor-help">
                     {accoladeData.icon}
                   </span>
                 </TooltipTrigger>
@@ -92,19 +85,27 @@ export default function LeaderboardTable() {
             </TooltipProvider>
           );
         })}
-        {remainingCount > 0 && (
+        {hiddenCount > 0 && (
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
-                <Badge variant="outline" className="text-xs px-1 py-0 border-[#22cda6] text-[#22cda6] bg-[#22cda6]/10">
-                  +{remainingCount}
+                <Badge variant="outline" className="text-xs px-1 py-0 h-5 border-[#22cda6]/50 text-[#22cda6] bg-[#22cda6]/5">
+                  +{hiddenCount}
                 </Badge>
               </TooltipTrigger>
               <TooltipContent className="max-w-xs bg-[#253935] border-[#22cda6]">
                 <div className="text-sm text-white">
-                  <div className="font-medium">{remainingCount} more accolade{remainingCount !== 1 ? 's' : ''}</div>
-                  <div className="text-xs text-gray-400 mt-1">
-                    {accolades.slice(3).map(a => getAccoladeData(a.accoladeType).name).join(', ')}
+                  <div className="font-medium">Additional Accolades:</div>
+                  <div className="text-xs text-gray-400 mt-1 space-y-1">
+                    {accolades.slice(2).map((accolade, idx) => {
+                      const data = getAccoladeData(accolade.accoladeType);
+                      return (
+                        <div key={idx} className="flex items-center gap-1">
+                          <span>{data.icon}</span>
+                          <span>{data.name}</span>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </TooltipContent>
@@ -231,7 +232,7 @@ export default function LeaderboardTable() {
                       
                       {/* Accolades Display */}
                       <div className="mt-1">
-                        {renderAccolades(user.accolades || [], user.id.toString())}
+                        {renderAccolades(user.accolades || [])}
                       </div>
                     </div>
                     
@@ -277,7 +278,7 @@ export default function LeaderboardTable() {
                     }
                     {currentUser?.accolades?.length > 0 && (
                       <div className="ml-2">
-                        {renderAccolades(currentUser.accolades, currentUser.id.toString())}
+                        {renderAccolades(currentUser.accolades)}
                       </div>
                     )}
                   </div>
