@@ -17,8 +17,9 @@ import {
   ChevronUp,
   Trophy
 } from "lucide-react";
+import * as LucideIcons from "lucide-react";
 import { web3Service } from "@/lib/web3";
-import { ACCOLADES } from "@shared/accolades";
+import { ACCOLADES, RARITY_COLORS } from "@shared/accolades";
 
 export default function ActivitiesPanel() {
   const [showAntiSybilNotice, setShowAntiSybilNotice] = useState(false);
@@ -47,6 +48,16 @@ export default function ActivitiesPanel() {
   const pointActivities = Array.isArray(recentActivities) 
     ? recentActivities.filter((activity: any) => activity.activityType !== 'accolade_earned')
     : [];
+
+  const earnedAccoladeIds = new Set((userAccolades || []).map((a: any) => a.accoladeType));
+
+  const renderIcon = (iconName: string, className?: string) => {
+    const IconComponent = (LucideIcons as any)[iconName];
+    if (IconComponent) {
+      return <IconComponent className={className || "w-5 h-5"} />;
+    }
+    return <LucideIcons.Award className={className || "w-5 h-5"} />;
+  };
 
   const activityTypes = [
     {
@@ -158,7 +169,9 @@ export default function ActivitiesPanel() {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div className="space-y-8">
+      {/* First Row: Point Earning Activities and Sidebar */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
       {/* Point Sources */}
       <div className="lg:col-span-2">
         <Card className="bg-gem-slate border-primary/20">
@@ -207,51 +220,6 @@ export default function ActivitiesPanel() {
                 </div>
               );
             })}
-          </CardContent>
-        </Card>
-
-        {/* Available Accolades Section */}
-        <Card className="bg-[#253935]/80 border border-[#22cda6]/30">
-          <CardHeader>
-            <CardTitle className="text-lg font-bold flex items-center text-[#22cda6]">
-              <Trophy className="h-5 w-5 mr-2" />
-              Available Accolades
-            </CardTitle>
-            <p className="text-sm text-gray-400">Achievements you can unlock with your activities</p>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {ACCOLADES.map((accolade) => (
-                <div key={accolade.id} className="flex items-center justify-between p-3 rounded-lg bg-[#0f1713]/50 border border-[#22cda6]/20">
-                  <div className="flex items-center space-x-3">
-                    <div className="text-xl" title={accolade.name}>
-                      {accolade.icon}
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2">
-                        <h4 className="text-sm font-medium text-white">{accolade.name}</h4>
-                        <span className={`px-2 py-1 text-xs rounded-full ${
-                          accolade.rarity === 'legendary' ? 'bg-orange-500/20 text-orange-300' :
-                          accolade.rarity === 'epic' ? 'bg-purple-500/20 text-purple-300' :
-                          accolade.rarity === 'rare' ? 'bg-blue-500/20 text-blue-300' :
-                          accolade.rarity === 'uncommon' ? 'bg-green-500/20 text-green-300' :
-                          'bg-gray-500/20 text-gray-300'
-                        }`}>
-                          {accolade.rarity}
-                        </span>
-                      </div>
-                      <p className="text-xs text-gray-400 mt-1">{accolade.criteria}</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-sm font-medium text-[#22cda6]">+{accolade.pointsBonus} pts</div>
-                    {accolade.multiplier && (
-                      <div className="text-xs text-yellow-400">{accolade.multiplier}x multiplier</div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
           </CardContent>
         </Card>
       </div>
@@ -382,8 +350,102 @@ export default function ActivitiesPanel() {
             </CardContent>
           )}
         </Card>
+      </div>
+      </div>
 
-
+      {/* Full Width Available Accolades Section */}
+      <div className="w-full">
+        <Card className="bg-[#253935] border-[#22cda6]/30">
+          <CardHeader>
+            <CardTitle className="text-xl font-bold flex items-center text-white">
+              {renderIcon('Trophy', 'h-6 w-6 mr-3 text-[#22cda6]')}
+              Available Accolades
+            </CardTitle>
+            <p className="text-gray-400 text-sm">
+              Unlock achievements by participating in the Gemlaunch ecosystem. Each accolade grants bonus points and special recognition.
+            </p>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {ACCOLADES.map((accolade) => {
+                const isEarned = earnedAccoladeIds.has(accolade.id);
+                const rarityColor = RARITY_COLORS[accolade.rarity];
+                
+                return (
+                  <Card 
+                    key={accolade.id}
+                    className={`bg-[#0f1713] border transition-all hover:border-opacity-60 ${
+                      isEarned 
+                        ? 'border-[#22cda6] shadow-lg shadow-[#22cda6]/20' 
+                        : 'border-[#3d5c4d] opacity-75'
+                    }`}
+                  >
+                    <CardHeader className="pb-3">
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-center space-x-3">
+                          <div className={`text-2xl ${isEarned ? '' : 'grayscale opacity-50'}`}>
+                            {renderIcon(accolade.icon, 'w-8 h-8')}
+                          </div>
+                          <div>
+                            <CardTitle className={`text-lg ${isEarned ? 'text-[#22cda6]' : 'text-gray-300'}`}>
+                              {accolade.name}
+                            </CardTitle>
+                            <div className="flex items-center space-x-2 mt-1">
+                              <Badge 
+                                variant="outline" 
+                                style={{ 
+                                  borderColor: rarityColor,
+                                  color: rarityColor 
+                                }}
+                                className="text-xs"
+                              >
+                                {accolade.rarity}
+                              </Badge>
+                              <Badge variant="outline" className="text-xs border-[#22cda6] text-[#22cda6]">
+                                {accolade.category}
+                              </Badge>
+                            </div>
+                          </div>
+                        </div>
+                        {isEarned && (
+                          <div className="text-[#22cda6]">
+                            {renderIcon('Crown', 'h-5 w-5')}
+                          </div>
+                        )}
+                      </div>
+                    </CardHeader>
+                    <CardContent className="pt-0">
+                      <p className="text-sm text-gray-400 mb-3">
+                        {accolade.description}
+                      </p>
+                      
+                      <div className="space-y-2">
+                        <div className="text-xs text-gray-500 font-medium">
+                          HOW TO UNLOCK:
+                        </div>
+                        <div className="text-sm text-gray-300">
+                          {accolade.criteria}
+                        </div>
+                        
+                        <div className="flex items-center justify-between pt-2 border-t border-gray-700">
+                          <div className="text-sm">
+                            <span className="text-gray-400">Reward: </span>
+                            <span className="text-[#22cda6] font-medium">+{accolade.pointsBonus} pts</span>
+                          </div>
+                          {accolade.multiplier && (
+                            <div className="text-sm">
+                              <span className="text-yellow-400">{accolade.multiplier}x multiplier</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
