@@ -239,6 +239,25 @@ export default function Leaderboard() {
               </div>
             </div>
 
+            {/* Anti-Sybil Notice */}
+            <div className="bg-[#253935]/80 border border-[#22cda6]/30 rounded-lg p-6 mb-6">
+              <div className="flex items-start space-x-4">
+                <Shield className="h-6 w-6 text-[#22cda6] mt-1 flex-shrink-0" />
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-[#22cda6] mb-2">Fair Distribution Commitment</h3>
+                  <p className="text-[#9ca3af] text-sm leading-relaxed mb-3">
+                    To ensure equitable distribution and maintain program integrity, comprehensive anti-sybil analysis will be conducted 
+                    at the conclusion of the airdrop qualification period. Participants engaging in coordinated multi-account activities, 
+                    artificial transaction patterns, or other forms of ecosystem manipulation will be identified and excluded from final 
+                    reward distributions.
+                  </p>
+                  <p className="text-[#22cda6] text-sm font-medium">
+                    Authentic participation and genuine community engagement are the foundation of GemLaunch's reward ecosystem.
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {/* Leaderboard Section */}
             <Tabs defaultValue="leaderboard" className="w-full">
               <TabsList className="grid w-full max-w-md grid-cols-3 bg-[#253935]">
