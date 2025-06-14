@@ -3,20 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { 
-  Rocket, 
-  Flame, 
-  Crown, 
-  Gavel, 
-  DollarSign, 
-  Users, 
-  TrendingUp,
-  Activity,
-  Shield,
-  ChevronDown,
-  ChevronUp,
-  Trophy
-} from "lucide-react";
+import * as LucideIcons from "lucide-react";
 import { web3Service } from "@/lib/web3";
 import { ACCOLADES } from "@shared/accolades";
 
@@ -24,6 +11,15 @@ export default function ActivitiesPanel() {
   const [showAntiSybilNotice, setShowAntiSybilNotice] = useState(false);
   
   const connectedWallet = web3Service.getAccount();
+
+  // Dynamic icon renderer for consistent icon display
+  const renderIcon = (iconName: string, className?: string) => {
+    const IconComponent = (LucideIcons as any)[iconName];
+    if (IconComponent) {
+      return <IconComponent className={className || "w-5 h-5"} />;
+    }
+    return <LucideIcons.Award className={className || "w-5 h-5"} />;
+  };
   
   const { data: recentActivities } = useQuery({
     queryKey: ["/api/activities/recent", connectedWallet],
@@ -48,244 +44,169 @@ export default function ActivitiesPanel() {
     ? recentActivities.filter((activity: any) => activity.activityType !== 'accolade_earned')
     : [];
 
+  const earnedAccolades = Array.isArray(userAccolades) ? userAccolades : [];
+
   const activityTypes = [
     {
       type: "token_creation",
       title: "Token Creation",
       points: 100,
       description: "Create a new token on Gemlaunch",
-      icon: Rocket,
-      color: "primary"
+      icon: "Rocket"
     },
     {
       type: "fair_launch",
       title: "Fair Launch",
       points: 500,
       description: "Launch a fair launch campaign",
-      icon: Flame,
-      color: "green"
+      icon: "Flame"
     },
     {
-      type: "presale",
+      type: "presale_launch",
       title: "Presale Launch",
       points: 750,
       description: "Create and run a presale",
-      icon: Crown,
-      color: "yellow"
+      icon: "Crown"
     },
     {
       type: "dutch_auction",
       title: "Dutch Auction",
       points: 1000,
       description: "Host a Dutch auction",
-      icon: Gavel,
-      color: "purple"
+      icon: "Gavel"
     },
     {
       type: "volume_contribution",
       title: "Volume Contribution",
       points: 1,
+      suffix: "pt / $1",
       description: "Earn points based on trading volume",
-      icon: DollarSign,
-      color: "primary",
-      suffix: "pt / $1"
+      icon: "DollarSign"
     },
     {
       type: "referral",
       title: "Successful Referral",
       points: 500,
       description: "Each user who joins via your link",
-      icon: Users,
-      color: "blue"
+      icon: "Users"
     },
     {
       type: "welcome_bonus",
       title: "Welcome Bonus",
       points: 1000,
       description: "First-time registration bonus",
-      icon: Crown,
-      color: "primary"
+      icon: "Crown"
     },
     {
       type: "accolade_earned",
       title: "Accolade Earned",
       points: 0,
       description: "Achievement unlocked",
-      icon: Crown,
-      color: "yellow"
+      icon: "Crown"
     }
   ];
 
-  const mockRecentActivities = [
-    {
-      id: 1,
-      activityType: "token_creation",
-      points: 100,
-      createdAt: "2024-01-15T10:30:00Z",
-      user: { username: "You" }
-    },
-    {
-      id: 2,
-      activityType: "volume_contribution",
-      points: 150,
-      createdAt: "2024-01-15T09:15:00Z",
-      user: { username: "You" }
-    },
-    {
-      id: 3,
-      activityType: "referral",
-      points: 500,
-      createdAt: "2024-01-14T16:45:00Z",
-      user: { username: "You" }
-    }
-  ];
-
-  const getActivityIcon = (type: string) => {
-    const activity = activityTypes.find(a => a.type === type);
-    return activity?.icon || Activity;
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString();
   };
 
-  const getActivityColor = (type: string) => {
-    const activity = activityTypes.find(a => a.type === type);
-    const colorMap = {
-      primary: "text-primary",
-      green: "text-green-400",
-      yellow: "text-yellow-400",
-      purple: "text-purple-400",
-      blue: "text-blue-400"
-    };
-    return colorMap[activity?.color as keyof typeof colorMap] || "text-primary";
+  const getAccoladeInfo = (accoladeType: string) => {
+    const accolade = ACCOLADES.find(a => a.id === accoladeType);
+    return accolade || { name: "Unknown Accolade", icon: "Award" };
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      {/* Point Sources */}
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      {/* Left Column - Point Earning Activities */}
       <div className="lg:col-span-2">
-        <Card className="bg-gem-slate border-primary/20">
+        <Card className="bg-[#253935] border-[#3d5c4d]">
           <CardHeader>
-            <CardTitle className="text-xl font-bold flex items-center">
-              <TrendingUp className="h-6 w-6 text-primary mr-3" />
+            <CardTitle className="text-xl font-bold text-white flex items-center">
+              {renderIcon('TrendingUp', 'h-6 w-6 text-[#22cda6] mr-3')}
               Point Earning Activities
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            {activityTypes.map((activity) => {
-              const IconComponent = activity.icon;
-              
-              return (
-                <div
-                  key={activity.type}
-                  className={`bg-gem-dark rounded-lg p-4 border transition-all hover:border-opacity-60 ${
-                    activity.color === "primary" ? "border-primary/20" :
-                    activity.color === "green" ? "border-green-400/20" :
-                    activity.color === "yellow" ? "border-yellow-400/20" :
-                    activity.color === "purple" ? "border-purple-400/20" :
-                    activity.color === "blue" ? "border-blue-400/20" :
-                    "border-primary/20"
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center">
-                      <IconComponent className={`h-5 w-5 mr-3 ${getActivityColor(activity.type)}`} />
-                      <span className="font-medium">{activity.title}</span>
+          <CardContent className="space-y-3">
+            {activityTypes.map((activity) => (
+              <div
+                key={activity.type}
+                className="bg-[#0f1713] rounded-lg p-4 border border-[#3d5c4d] hover:border-[#22cda6]/30 transition-all"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    {renderIcon(activity.icon, 'h-5 w-5 mr-3 text-[#22cda6]')}
+                    <div>
+                      <span className="font-medium text-white">{activity.title}</span>
+                      <p className="text-sm text-gray-400 mt-1">{activity.description}</p>
                     </div>
-                    <Badge
-                      variant="outline"
-                      className={`font-bold ${
-                        activity.color === "primary" ? "border-primary text-primary" :
-                        activity.color === "green" ? "border-green-400 text-green-400" :
-                        activity.color === "yellow" ? "border-yellow-400 text-yellow-400" :
-                        activity.color === "purple" ? "border-purple-400 text-purple-400" :
-                        activity.color === "blue" ? "border-blue-400 text-blue-400" :
-                        "border-primary text-primary"
-                      }`}
-                    >
-                      {activity.points} {activity.suffix || "pts"}
-                    </Badge>
                   </div>
-                  <div className="text-sm text-gray-400">{activity.description}</div>
+                  <Badge
+                    variant="outline"
+                    className="border-[#22cda6] text-[#22cda6] font-bold"
+                  >
+                    {activity.points} {activity.suffix || "pts"}
+                  </Badge>
                 </div>
-              );
-            })}
-          </CardContent>
-        </Card>
+              </div>
+            ))}
 
-        {/* Available Accolades Section */}
-        <Card className="bg-[#253935]/80 border border-[#22cda6]/30">
-          <CardHeader>
-            <CardTitle className="text-lg font-bold flex items-center text-[#22cda6]">
-              <Trophy className="h-5 w-5 mr-2" />
-              Available Accolades
-            </CardTitle>
-            <p className="text-sm text-gray-400">Achievements you can unlock with your activities</p>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {ACCOLADES.map((accolade) => (
-                <div key={accolade.id} className="flex items-center justify-between p-3 rounded-lg bg-[#0f1713]/50 border border-[#22cda6]/20">
-                  <div className="flex items-center space-x-3">
-                    <div className="text-xl" title={accolade.name}>
-                      {accolade.icon}
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2">
-                        <h4 className="text-sm font-medium text-white">{accolade.name}</h4>
-                        <span className={`px-2 py-1 text-xs rounded-full ${
-                          accolade.rarity === 'legendary' ? 'bg-orange-500/20 text-orange-300' :
-                          accolade.rarity === 'epic' ? 'bg-purple-500/20 text-purple-300' :
-                          accolade.rarity === 'rare' ? 'bg-blue-500/20 text-blue-300' :
-                          accolade.rarity === 'uncommon' ? 'bg-green-500/20 text-green-300' :
-                          'bg-gray-500/20 text-gray-300'
-                        }`}>
-                          {accolade.rarity}
-                        </span>
-                      </div>
-                      <p className="text-xs text-gray-400 mt-1">{accolade.criteria}</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-sm font-medium text-[#22cda6]">+{accolade.pointsBonus} pts</div>
-                    {accolade.multiplier && (
-                      <div className="text-xs text-yellow-400">{accolade.multiplier}x multiplier</div>
-                    )}
-                  </div>
+            {/* Anti-Sybil Notice */}
+            <div className="mt-6">
+              <Button
+                variant="outline"
+                onClick={() => setShowAntiSybilNotice(!showAntiSybilNotice)}
+                className="w-full bg-[#0f1713] border-[#3d5c4d] text-gray-300 hover:bg-[#253935] hover:border-[#22cda6]/30 flex items-center justify-between"
+              >
+                <div className="flex items-center">
+                  {renderIcon('Shield', 'h-4 w-4 mr-2 text-[#22cda6]')}
+                  <span>Fair Distribution Notice</span>
                 </div>
-              ))}
+                {showAntiSybilNotice ? renderIcon('ChevronUp', 'h-4 w-4') : renderIcon('ChevronDown', 'h-4 w-4')}
+              </Button>
+              
+              {showAntiSybilNotice && (
+                <div className="mt-3 p-4 bg-[#0f1713] border border-[#3d5c4d] rounded-lg">
+                  <p className="text-sm text-gray-300 leading-relaxed">
+                    To ensure fair distribution, our system employs advanced anti-sybil measures. 
+                    Activities from suspicious accounts may be flagged and excluded from airdrop eligibility. 
+                    Play fair, earn genuine rewards.
+                  </p>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Sidebar */}
+      {/* Right Column */}
       <div className="space-y-6">
         {/* Accolades Earned */}
-        <Card className="bg-gem-slate border-primary/20">
+        <Card className="bg-[#253935] border-[#3d5c4d]">
           <CardHeader>
-            <CardTitle className="text-lg font-bold flex items-center">
-              <Crown className="h-5 w-5 mr-2 text-[#22cda6]" />
+            <CardTitle className="text-lg font-bold text-white flex items-center">
+              {renderIcon('Crown', 'h-5 w-5 text-[#22cda6] mr-2')}
               Accolades Earned
             </CardTitle>
           </CardHeader>
           <CardContent>
-            {userAccolades && userAccolades.length > 0 ? (
+            {earnedAccolades.length > 0 ? (
               <div className="space-y-3">
-                {userAccolades.map((accolade: any) => {
-                  const formattedDate = new Date(accolade.unlockedAt || accolade.unlocked_at).toLocaleDateString();
-                  
+                {earnedAccolades.map((userAccolade: any) => {
+                  const accolade = getAccoladeInfo(userAccolade.accoladeType);
                   return (
-                    <div key={accolade.id} className="flex items-start space-x-3 py-2">
-                      <div className="text-2xl">🚀</div>
-                      <div className="flex-1">
-                        <div className="text-sm font-medium text-[#22cda6]">
-                          Gemlaunch Pioneer
+                    <div
+                      key={userAccolade.id}
+                      className="bg-[#0f1713] rounded-lg p-3 border border-[#22cda6]/30 flex items-center"
+                    >
+                      <div className="flex items-center flex-1">
+                        {renderIcon(accolade.icon, 'h-5 w-5 mr-3 text-[#22cda6]')}
+                        <div>
+                          <span className="font-medium text-[#22cda6] text-sm">{accolade.name}</span>
+                          <p className="text-xs text-gray-400">{formatDate(userAccolade.earnedAt)}</p>
                         </div>
-                        <div className="text-xs text-gray-400">{formattedDate}</div>
                       </div>
-                      <Badge 
-                        variant="outline" 
-                        className="text-sm font-medium text-[#22cda6] border-[#22cda6]"
-                      >
-                        Level {accolade.level}
+                      <Badge className="bg-[#22cda6]/10 text-[#22cda6] border-[#22cda6] text-xs">
+                        Level 1
                       </Badge>
                     </div>
                   );
@@ -293,97 +214,55 @@ export default function ActivitiesPanel() {
               </div>
             ) : (
               <div className="text-center py-6 text-gray-400">
-                <Crown className="h-10 w-10 mx-auto mb-2 opacity-50" />
-                <p className="text-sm">No accolades yet</p>
-                <p className="text-xs mt-1">Achieve milestones to earn recognition!</p>
+                <div className="mb-2">{renderIcon('Crown', 'h-8 w-8 mx-auto opacity-50')}</div>
+                <p className="text-sm">No accolades earned yet</p>
+                <p className="text-xs mt-1">Complete activities to unlock achievements</p>
               </div>
             )}
           </CardContent>
         </Card>
 
         {/* Recent Activity */}
-        <Card className="bg-gem-slate border-primary/20">
+        <Card className="bg-[#253935] border-[#3d5c4d]">
           <CardHeader>
-            <CardTitle className="text-lg font-bold flex items-center">
-              <Activity className="h-5 w-5 mr-2 text-primary" />
+            <CardTitle className="text-lg font-bold text-white flex items-center">
+              {renderIcon('Activity', 'h-5 w-5 text-[#22cda6] mr-2')}
               Recent Activity
             </CardTitle>
           </CardHeader>
           <CardContent>
-            {pointActivities && pointActivities.length > 0 ? (
+            {pointActivities.length > 0 ? (
               <div className="space-y-3">
-                {pointActivities.map((activity) => {
-                  const IconComponent = getActivityIcon(activity.activityType);
-                  const formattedTime = new Date(activity.createdAt).toLocaleDateString();
-                  
+                {pointActivities.slice(0, 5).map((activity: any) => {
+                  const activityType = activityTypes.find(t => t.type === activity.activityType);
                   return (
-                    <div key={activity.id} className="flex items-start space-x-3 py-2">
-                      <div className={`w-2 h-2 rounded-full mt-2 ${
-                        getActivityColor(activity.activityType).replace('text-', 'bg-')
-                      }`} />
-                      <div className="flex-1">
-                        <div className="text-sm capitalize">
-                          {activity.activityType.replace('_', ' ')}
+                    <div
+                      key={activity.id}
+                      className="bg-[#0f1713] rounded-lg p-3 border border-[#3d5c4d] flex items-center justify-between"
+                    >
+                      <div className="flex items-center">
+                        {renderIcon(activityType?.icon || 'Activity', 'h-4 w-4 mr-3 text-[#22cda6]')}
+                        <div>
+                          <span className="font-medium text-white text-sm">
+                            {activityType?.title || 'Activity'}
+                          </span>
+                          <p className="text-xs text-gray-400">{formatDate(activity.createdAt)}</p>
                         </div>
-                        <div className="text-xs text-gray-400">{formattedTime}</div>
                       </div>
-                      <Badge 
-                        variant="outline" 
-                        className={`text-sm font-medium ${getActivityColor(activity.activityType)} border-current`}
-                      >
-                        +{activity.points}
-                      </Badge>
+                      <span className="text-[#22cda6] font-bold text-sm">+{activity.points}</span>
                     </div>
                   );
                 })}
               </div>
             ) : (
-              <div className="text-center py-8 text-gray-400">
-                <Activity className="h-12 w-12 mx-auto mb-3 opacity-50" />
-                <p className="text-sm">No point activities yet</p>
-                <p className="text-xs mt-1">Start using Gemlaunch to earn points!</p>
+              <div className="text-center py-6 text-gray-400">
+                <div className="mb-2">{renderIcon('Activity', 'h-8 w-8 mx-auto opacity-50')}</div>
+                <p className="text-sm">No recent activity</p>
+                <p className="text-xs mt-1">Start participating to earn points</p>
               </div>
             )}
           </CardContent>
         </Card>
-
-        {/* Anti-Sybil Notice */}
-        <Card className="bg-[#253935]/80 border border-[#22cda6]/30">
-          <CardHeader>
-            <Button
-              variant="ghost"
-              onClick={() => setShowAntiSybilNotice(!showAntiSybilNotice)}
-              className="w-full justify-between p-0 h-auto hover:bg-transparent"
-            >
-              <CardTitle className="text-sm font-bold flex items-center text-[#22cda6]">
-                <Shield className="h-4 w-4 mr-2" />
-                Fair Distribution Notice
-              </CardTitle>
-              {showAntiSybilNotice ? (
-                <ChevronUp className="h-4 w-4 text-[#22cda6]" />
-              ) : (
-                <ChevronDown className="h-4 w-4 text-[#22cda6]" />
-              )}
-            </Button>
-          </CardHeader>
-          {showAntiSybilNotice && (
-            <CardContent className="pt-0">
-              <div className="space-y-3">
-                <p className="text-[#9ca3af] text-xs leading-relaxed">
-                  To ensure equitable distribution and maintain program integrity, comprehensive anti-sybil analysis will be conducted 
-                  at the conclusion of the airdrop qualification period. Participants engaging in coordinated multi-account activities, 
-                  artificial transaction patterns, or other forms of ecosystem manipulation will be identified and excluded from final 
-                  reward distributions.
-                </p>
-                <p className="text-[#22cda6] text-xs font-medium">
-                  Authentic participation and genuine community engagement are the foundation of Gemlaunch's reward ecosystem.
-                </p>
-              </div>
-            </CardContent>
-          )}
-        </Card>
-
-
       </div>
     </div>
   );
