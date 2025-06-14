@@ -1,4 +1,4 @@
-// Comprehensive Accolade System for GemLaunch
+// Comprehensive Accolade System for Gemlaunch
 export interface AccoladeDefinition {
   id: string;
   name: string;

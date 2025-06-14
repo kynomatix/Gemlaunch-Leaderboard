@@ -1,8 +1,8 @@
-# GemLaunch Rewards System
+# Gemlaunch Rewards System
 
 ## Overview
 
-GemLaunch is a blockchain-based rewards platform that tracks user activities on the BNB Chain and awards points for various actions like token creation, fair launches, presales, volume trading, and referrals. The system features a comprehensive leaderboard, accolade system, and admin dashboard for managing point configurations.
+Gemlaunch is a blockchain-based rewards platform that tracks user activities on the BNB Chain and awards points for various actions like token creation, fair launches, presales, volume trading, and referrals. The system features a comprehensive leaderboard, accolade system, and admin dashboard for managing point configurations.
 
 ## System Architecture
 

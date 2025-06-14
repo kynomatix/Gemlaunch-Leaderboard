@@ -39,7 +39,7 @@ export default function StatsOverview() {
               </div>
               <div>
                 <h2 className="text-xl font-bold text-primary mb-1">
-                  Welcome to GemLaunch Leaderboard!
+                  Welcome to Gemlaunch Leaderboard!
                 </h2>
                 <p className="text-sm text-gray-300">
                   Track your on-chain activities and climb the ranks for upcoming airdrops

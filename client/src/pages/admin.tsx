@@ -143,7 +143,7 @@ export default function Admin() {
             Point Management System
           </h1>
           <p className="text-gray-400">
-            Configure point values and manage user scores for the GemLaunch rewards system.
+            Configure point values and manage user scores for the Gemlaunch rewards system.
           </p>
         </div>
 

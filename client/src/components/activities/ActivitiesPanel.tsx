@@ -51,7 +51,7 @@ export default function ActivitiesPanel() {
       type: "token_creation",
       title: "Token Creation",
       points: 100,
-      description: "Create a new token on GemLaunch",
+      description: "Create a new token on Gemlaunch",
       icon: Rocket,
       color: "primary"
     },
@@ -294,7 +294,7 @@ export default function ActivitiesPanel() {
               <div className="text-center py-8 text-gray-400">
                 <Activity className="h-12 w-12 mx-auto mb-3 opacity-50" />
                 <p className="text-sm">No point activities yet</p>
-                <p className="text-xs mt-1">Start using GemLaunch to earn points!</p>
+                <p className="text-xs mt-1">Start using Gemlaunch to earn points!</p>
               </div>
             )}
           </CardContent>
@@ -329,7 +329,7 @@ export default function ActivitiesPanel() {
                   reward distributions.
                 </p>
                 <p className="text-[#22cda6] text-xs font-medium">
-                  Authentic participation and genuine community engagement are the foundation of GemLaunch's reward ecosystem.
+                  Authentic participation and genuine community engagement are the foundation of Gemlaunch's reward ecosystem.
                 </p>
               </div>
             </CardContent>
