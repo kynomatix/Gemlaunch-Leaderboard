@@ -10,22 +10,30 @@
 }
 
 :root {
-  /* Exact Gemlaunch colors from website CSS */
-  --gem-background: #0f181a;
-  --gem-sidebar: #090909;
-  --gem-card: #0b0b0b;
+  /* Exact Gemlaunch colors from live website extraction */
+  --bs-body-bg: #0B1B18;     /* page background */
+  --bs-card-bg: #0B0B0B;     /* main form container */
+  --form-input: #253935;     /* inputs / dropdowns */
+  --accent: #00C997;         /* buttons, highlights, icons */
+  --text-main: #FFFFFF;      /* labels, primary text */
+  --text-muted: #A6A6A6;     /* placeholders, hints */
+  
+  /* Map to our CSS variables */
+  --gem-background: var(--bs-body-bg);
+  --gem-sidebar: #081612;
+  --gem-card: var(--bs-card-bg);
   --gem-card-hover: #161616;
-  --gem-form-bg: #0b0b0b;
-  --gem-input-bg: #000000;
-  --gem-primary: #22cda6;
-  --gem-primary-hover: #22cdc5;
+  --gem-form-bg: var(--bs-card-bg);
+  --gem-input-bg: var(--form-input);
+  --gem-primary: var(--accent);
+  --gem-primary-hover: #00b896;
   --gem-accent: #16abff;
-  --gem-text: #ffffff;
-  --gem-text-muted: #e5e7eb;
+  --gem-text: var(--text-main);
+  --gem-text-muted: var(--text-muted);
   --gem-text-secondary: #9ca3af;
   --gem-border: #333333;
   --gem-border-light: #444444;
-  --gem-success: #22cda6;
+  --gem-success: var(--accent);
   --gem-warning: #54d6ff;
   --gem-error: #ef4444;
   
