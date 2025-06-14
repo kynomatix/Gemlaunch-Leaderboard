@@ -3,10 +3,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Crown, Trophy, Medal, User, Clock } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Crown, Trophy, Medal, User, Clock, ChevronDown, ChevronUp } from "lucide-react";
 import { web3Service } from "@/lib/web3";
+import { ACCOLADES } from "@shared/accolades";
+import { useState } from "react";
 
 export default function LeaderboardTable() {
+  const [expandedAccolades, setExpandedAccolades] = useState<{[key: string]: boolean}>({});
+  
   const { data: leaderboard, isLoading } = useQuery({
     queryKey: ["/api/leaderboard"],
     refetchInterval: 30000, // Refresh every 30 seconds
@@ -33,24 +38,96 @@ export default function LeaderboardTable() {
   const topThree = users.slice(0, 3);
   const remaining = users.slice(3);
 
-  const getAccoladeIcon = (type: string) => {
-    switch (type) {
-      case 'gemlaunch_pioneer': return '🚀';
-      case 'launch_pioneer': return '⭐';
-      case 'referral_champion': return '🏆';
-      case 'volume_trader': return '💎';
-      default: return '🎖️';
-    }
+  const getAccoladeData = (type: string) => {
+    const accolade = ACCOLADES.find(a => a.id === type);
+    return accolade ? {
+      icon: accolade.icon,
+      name: accolade.name,
+      description: accolade.description,
+      rarity: accolade.rarity,
+      pointsBonus: accolade.pointsBonus
+    } : {
+      icon: '🎖️',
+      name: 'Unknown Accolade',
+      description: 'Achievement not found',
+      rarity: 'common' as const,
+      pointsBonus: 0
+    };
   };
 
-  const getAccoladeName = (type: string) => {
-    switch (type) {
-      case 'gemlaunch_pioneer': return 'Gemlaunch Pioneer - First 50 users to join the platform';
-      case 'launch_pioneer': return 'Launch Pioneer - Successfully launched a token';
-      case 'referral_champion': return 'Referral Champion - Brought multiple users to the platform';
-      case 'volume_trader': return 'Volume Trader - High trading volume achievements';
-      default: return 'Special Achievement';
+  const toggleAccolades = (userId: string) => {
+    setExpandedAccolades(prev => ({
+      ...prev,
+      [userId]: !prev[userId]
+    }));
+  };
+
+  const renderAccolades = (accolades: any[], userId: string) => {
+    if (!accolades || accolades.length === 0) {
+      return <span className="text-xs text-gray-400">No accolades yet</span>;
     }
+
+    const isExpanded = expandedAccolades[userId];
+    const displayedAccolades = isExpanded ? accolades : accolades.slice(0, 2);
+    const hasMore = accolades.length > 2;
+
+    return (
+      <div className="space-y-1">
+        <div className="flex flex-wrap gap-1">
+          {displayedAccolades.map((accolade: any, index: number) => {
+            const accoladeData = getAccoladeData(accolade.accoladeType);
+            return (
+              <TooltipProvider key={index}>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Badge
+                      variant="outline"
+                      className={`text-xs px-2 py-1 ${
+                        accoladeData.rarity === 'legendary' ? 'border-orange-400 text-orange-300 bg-orange-500/10' :
+                        accoladeData.rarity === 'epic' ? 'border-purple-400 text-purple-300 bg-purple-500/10' :
+                        accoladeData.rarity === 'rare' ? 'border-blue-400 text-blue-300 bg-blue-500/10' :
+                        accoladeData.rarity === 'uncommon' ? 'border-green-400 text-green-300 bg-green-500/10' :
+                        'border-gray-400 text-gray-300 bg-gray-500/10'
+                      }`}
+                    >
+                      <span className="mr-1">{accoladeData.icon}</span>
+                      {accoladeData.name}
+                    </Badge>
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-xs">
+                    <div className="text-sm">
+                      <div className="font-medium">{accoladeData.name}</div>
+                      <div className="text-xs text-gray-400 mt-1">{accoladeData.description}</div>
+                      <div className="text-xs text-[#22cda6] mt-1">+{accoladeData.pointsBonus} points</div>
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            );
+          })}
+        </div>
+        {hasMore && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => toggleAccolades(userId)}
+            className="h-6 px-2 text-xs text-[#22cda6] hover:text-[#22cda6] hover:bg-[#22cda6]/10"
+          >
+            {isExpanded ? (
+              <>
+                <ChevronUp className="h-3 w-3 mr-1" />
+                Show less
+              </>
+            ) : (
+              <>
+                <ChevronDown className="h-3 w-3 mr-1" />
+                +{accolades.length - 2} more
+              </>
+            )}
+          </Button>
+        )}
+      </div>
+    );
   };
 
   return (
