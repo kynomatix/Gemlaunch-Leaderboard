@@ -18,7 +18,7 @@ import {
   type BlockchainEvent,
   type InsertBlockchainEvent
 } from "@shared/schema";
-import { db } from "./db";
+import { db } from "./sqlite-db";
 import { eq, desc, sql, sum, count, and, inArray } from "drizzle-orm";
 
 export interface IStorage {
