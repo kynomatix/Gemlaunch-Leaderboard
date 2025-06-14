@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { 
   Rocket, 
   Flame, 
@@ -11,10 +13,15 @@ import {
   TrendingUp,
   Activity,
   Database,
-  Clock
+  Clock,
+  Shield,
+  ChevronDown,
+  ChevronUp
 } from "lucide-react";
 
 export default function ActivitiesPanel() {
+  const [showAntiSybilNotice, setShowAntiSybilNotice] = useState(false);
+  
   const { data: recentActivities } = useQuery({
     queryKey: ["/api/activities/recent"],
     refetchInterval: 30000,
@@ -218,6 +225,42 @@ export default function ActivitiesPanel() {
               </div>
             )}
           </CardContent>
+        </Card>
+
+        {/* Anti-Sybil Notice */}
+        <Card className="bg-[#253935]/80 border border-[#22cda6]/30">
+          <CardHeader>
+            <Button
+              variant="ghost"
+              onClick={() => setShowAntiSybilNotice(!showAntiSybilNotice)}
+              className="w-full justify-between p-0 h-auto hover:bg-transparent"
+            >
+              <CardTitle className="text-sm font-bold flex items-center text-[#22cda6]">
+                <Shield className="h-4 w-4 mr-2" />
+                Fair Distribution Notice
+              </CardTitle>
+              {showAntiSybilNotice ? (
+                <ChevronUp className="h-4 w-4 text-[#22cda6]" />
+              ) : (
+                <ChevronDown className="h-4 w-4 text-[#22cda6]" />
+              )}
+            </Button>
+          </CardHeader>
+          {showAntiSybilNotice && (
+            <CardContent className="pt-0">
+              <div className="space-y-3">
+                <p className="text-[#9ca3af] text-xs leading-relaxed">
+                  To ensure equitable distribution and maintain program integrity, comprehensive anti-sybil analysis will be conducted 
+                  at the conclusion of the airdrop qualification period. Participants engaging in coordinated multi-account activities, 
+                  artificial transaction patterns, or other forms of ecosystem manipulation will be identified and excluded from final 
+                  reward distributions.
+                </p>
+                <p className="text-[#22cda6] text-xs font-medium">
+                  Authentic participation and genuine community engagement are the foundation of GemLaunch's reward ecosystem.
+                </p>
+              </div>
+            </CardContent>
+          )}
         </Card>
 
         {/* On-Chain Tracking Status */}
