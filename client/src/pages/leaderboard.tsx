@@ -18,9 +18,9 @@ import {
   Shield,
   Gift,
   FileText,
+  Zap,
   Settings,
-  ChevronDown,
-  Zap
+  ChevronDown
 } from "lucide-react";
 import StatsOverview from "@/components/leaderboard/StatsOverview";
 import LeaderboardTable from "@/components/leaderboard/LeaderboardTable";
@@ -105,28 +105,46 @@ export default function Leaderboard() {
         <div className="flex-1 p-6">
           <div className="max-w-7xl mx-auto space-y-6">
             {/* Welcome section with Gemmy */}
-            <div className="bg-gradient-to-r from-[#253935] to-[#1a2b21] rounded-lg p-6 border border-[#22cda6]/20 mb-6">
+            <div className="bg-gradient-to-r from-[#253935] to-[#1a2b21] rounded-lg p-8 border border-[#22cda6]/20 mt-[20px] mb-[20px]">
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <div className="w-16 h-16 rounded-lg overflow-hidden">
+                <div className="flex items-center space-x-6">
+                  <div className="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
                     <img 
                       src={Gemmy_Mascot} 
                       alt="Gemmy Mascot" 
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <div>
-                    <h2 className="text-xl font-bold text-[#22cda6] mb-1">
-                      Welcome to GemLaunch Leaderboard!
+                  <div className="flex-1">
+                    <h2 className="text-2xl font-bold text-[#22cda6] mb-2">
+                      Welcome to GemLaunch Rewards Program!
                     </h2>
-                    <p className="text-sm text-[#9ca3af]">
-                      Track your on-chain activities and climb the ranks for upcoming airdrops
+                    <p className="text-base text-[#9ca3af] mb-3">
+                      Earn points for every on-chain activity: token creation, fair launches, presales, volume trading, and referrals. 
+                      Build your ranking for exclusive airdrops and rewards.
                     </p>
+                    <div className="flex items-center space-x-4 text-sm text-[#22cda6]">
+                      <span className="flex items-center">
+                        <Trophy className="h-4 w-4 mr-1" />
+                        Compete for Rankings
+                      </span>
+                      <span className="flex items-center">
+                        <Star className="h-4 w-4 mr-1" />
+                        Unlock Accolades
+                      </span>
+                      <span className="flex items-center">
+                        <Gift className="h-4 w-4 mr-1" />
+                        Earn Airdrop Priority
+                      </span>
+                    </div>
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-2xl font-bold text-[#22cda6]">🚀</div>
-                  <div className="text-xs text-[#9ca3af]">Earn Points</div>
+                  <button className="bg-[#22cda6] hover:bg-[#1fb898] text-black px-6 py-3 rounded-lg font-bold transition-colors duration-200 flex items-center space-x-2">
+                    <Zap className="h-5 w-5" />
+                    <span>Connect Wallet</span>
+                  </button>
+                  <div className="text-xs text-[#9ca3af] mt-2">Start Earning Points</div>
                 </div>
               </div>
             </div>
