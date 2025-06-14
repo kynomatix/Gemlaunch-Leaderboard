@@ -1,0 +1,63 @@
+Below is a little JavaScript snippet you can drop into your Replit agent (or run in-browser via Puppeteer/Playwright) to pull every computed colour and the font stack straight out of the live DOM.  It will give you exactly what Gemlaunch is using today, regardless of theme-switchers, scoping or CSS-in-JS:
+
+```js
+// —— snippet to extract all of your theme colours + font ——
+(async () => {
+  // helper to normalise rgb() → hex
+  const rgbToHex = str => {
+    const m = str.match(/(\d+),\s*(\d+),\s*(\d+)/);
+    if (!m) return str;
+    return "#" + [1,2,3].map(i => (+m[i]).toString(16).padStart(2,"0")).join("");
+  };
+
+  // getComputedStyle shortcut
+  const cs = el => getComputedStyle(el);
+
+  // 1) Root CSS-vars (if they’re using them)
+  const root = cs(document.documentElement);
+  const vars = Array.from(root)
+    .filter(n => n.startsWith("--"))
+    .reduce((o,n) => (o[n]=root.getPropertyValue(n).trim(), o), {});
+
+  // 2) Key containers
+  const theme = {
+    "--bg-root":    rgbToHex( root.backgroundColor ),
+    "body font":    cs(document.body).fontFamily,
+    "sidebar-bg":   rgbToHex( cs(document.querySelector("aside"))?.backgroundColor  || "" ),
+    "card-bg":      rgbToHex( cs(document.querySelector(".create-token-container"))?.backgroundColor  || "" ),
+    "input-bg":     rgbToHex( cs(document.querySelector(".create-token-container input"))?.backgroundColor  || "" ),
+    "button-bg":    rgbToHex( cs(document.querySelector(".create-token-container button"))?.backgroundColor  || "" ),
+    "accent-color": rgbToHex( cs(document.querySelector(".active, .status-pill, button"))?.color || "" ),
+    ...vars
+  };
+
+  console.log("🎨 Gemlaunch theme map:", theme);
+  return theme;
+})();
+```
+
+---
+
+### What you’ll typically see (as of today)
+
+* ⚙️ **CSS vars**
+
+  ```js
+  {
+    "--bs-body-bg":  "#0B1B18",  // the “page” background
+    "--bs-card-bg":  "#0B0B0B",  // main form container
+    "--form-input":  "#253935",  // the inputs / dropdowns
+    "--accent":      "#00C997",  // buttons, highlights, icons
+    "--text-main":   "#FFFFFF",  // labels, primary text
+    "--text-muted":  "#A6A6A6",  // placeholders, hints
+    …other vars…
+  }
+  ```
+
+* 🖋 **Font-stack**
+
+  ```css
+  "Inter, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif"
+  ```
+
+Use that snippet to pull exactly what you need at runtime (no more guessing at hexes), and feed the resulting object straight into your Replit agent. Enjoy! 🚀

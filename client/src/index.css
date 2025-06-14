@@ -10,32 +10,24 @@
 }
 
 :root {
-  /* Exact Gemlaunch colors from live website extraction */
-  --bs-body-bg: #0B1B18;     /* page background */
-  --bs-card-bg: #0B0B0B;     /* main form container */
-  --form-input: #253935;     /* inputs / dropdowns */
-  --accent: #00C997;         /* buttons, highlights, icons */
-  --text-main: #FFFFFF;      /* labels, primary text */
-  --text-muted: #A6A6A6;     /* placeholders, hints */
-  
-  /* Map to our CSS variables */
-  --gem-background: var(--bs-body-bg);
-  --gem-sidebar: #081612;
-  --gem-card: var(--bs-card-bg);
-  --gem-card-hover: #161616;
-  --gem-form-bg: var(--bs-card-bg);
-  --gem-input-bg: var(--form-input);
-  --gem-primary: var(--accent);
-  --gem-primary-hover: #00b896;
-  --gem-accent: #16abff;
-  --gem-text: var(--text-main);
-  --gem-text-muted: var(--text-muted);
-  --gem-text-secondary: #9ca3af;
-  --gem-border: #333333;
-  --gem-border-light: #444444;
-  --gem-success: var(--accent);
-  --gem-warning: #54d6ff;
-  --gem-error: #ef4444;
+  /* Exact colors from Create Token page image */
+  --gem-background: #0a0f0c;        /* Very dark background from image */
+  --gem-sidebar: #0f1713;           /* Sidebar dark green from image */
+  --gem-card: #2a4f3f;              /* Form container green from image */
+  --gem-card-hover: #345a48;        /* Hover state for cards */
+  --gem-form-bg: #2a4f3f;           /* Main form background green */
+  --gem-input-bg: #0f1713;          /* Very dark input backgrounds */
+  --gem-primary: #26d0ce;           /* Bright teal button color */
+  --gem-primary-hover: #1bb6b4;     /* Hover state for buttons */
+  --gem-accent: #26d0ce;            /* Same as primary */
+  --gem-text: #ffffff;              /* White text */
+  --gem-text-muted: #9ca3af;        /* Muted text */
+  --gem-text-secondary: #6b7280;    /* Secondary text */
+  --gem-border: #3d5c4d;            /* Border color for form elements */
+  --gem-border-light: #4a6a57;      /* Lighter border variant */
+  --gem-success: #26d0ce;           /* Success color */
+  --gem-warning: #f59e0b;           /* Warning color */
+  --gem-error: #ef4444;             /* Error color */
   
   --background: var(--gem-background);
   --foreground: var(--gem-text);
@@ -76,50 +68,68 @@
   --chart-5: #8b5cf6;
 }
 
+/* Override all shadcn components with Gemlaunch styling */
+@layer base {
+  * {
+    border-color: var(--gem-border);
+  }
+  
+  body {
+    background-color: var(--gem-background) !important;
+    color: var(--gem-text) !important;
+  }
+  
+  /* Force all inputs to use Gemlaunch styling */
+  input[type="text"], 
+  input[type="email"], 
+  input[type="password"], 
+  input[type="number"], 
+  textarea,
+  select {
+    background-color: var(--gem-input-bg) !important;
+    border: 1px solid var(--gem-border) !important;
+    color: var(--gem-text) !important;
+    border-radius: 8px !important;
+  }
+  
+  input:focus, 
+  textarea:focus, 
+  select:focus {
+    border-color: var(--gem-primary) !important;
+    box-shadow: 0 0 0 2px rgba(38, 208, 206, 0.2) !important;
+    outline: none !important;
+  }
+  
+  /* Force all buttons to use Gemlaunch styling */
+  button[data-variant="default"],
+  .bg-primary {
+    background-color: var(--gem-primary) !important;
+    color: #000000 !important;
+    border: none !important;
+  }
+  
+  button[data-variant="default"]:hover,
+  .bg-primary:hover {
+    background-color: var(--gem-primary-hover) !important;
+  }
+  
+  /* Card styling */
+  .bg-card,
+  [data-shadcn="card"] {
+    background-color: var(--gem-card) !important;
+    border: 1px solid var(--gem-border) !important;
+  }
+}
+
 /* Custom Gemlaunch styling */
 @layer components {
-  .gem-input {
-    background-color: var(--gem-input-bg);
-    border: 1px solid var(--gem-border);
-    border-radius: 8px;
-    color: var(--gem-text);
-    font-size: 14px;
-    padding: 12px 16px;
-    transition: all 0.2s ease;
-  }
-  
-  .gem-input:focus {
-    border-color: var(--gem-primary);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(38, 208, 206, 0.1);
-  }
-  
-  .gem-input::placeholder {
-    color: var(--gem-text-muted);
-  }
-  
-  .gem-button-primary {
-    background: linear-gradient(135deg, var(--gem-primary) 0%, var(--gem-accent) 100%);
-    border: none;
-    border-radius: 8px;
-    color: var(--gem-background);
-    font-weight: 600;
-    padding: 12px 24px;
-    transition: all 0.2s ease;
-    cursor: pointer;
-  }
-  
-  .gem-button-primary:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(38, 208, 206, 0.3);
-  }
-  
   .gem-form-container {
-    background: var(--gem-form-bg);
+    background: var(--gem-form-bg) !important;
     border: 1px solid var(--gem-border);
     border-radius: 12px;
     padding: 32px;
-    backdrop-filter: blur(10px);
+    max-width: 600px;
+    margin: 0 auto;
   }
   
   .gem-card {
