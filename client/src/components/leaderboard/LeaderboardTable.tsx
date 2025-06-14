@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Crown, Trophy, Medal, User, Clock } from "lucide-react";
+import * as LucideIcons from "lucide-react";
 import { web3Service } from "@/lib/web3";
 import { ACCOLADES } from "@shared/accolades";
 
@@ -43,12 +43,20 @@ export default function LeaderboardTable() {
       rarity: accolade.rarity,
       pointsBonus: accolade.pointsBonus
     } : {
-      icon: '🎖️',
+      icon: 'Award',
       name: 'Unknown Accolade',
       description: 'Achievement not found',
       rarity: 'common' as const,
       pointsBonus: 0
     };
+  };
+
+  const renderIcon = (iconName: string, className?: string) => {
+    const IconComponent = (LucideIcons as any)[iconName];
+    if (IconComponent) {
+      return <IconComponent className={className || "w-4 h-4"} />;
+    }
+    return <LucideIcons.Award className={className || "w-4 h-4"} />;
   };
 
 
@@ -70,8 +78,8 @@ export default function LeaderboardTable() {
             <TooltipProvider key={index}>
               <Tooltip>
                 <TooltipTrigger>
-                  <span className="text-sm hover:scale-110 transition-transform cursor-help">
-                    {accoladeData.icon}
+                  <span className="text-[#22cda6] hover:scale-110 transition-transform cursor-help">
+                    {renderIcon(accoladeData.icon, "w-4 h-4")}
                   </span>
                 </TooltipTrigger>
                 <TooltipContent className="max-w-xs bg-[#253935] border-[#22cda6]">
@@ -121,11 +129,11 @@ export default function LeaderboardTable() {
       <CardHeader className="border-b border-[#22cda6]/20">
         <CardTitle className="text-xl font-bold text-white flex items-center justify-between">
           <div className="flex items-center">
-            <Crown className="h-6 w-6 text-[#22cda6] mr-3" />
+            {renderIcon('Crown', 'h-6 w-6 text-[#22cda6] mr-3')}
             Global Leaderboard
           </div>
           <div className="flex items-center space-x-2 text-sm text-gray-400">
-            <Clock className="h-4 w-4" />
+            {renderIcon('Clock', 'h-4 w-4')}
             <span>Live Updates</span>
             <div className="w-2 h-2 bg-[#22cda6] rounded-full animate-pulse" />
           </div>
@@ -156,7 +164,7 @@ export default function LeaderboardTable() {
           {topThree[0] && (
             <div className="text-center">
               <div className="w-20 h-20 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center mb-3 mx-auto">
-                <Crown className="h-6 w-6 text-yellow-800" />
+                {renderIcon('Crown', 'h-6 w-6 text-yellow-800')}
               </div>
               <div className="bg-[#22cda6]/20 border border-[#22cda6] rounded-lg p-4 min-h-[100px] flex flex-col justify-center">
                 <div className="font-bold text-white">
@@ -193,7 +201,7 @@ export default function LeaderboardTable() {
       <div className="bg-[#253935]">
         <div className="p-4 border-b border-[#22cda6]/20">
           <h3 className="text-lg font-semibold text-white flex items-center">
-            <Trophy className="h-5 w-5 text-[#22cda6] mr-2" />
+            {renderIcon('Trophy', 'h-5 w-5 text-[#22cda6] mr-2')}
             Complete Rankings
           </h3>
         </div>
