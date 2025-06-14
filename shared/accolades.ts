@@ -72,6 +72,17 @@ export const ACCOLADES: AccoladeDefinition[] = [
     rarity: 'uncommon'
   },
   {
+    id: 'volume_veteran',
+    name: 'Volume Veteran',
+    description: 'Achieved significant trading volume on the platform.',
+    icon: '💎',
+    category: 'trading',
+    level: 2,
+    criteria: 'Generate significant trading volume',
+    pointsBonus: 300,
+    rarity: 'uncommon'
+  },
+  {
     id: 'whale_trader',
     name: 'Whale Trader',
     description: 'Generate $10,000+ in trading volume.',
@@ -132,6 +143,28 @@ export const ACCOLADES: AccoladeDefinition[] = [
     multiplier: 1.25,
     rarity: 'epic'
   },
+  {
+    id: 'launch_master',
+    name: 'Launch Master',
+    description: 'Successfully completed a fair launch on the platform.',
+    icon: '🚀',
+    category: 'creator',
+    level: 2,
+    criteria: 'Complete a successful fair launch',
+    pointsBonus: 500,
+    rarity: 'uncommon'
+  },
+  {
+    id: 'presale_participant',
+    name: 'Presale Participant',
+    description: 'Participated in a token presale on the platform.',
+    icon: '💰',
+    category: 'trading',
+    level: 1,
+    criteria: 'Participate in a token presale',
+    pointsBonus: 150,
+    rarity: 'common'
+  },
 
   // SOCIAL CATEGORY
   {
@@ -142,6 +175,17 @@ export const ACCOLADES: AccoladeDefinition[] = [
     category: 'social',
     level: 1,
     criteria: 'Refer 1 friend',
+    pointsBonus: 100,
+    rarity: 'common'
+  },
+  {
+    id: 'referral_rookie',
+    name: 'Referral Rookie',
+    description: 'Made your first successful referral.',
+    icon: '🌟',
+    category: 'social',
+    level: 1,
+    criteria: 'Make 1 successful referral',
     pointsBonus: 100,
     rarity: 'common'
   },

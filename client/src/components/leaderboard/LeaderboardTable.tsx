@@ -10,8 +10,6 @@ import { ACCOLADES } from "@shared/accolades";
 import { useState } from "react";
 
 export default function LeaderboardTable() {
-  const [expandedAccolades, setExpandedAccolades] = useState<{[key: string]: boolean}>({});
-  
   const { data: leaderboard, isLoading } = useQuery({
     queryKey: ["/api/leaderboard"],
     refetchInterval: 30000, // Refresh every 30 seconds
@@ -62,69 +60,56 @@ export default function LeaderboardTable() {
     }));
   };
 
-  const renderAccolades = (accolades: any[], userId: string) => {
+  const renderAccolades = (accolades: any[]) => {
     if (!accolades || accolades.length === 0) {
       return <span className="text-xs text-gray-400">No accolades yet</span>;
     }
 
-    const isExpanded = expandedAccolades[userId];
-    const displayedAccolades = isExpanded ? accolades : accolades.slice(0, 2);
-    const hasMore = accolades.length > 2;
+    // Show first 3 accolades as icons, then count for remaining
+    const displayedAccolades = accolades.slice(0, 3);
+    const remainingCount = accolades.length - 3;
 
     return (
-      <div className="space-y-1">
-        <div className="flex flex-wrap gap-1">
-          {displayedAccolades.map((accolade: any, index: number) => {
-            const accoladeData = getAccoladeData(accolade.accoladeType);
-            return (
-              <TooltipProvider key={index}>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <Badge
-                      variant="outline"
-                      className={`text-xs px-2 py-1 ${
-                        accoladeData.rarity === 'legendary' ? 'border-orange-400 text-orange-300 bg-orange-500/10' :
-                        accoladeData.rarity === 'epic' ? 'border-purple-400 text-purple-300 bg-purple-500/10' :
-                        accoladeData.rarity === 'rare' ? 'border-blue-400 text-blue-300 bg-blue-500/10' :
-                        accoladeData.rarity === 'uncommon' ? 'border-green-400 text-green-300 bg-green-500/10' :
-                        'border-gray-400 text-gray-300 bg-gray-500/10'
-                      }`}
-                    >
-                      <span className="mr-1">{accoladeData.icon}</span>
-                      {accoladeData.name}
-                    </Badge>
-                  </TooltipTrigger>
-                  <TooltipContent className="max-w-xs">
-                    <div className="text-sm">
-                      <div className="font-medium">{accoladeData.name}</div>
-                      <div className="text-xs text-gray-400 mt-1">{accoladeData.description}</div>
-                      <div className="text-xs text-[#22cda6] mt-1">+{accoladeData.pointsBonus} points</div>
-                    </div>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            );
-          })}
-        </div>
-        {hasMore && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => toggleAccolades(userId)}
-            className="h-6 px-2 text-xs text-[#22cda6] hover:text-[#22cda6] hover:bg-[#22cda6]/10"
-          >
-            {isExpanded ? (
-              <>
-                <ChevronUp className="h-3 w-3 mr-1" />
-                Show less
-              </>
-            ) : (
-              <>
-                <ChevronDown className="h-3 w-3 mr-1" />
-                +{accolades.length - 2} more
-              </>
-            )}
-          </Button>
+      <div className="flex items-center gap-1 flex-wrap">
+        {displayedAccolades.map((accolade: any, index: number) => {
+          const accoladeData = getAccoladeData(accolade.accoladeType);
+          return (
+            <TooltipProvider key={index}>
+              <Tooltip>
+                <TooltipTrigger>
+                  <span className="text-base hover:scale-110 transition-transform cursor-help">
+                    {accoladeData.icon}
+                  </span>
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs bg-[#253935] border-[#22cda6]">
+                  <div className="text-sm text-white">
+                    <div className="font-medium">{accoladeData.name}</div>
+                    <div className="text-xs text-gray-400 mt-1">{accoladeData.description}</div>
+                    <div className="text-xs text-[#22cda6] mt-1">+{accoladeData.pointsBonus} points</div>
+                  </div>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          );
+        })}
+        {remainingCount > 0 && (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Badge variant="outline" className="text-xs px-1 py-0 border-[#22cda6] text-[#22cda6] bg-[#22cda6]/10">
+                  +{remainingCount}
+                </Badge>
+              </TooltipTrigger>
+              <TooltipContent className="max-w-xs bg-[#253935] border-[#22cda6]">
+                <div className="text-sm text-white">
+                  <div className="font-medium">{remainingCount} more accolade{remainingCount !== 1 ? 's' : ''}</div>
+                  <div className="text-xs text-gray-400 mt-1">
+                    {accolades.slice(3).map(a => getAccoladeData(a.accoladeType).name).join(', ')}
+                  </div>
+                </div>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         )}
       </div>
     );
