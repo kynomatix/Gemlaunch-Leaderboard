@@ -214,7 +214,7 @@ export default function Leaderboard() {
                   </div>
                   <div className="flex-1">
                     <h2 className="text-2xl font-bold text-[#22cda6] mb-2">
-                      Welcome to GemLaunch Rewards Program!
+                      Welcome to Gemlaunch Rewards Program!
                     </h2>
                     <p className="text-base text-[#9ca3af] mb-3">
                       Earn points for every on-chain activity: token creation, fair launches, presales, contributing to project funding, and referrals. 
