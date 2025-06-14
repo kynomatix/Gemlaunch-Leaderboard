@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Gemlaunch font family */
+@layer base {
+  * {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  }
+}
+
 :root {
   /* Exact Gemlaunch brand colors extracted from source */
   --gem-background: #0c1713;
@@ -59,6 +66,66 @@
   --chart-3: var(--gem-success);
   --chart-4: var(--gem-warning);
   --chart-5: #8b5cf6;
+}
+
+/* Custom Gemlaunch styling */
+@layer components {
+  .gem-input {
+    background-color: var(--gem-input-bg);
+    border: 1px solid var(--gem-border);
+    border-radius: 8px;
+    color: var(--gem-text);
+    font-size: 14px;
+    padding: 12px 16px;
+    transition: all 0.2s ease;
+  }
+  
+  .gem-input:focus {
+    border-color: var(--gem-primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(38, 208, 206, 0.1);
+  }
+  
+  .gem-input::placeholder {
+    color: var(--gem-text-muted);
+  }
+  
+  .gem-button-primary {
+    background: linear-gradient(135deg, var(--gem-primary) 0%, var(--gem-accent) 100%);
+    border: none;
+    border-radius: 8px;
+    color: var(--gem-background);
+    font-weight: 600;
+    padding: 12px 24px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+  
+  .gem-button-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(38, 208, 206, 0.3);
+  }
+  
+  .gem-form-container {
+    background: var(--gem-form-bg);
+    border: 1px solid var(--gem-border);
+    border-radius: 12px;
+    padding: 32px;
+    backdrop-filter: blur(10px);
+  }
+  
+  .gem-card {
+    background: var(--gem-card);
+    border: 1px solid var(--gem-border);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+  
+  .gem-card:hover {
+    border-color: var(--gem-border-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
 }
 
 .dark {

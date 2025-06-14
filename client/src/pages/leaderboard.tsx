@@ -131,8 +131,8 @@ export default function Leaderboard() {
             {/* Stats Overview */}
             <StatsOverview />
 
-          {/* Main Content Tabs */}
-          <Tabs defaultValue="leaderboard" className="w-full">
+            {/* Main Content Tabs */}
+            <Tabs defaultValue="leaderboard" className="w-full">
             <TabsList className="grid w-full max-w-md grid-cols-3 bg-card">
               <TabsTrigger value="leaderboard" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
                 <Trophy className="h-4 w-4 mr-2" />
