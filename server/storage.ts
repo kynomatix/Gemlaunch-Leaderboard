@@ -82,23 +82,27 @@ export class DatabaseStorage implements IStorage {
     
     if (totalUsers <= 50) {
       // Create Gemlaunch Pioneer accolade
-      await this.createAccolade({
-        userId: user.id,
-        accoladeType: 'gemlaunch_pioneer',
-        level: 1,
-        multiplier: 1.1
-      });
+      try {
+        await this.createAccolade({
+          userId: user.id,
+          accoladeType: 'gemlaunch_pioneer',
+          level: 1,
+          multiplier: '1.10'
+        });
 
-      // Create activity for receiving the accolade
-      await this.createActivity({
-        userId: user.id,
-        activityType: 'accolade_earned',
-        points: 100,
-        metadata: { 
-          accoladeType: 'gemlaunch_pioneer', 
-          description: 'Earned Gemlaunch Pioneer status as one of the first 50 users!' 
-        }
-      });
+        // Create activity for receiving the accolade
+        await this.createActivity({
+          userId: user.id,
+          activityType: 'accolade_earned',
+          points: 100,
+          metadata: { 
+            accoladeType: 'gemlaunch_pioneer', 
+            description: 'Earned Gemlaunch Pioneer status as one of the first 50 users!' 
+          }
+        });
+      } catch (error) {
+        console.error('Error creating Gemlaunch Pioneer accolade:', error);
+      }
     }
 
     return user;
@@ -154,18 +158,17 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getUserRank(userId: number): Promise<number> {
-    const result = await db
-      .select({
-        rank: sql<number>`(
-          SELECT COUNT(*) + 1 
-          FROM ${users} u2 
-          WHERE u2.total_points > u1.total_points
-        )`.as('rank')
-      })
-      .from(users.as('u1'))
-      .where(eq(users.id, userId));
+    // Get user's points
+    const user = await db.select().from(users).where(eq(users.id, userId));
+    if (!user[0]) return 0;
     
-    return result[0]?.rank || 0;
+    // Count users with more points
+    const higherRanked = await db
+      .select({ count: count() })
+      .from(users)
+      .where(sql`${users.totalPoints} > ${user[0].totalPoints}`);
+    
+    return higherRanked[0].count + 1;
   }
 
   async createActivity(activity: InsertActivity): Promise<Activity> {
