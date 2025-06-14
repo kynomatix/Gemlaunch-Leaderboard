@@ -115,3 +115,9 @@ Changelog:
   - Updated teal color from #26d0ce to #22cda6 throughout entire application for better brand consistency
   - Removed unwanted hero section and fixed top bar to show proper network selection (BSC Mainnet) and wallet address display
   - Created clean leaderboard interface with Latest Pools, Private Sales, New Tokens sections and proper tabs
+- June 14, 2025: Wallet connection and referral system implementation
+  - Implemented simulated wallet connection using 0x2d9b878DD5f779aF723a430F8d56f21dAc847592 for testing
+  - Created complete user registration system with welcome bonus and sample activities
+  - Added Gemlaunch Pioneer accolade system for early users
+  - Updated all referral links to use production domain https://gemlaunch.io/
+  - Established real data flow between frontend and backend with authentic user tracking

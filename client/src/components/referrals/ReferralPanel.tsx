@@ -63,7 +63,7 @@ export default function ReferralPanel() {
   const copyReferralLink = async () => {
     if (!connectedWallet || !referralStats?.referralCode) return;
     
-    const referralLink = `${window.location.origin}?ref=${referralStats.referralCode}`;
+    const referralLink = `https://gemlaunch.io/?ref=${referralStats.referralCode}`;
     try {
       await navigator.clipboard.writeText(referralLink);
       setCopied(true);
@@ -123,7 +123,7 @@ export default function ReferralPanel() {
             <div className="bg-[#0f1713] rounded-lg p-4 border border-[#22cda6]/30">
               <div className="flex items-center justify-between">
                 <div className="font-mono text-sm text-gray-300 truncate mr-4">
-                  {referralStats?.referralCode ? `${window.location.origin}?ref=${referralStats.referralCode}` : 'Loading...'}
+                  {referralStats?.referralCode ? `https://gemlaunch.io/?ref=${referralStats.referralCode}` : 'Loading...'}
                 </div>
                 <Button
                   onClick={copyReferralLink}
