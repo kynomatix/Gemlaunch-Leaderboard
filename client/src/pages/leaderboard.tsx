@@ -81,7 +81,6 @@ export default function Leaderboard() {
           ))}
         </nav>
       </div>
-
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
         {/* Top Bar */}
@@ -251,7 +250,7 @@ export default function Leaderboard() {
               </TabsContent>
 
               <TabsContent value="referrals" className="mt-6">
-                <div className="bg-[var(--gem-form-bg)] rounded-lg p-6 border border-[var(--gem-border)]">
+                <div className="rounded-lg p-6 border border-[var(--gem-border)] bg-[253935]">
                   <ReferralPanel />
                 </div>
               </TabsContent>
