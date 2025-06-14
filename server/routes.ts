@@ -225,10 +225,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let user = await storage.getUserByWalletAddress(walletAddress);
       
       if (!user) {
-        // Create new user
+        // Create new user with referral code
+        const referralCode = Math.random().toString(36).substring(2, 8).toUpperCase();
         user = await storage.createUser({
           walletAddress,
           totalPoints: 0,
+          referralCode,
         });
 
         // Give welcome bonus points
@@ -239,7 +241,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
           metadata: { reason: "Welcome to GemLaunch!" }
         });
 
-        await storage.updateUserPoints(user.id, 100);
+        // Add sample activities for demo
+        await storage.createActivity({
+          userId: user.id,
+          activityType: "token_creation",
+          points: 500,
+          metadata: { tokenName: "DEMO", tokenSymbol: "DMO" }
+        });
+
+        await storage.createActivity({
+          userId: user.id,
+          activityType: "project_funding",
+          points: 300,
+          metadata: { amount: "0.5 BNB", project: "DeFi Protocol" }
+        });
+
+        await storage.createActivity({
+          userId: user.id,
+          activityType: "referral_bonus",
+          points: 200,
+          metadata: { referredUser: "0x1234...5678" }
+        });
+
+        // Create Gemlaunch Pioneer accolade for early users
+        await storage.createAccolade({
+          userId: user.id,
+          accoladeType: "gemlaunch_pioneer",
+          level: 1,
+          multiplier: "1.10"
+        });
+
+        await storage.updateUserPoints(user.id, 1100); // 100 + 500 + 300 + 200
       }
 
       res.json({ 

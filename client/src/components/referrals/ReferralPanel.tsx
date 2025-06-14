@@ -13,10 +13,18 @@ export default function ReferralPanel() {
   const [connectedWallet, setConnectedWallet] = useState<string | null>(null);
   const { toast } = useToast();
 
-  // Check wallet connection on component mount
+  // Check wallet connection on component mount and set up polling
   useEffect(() => {
-    const account = web3Service.getAccount();
-    setConnectedWallet(account);
+    const checkConnection = () => {
+      const account = web3Service.getAccount();
+      setConnectedWallet(account);
+    };
+    
+    checkConnection();
+    
+    // Poll for wallet connection changes
+    const interval = setInterval(checkConnection, 1000);
+    return () => clearInterval(interval);
   }, []);
 
   // Fetch user's referral data
