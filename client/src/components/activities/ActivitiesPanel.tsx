@@ -12,8 +12,6 @@ import {
   Users, 
   TrendingUp,
   Activity,
-  Database,
-  Clock,
   Shield,
   ChevronDown,
   ChevronUp
@@ -25,11 +23,6 @@ export default function ActivitiesPanel() {
   const { data: recentActivities } = useQuery({
     queryKey: ["/api/activities/recent"],
     refetchInterval: 30000,
-  });
-
-  const { data: blockchainStatus } = useQuery({
-    queryKey: ["/api/blockchain/status"],
-    refetchInterval: 10000,
   });
 
   const activityTypes = [
@@ -263,55 +256,7 @@ export default function ActivitiesPanel() {
           )}
         </Card>
 
-        {/* On-Chain Tracking Status */}
-        <Card className="bg-gem-slate border-primary/20">
-          <CardHeader>
-            <CardTitle className="text-lg font-bold flex items-center">
-              <Database className="h-5 w-5 mr-2 text-primary" />
-              Blockchain Integration
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-sm">BNB Chain Monitoring</span>
-              <Badge 
-                variant={blockchainStatus?.isConnected ? "default" : "destructive"}
-                className={`flex items-center ${
-                  blockchainStatus?.isConnected 
-                    ? "bg-green-600 text-white" 
-                    : "bg-red-600 text-white"
-                }`}
-              >
-                <div className={`w-2 h-2 rounded-full mr-2 ${
-                  blockchainStatus?.isConnected ? "bg-white animate-pulse" : "bg-white"
-                }`} />
-                {blockchainStatus?.isConnected ? "Active" : "Disconnected"}
-              </Badge>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-sm">Smart Contract Events</span>
-              <span className="text-primary">
-                {blockchainStatus?.eventsProcessed || 0} tracked
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-sm">Last Block</span>
-              <span className="text-gray-400 font-mono text-xs">
-                #{blockchainStatus?.lastBlockNumber?.toLocaleString() || "---"}
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-sm">Last Update</span>
-              <span className="text-gray-400 text-xs flex items-center">
-                <Clock className="h-3 w-3 mr-1" />
-                {blockchainStatus?.lastUpdate 
-                  ? new Date(blockchainStatus.lastUpdate).toLocaleTimeString()
-                  : "---"
-                }
-              </span>
-            </div>
-          </CardContent>
-        </Card>
+
       </div>
     </div>
   );
