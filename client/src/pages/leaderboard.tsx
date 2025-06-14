@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -20,8 +20,11 @@ import {
   FileText,
   Zap,
   Settings,
-  ChevronDown
+  ChevronDown,
+  Wallet
 } from "lucide-react";
+import { web3Service } from "@/lib/web3";
+import { useToast } from "@/hooks/use-toast";
 import StatsOverview from "@/components/leaderboard/StatsOverview";
 import LeaderboardTable from "@/components/leaderboard/LeaderboardTable";
 import AccoladesPanel from "@/components/leaderboard/AccoladesPanel";
@@ -33,9 +36,55 @@ import Gemmy_Mascot from "@assets/Gemmy_Mascot.png";
 
 export default function Leaderboard() {
   const [currentUser, setCurrentUser] = useState<any>(null);
+  const [connectedWallet, setConnectedWallet] = useState<string | null>(null);
+  const { toast } = useToast();
   
   // Connect to WebSocket for real-time updates
   useWebSocket();
+
+  // Check wallet connection on component mount
+  useEffect(() => {
+    const account = web3Service.getAccount();
+    setConnectedWallet(account);
+  }, []);
+
+  const connectWallet = async () => {
+    try {
+      const account = await web3Service.connectWallet();
+      setConnectedWallet(account);
+      
+      // Register/login user in backend
+      const response = await fetch('/api/wallet/connect', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ walletAddress: account }),
+      });
+      
+      const data = await response.json();
+      
+      toast({
+        title: "Wallet Connected",
+        description: data.message || `Connected to ${account?.slice(0, 6)}...${account?.slice(-4)}`,
+      });
+    } catch (error: any) {
+      toast({
+        title: "Connection Failed", 
+        description: error.message || "Please check your Brave wallet and try again",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const disconnectWallet = () => {
+    web3Service.disconnect();
+    setConnectedWallet(null);
+    toast({
+      title: "Wallet Disconnected",
+      description: "Your wallet has been disconnected",
+    });
+  };
 
   const sidebarItems = [
     { icon: Home, label: "Home", active: false },
@@ -95,9 +144,32 @@ export default function Leaderboard() {
                 <span className="text-sm font-medium">BSC Mainnet</span>
               </div>
             </div>
-            <div className="bg-[#0f1713] border border-[#3d5c4d] px-4 py-2 rounded-full">
-              <span className="text-[#22cda6] text-sm font-mono">0x23d9b...7592</span>
-            </div>
+            
+            {connectedWallet ? (
+              <div className="flex items-center space-x-2">
+                <div className="bg-[#0f1713] border border-[#3d5c4d] px-4 py-2 rounded-full">
+                  <span className="text-[#22cda6] text-sm font-mono">
+                    {connectedWallet.slice(0, 6)}...{connectedWallet.slice(-4)}
+                  </span>
+                </div>
+                <Button
+                  onClick={disconnectWallet}
+                  variant="outline"
+                  size="sm"
+                  className="border-[#3d5c4d] text-gray-400 hover:text-white"
+                >
+                  Disconnect
+                </Button>
+              </div>
+            ) : (
+              <Button
+                onClick={connectWallet}
+                className="bg-[#22cda6] hover:bg-[#1fb898] text-black font-bold px-6 py-2"
+              >
+                <Wallet className="h-4 w-4 mr-2" />
+                Connect Wallet
+              </Button>
+            )}
           </div>
         </div>
 

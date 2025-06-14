@@ -212,6 +212,46 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Connect wallet - create or get user
+  app.post("/api/wallet/connect", async (req, res) => {
+    try {
+      const { walletAddress } = req.body;
+      
+      if (!walletAddress) {
+        return res.status(400).json({ error: "Wallet address is required" });
+      }
+
+      // Check if user already exists
+      let user = await storage.getUserByWalletAddress(walletAddress);
+      
+      if (!user) {
+        // Create new user
+        user = await storage.createUser({
+          walletAddress,
+          totalPoints: 0,
+        });
+
+        // Give welcome bonus points
+        await storage.createActivity({
+          userId: user.id,
+          activityType: "welcome_bonus",
+          points: 100,
+          metadata: { reason: "Welcome to GemLaunch!" }
+        });
+
+        await storage.updateUserPoints(user.id, 100);
+      }
+
+      res.json({ 
+        user,
+        message: user.totalPoints === 0 ? "Welcome to GemLaunch! You've earned 100 welcome points!" : "Welcome back!"
+      });
+    } catch (error) {
+      console.error("Error connecting wallet:", error);
+      res.status(500).json({ error: "Failed to connect wallet" });
+    }
+  });
+
   const httpServer = createServer(app);
 
   // WebSocket setup for real-time updates
