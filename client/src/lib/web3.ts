@@ -3,34 +3,67 @@ import { Web3 } from "web3";
 class Web3Service {
   private web3: Web3 | null = null;
   private account: string | null = null;
+  private simulatedWallet = "0x2d9b878DD5f779aF723a430F8d56f21dAc847592";
 
   async connectWallet(): Promise<string | null> {
-    if (typeof window !== "undefined" && (window as any).ethereum) {
+    // Simulate wallet connection for testing
+    this.account = this.simulatedWallet;
+    console.log("Simulated wallet connected:", this.account);
+    return this.account;
+  }
+
+  async connectWalletReal(): Promise<string | null> {
+    if (typeof window !== "undefined") {
+      // Check for ethereum provider (MetaMask, Brave, etc.)
+      const ethereum = (window as any).ethereum;
+      
+      if (!ethereum) {
+        throw new Error("No Web3 wallet detected. Please install MetaMask, enable Brave wallet, or use another Web3 browser.");
+      }
+
       try {
-        this.web3 = new Web3((window as any).ethereum);
+        // For Brave wallet, we might need to check if it's enabled
+        if (ethereum.isBraveWallet) {
+          console.log("Brave wallet detected");
+        }
+
+        this.web3 = new Web3(ethereum);
         
         // Request account access
-        const accounts = await (window as any).ethereum.request({
+        const accounts = await ethereum.request({
           method: "eth_requestAccounts",
         });
         
-        if (accounts.length > 0) {
+        if (accounts && accounts.length > 0) {
           this.account = accounts[0];
+          console.log("Connected to wallet:", this.account);
           
-          // Switch to BNB Chain if not already on it
-          await this.switchToBNBChain();
+          // Try to switch to BNB Chain, but don't fail if it doesn't work
+          try {
+            await this.switchToBNBChain();
+          } catch (switchError) {
+            console.warn("Could not switch to BNB Chain:", switchError);
+            // Continue anyway - user can switch manually
+          }
           
           return this.account;
+        } else {
+          throw new Error("No accounts found. Please unlock your wallet.");
         }
-      } catch (error) {
-        console.error("Failed to connect wallet:", error);
-        throw new Error("Failed to connect wallet");
+      } catch (error: any) {
+        console.error("Wallet connection error:", error);
+        
+        if (error.code === 4001) {
+          throw new Error("Connection rejected by user");
+        } else if (error.code === -32002) {
+          throw new Error("Connection request already pending. Please check your wallet.");
+        } else {
+          throw new Error(error.message || "Failed to connect wallet");
+        }
       }
     } else {
-      throw new Error("No wallet detected. Please install MetaMask or another Web3 wallet.");
+      throw new Error("Web3 not supported in this environment");
     }
-    
-    return null;
   }
 
   async switchToBNBChain() {
@@ -80,6 +113,25 @@ class Web3Service {
 
   isConnected(): boolean {
     return this.account !== null;
+  }
+
+  // Check if wallet is available
+  isWalletAvailable(): boolean {
+    return typeof window !== "undefined" && !!(window as any).ethereum;
+  }
+
+  // Get wallet info for debugging
+  getWalletInfo(): any {
+    if (typeof window !== "undefined" && (window as any).ethereum) {
+      const ethereum = (window as any).ethereum;
+      return {
+        isMetaMask: ethereum.isMetaMask,
+        isBraveWallet: ethereum.isBraveWallet,
+        isConnected: ethereum.isConnected ? ethereum.isConnected() : false,
+        chainId: ethereum.chainId,
+      };
+    }
+    return null;
   }
 
   async getBalance(): Promise<string> {

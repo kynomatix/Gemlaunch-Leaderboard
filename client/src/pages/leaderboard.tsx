@@ -42,10 +42,32 @@ export default function Leaderboard() {
   // Connect to WebSocket for real-time updates
   useWebSocket();
 
-  // Check wallet connection on component mount
+  // Auto-connect simulated wallet on component mount
   useEffect(() => {
-    const account = web3Service.getAccount();
-    setConnectedWallet(account);
+    const connectSimulatedWallet = async () => {
+      const account = await web3Service.connectWallet();
+      setConnectedWallet(account);
+      
+      if (account) {
+        // Register/login user in backend
+        try {
+          const response = await fetch('/api/wallet/connect', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ walletAddress: account }),
+          });
+          
+          const data = await response.json();
+          console.log("Auto-connected wallet:", data.message);
+        } catch (error) {
+          console.error("Failed to register wallet:", error);
+        }
+      }
+    };
+    
+    connectSimulatedWallet();
   }, []);
 
   const connectWallet = async () => {
@@ -53,25 +75,28 @@ export default function Leaderboard() {
       const account = await web3Service.connectWallet();
       setConnectedWallet(account);
       
-      // Register/login user in backend
-      const response = await fetch('/api/wallet/connect', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ walletAddress: account }),
-      });
-      
-      const data = await response.json();
-      
-      toast({
-        title: "Wallet Connected",
-        description: data.message || `Connected to ${account?.slice(0, 6)}...${account?.slice(-4)}`,
-      });
+      if (account) {
+        // Register/login user in backend
+        const response = await fetch('/api/wallet/connect', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ walletAddress: account }),
+        });
+        
+        const data = await response.json();
+        
+        toast({
+          title: "Wallet Connected",
+          description: data.message || `Connected to ${account?.slice(0, 6)}...${account?.slice(-4)}`,
+        });
+      }
     } catch (error: any) {
+      console.error("Wallet connection error:", error);
       toast({
         title: "Connection Failed", 
-        description: error.message || "Please check your Brave wallet and try again",
+        description: error.message || "Failed to connect wallet",
         variant: "destructive"
       });
     }
