@@ -5,6 +5,8 @@ import { storage } from "./storage";
 import { blockchainService } from "./services/blockchain";
 import { insertUserSchema, insertActivitySchema, insertPointConfigSchema } from "@shared/schema";
 import { z } from "zod";
+import { db } from "./db";
+import { sql } from "drizzle-orm";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // User routes
@@ -357,6 +359,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Start blockchain monitoring
   blockchainService.startMonitoring((update) => {
     broadcastUpdate({ type: "blockchain", data: update });
+  });
+
+  // Database health check endpoint
+  app.get('/api/health/database', async (req, res) => {
+    try {
+      const result = await storage.getLeaderboard(1);
+      const userCount = await db.select({ count: sql`count(*)` }).from(users);
+      
+      res.json({
+        status: 'healthy',
+        timestamp: new Date().toISOString(),
+        database: {
+          connected: true,
+          userCount: userCount[0].count,
+          connection: 'PostgreSQL'
+        }
+      });
+    } catch (error) {
+      console.error('Database health check failed:', error);
+      res.status(500).json({
+        status: 'unhealthy',
+        timestamp: new Date().toISOString(),
+        database: {
+          connected: false,
+          error: error instanceof Error ? error.message : 'Unknown error'
+        }
+      });
+    }
   });
 
   // Store broadcast function globally for use in other modules
