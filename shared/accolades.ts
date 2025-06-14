@@ -4,7 +4,7 @@ export interface AccoladeDefinition {
   name: string;
   description: string;
   icon: string;
-  category: 'pioneer' | 'trading' | 'social' | 'creator' | 'elite' | 'streak';
+  category: 'pioneer' | 'funding' | 'social' | 'creator' | 'elite' | 'streak';
   level: number;
   criteria: string;
   pointsBonus: number;
@@ -54,7 +54,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     name: 'First Funder',
     description: 'Fund your first token launch on Gemlaunch.',
     icon: 'Coins',
-    category: 'trading',
+    category: 'funding',
     level: 1,
     criteria: 'Participate in 1 token funding',
     pointsBonus: 200,
@@ -65,43 +65,43 @@ export const ACCOLADES: AccoladeDefinition[] = [
     name: 'Launch Supporter',
     description: 'Support multiple token launches with funding.',
     icon: 'TrendingUp',
-    category: 'trading',
+    category: 'funding',
     level: 2,
     criteria: 'Fund 5+ different token launches',
     pointsBonus: 800,
     rarity: 'uncommon'
   },
   {
-    id: 'volume_veteran',
-    name: 'Volume Veteran',
-    description: 'Achieved significant trading volume on the platform.',
+    id: 'funding_veteran',
+    name: 'Funding Veteran',
+    description: 'Contributed significant funding across multiple token launches.',
     icon: 'BarChart3',
-    category: 'trading',
+    category: 'funding',
     level: 2,
-    criteria: 'Generate significant trading volume',
-    pointsBonus: 300,
+    criteria: 'Fund 10+ different token launches',
+    pointsBonus: 1200,
     rarity: 'uncommon'
   },
   {
-    id: 'whale_trader',
-    name: 'Whale Trader',
-    description: 'Generate $10,000+ in trading volume.',
+    id: 'whale_funder',
+    name: 'Whale Funder',
+    description: 'Provide $10,000+ in total funding across token launches.',
     icon: 'Waves',
-    category: 'trading',
+    category: 'funding',
     level: 3,
-    criteria: 'Generate $10,000+ in trading volume',
-    pointsBonus: 1500,
+    criteria: 'Contribute $10,000+ in total funding',
+    pointsBonus: 3000,
     multiplier: 1.1,
     rarity: 'rare'
   },
   {
-    id: 'diamond_hands',
-    name: 'Diamond Hands',
-    description: 'Hold tokens for 30+ days without selling.',
+    id: 'launch_loyalist',
+    name: 'Launch Loyalist',
+    description: 'Support token launches by holding funded tokens long-term.',
     icon: 'Gem',
-    category: 'trading',
+    category: 'funding',
     level: 2,
-    criteria: 'Hold tokens for 30+ days without selling',
+    criteria: 'Hold funded tokens for 30+ days without selling',
     pointsBonus: 750,
     multiplier: 1.05,
     rarity: 'uncommon'
@@ -159,7 +159,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     name: 'Presale Participant',
     description: 'Participated in a token presale on the platform.',
     icon: 'DollarSign',
-    category: 'trading',
+    category: 'funding',
     level: 1,
     criteria: 'Participate in a token presale',
     pointsBonus: 150,
@@ -331,7 +331,7 @@ export const RARITY_COLORS = {
 
 export const CATEGORY_NAMES = {
   pioneer: 'Pioneer',
-  trading: 'Trading',
+  funding: 'Funding',
   social: 'Social',
   creator: 'Creator',
   elite: 'Elite',
