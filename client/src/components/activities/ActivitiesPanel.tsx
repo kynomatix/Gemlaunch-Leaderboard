@@ -71,7 +71,7 @@ export default function ActivitiesPanel() {
     {
       type: "fair_launch",
       title: "Fair Launch",
-      points: 500,
+      points: 250,
       description: "Launch a fair launch campaign",
       icon: Flame,
       color: "green"
@@ -79,7 +79,7 @@ export default function ActivitiesPanel() {
     {
       type: "presale",
       title: "Presale Launch",
-      points: 750,
+      points: 300,
       description: "Create and run a presale",
       icon: Crown,
       color: "yellow"
@@ -87,7 +87,7 @@ export default function ActivitiesPanel() {
     {
       type: "dutch_auction",
       title: "Dutch Auction",
-      points: 1000,
+      points: 200,
       description: "Host a Dutch auction",
       icon: Gavel,
       color: "purple"

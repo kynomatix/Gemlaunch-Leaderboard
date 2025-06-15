@@ -180,3 +180,11 @@ Changelog:
   - Fixed SQLite compatibility issues with date handling, JSON metadata, and numeric types
   - Application now running on embedded SQLite database file that lives in source code repository
   - Database file size optimized and portable with the codebase for deployment
+- June 15, 2025: Point value adjustments for balanced rewards system
+  - Reduced Fair Launch from 500 to 250 points
+  - Reduced Presale Launch from 750 to 300 points
+  - Reduced Dutch Auction from 1000 to 200 points
+  - Confirmed Welcome Bonus at 100 points
+  - Maintained Volume Contribution at 1 point per $1
+  - Left accolade point bonuses unchanged
+  - Updated both frontend display and backend database configurations
