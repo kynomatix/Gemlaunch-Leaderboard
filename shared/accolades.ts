@@ -1,4 +1,3 @@
-// Comprehensive Accolade System for Gemlaunch
 export interface AccoladeDefinition {
   id: string;
   name: string;
@@ -13,7 +12,7 @@ export interface AccoladeDefinition {
 }
 
 export const ACCOLADES: AccoladeDefinition[] = [
-  // PIONEER CATEGORY
+  // PIONEER CATEGORY (Keep first 3 at top as requested)
   {
     id: 'genesis_member',
     name: 'Genesis Member',
@@ -48,7 +47,7 @@ export const ACCOLADES: AccoladeDefinition[] = [
     rarity: 'uncommon'
   },
 
-  // FUNDING CATEGORY
+  // COMMON RARITY ACCOLADES
   {
     id: 'first_funding',
     name: 'First Funder',
@@ -60,6 +59,41 @@ export const ACCOLADES: AccoladeDefinition[] = [
     pointsBonus: 200,
     rarity: 'common'
   },
+  {
+    id: 'token_creator',
+    name: 'Token Creator',
+    description: 'Launch your first token on Gemlaunch.',
+    icon: 'Target',
+    category: 'creator',
+    level: 1,
+    criteria: 'Create 1 token',
+    pointsBonus: 200,
+    rarity: 'common'
+  },
+  {
+    id: 'presale_participant',
+    name: 'Presale Participant',
+    description: 'Participated in a token presale on the platform.',
+    icon: 'DollarSign',
+    category: 'funding',
+    level: 1,
+    criteria: 'Participate in a token presale',
+    pointsBonus: 150,
+    rarity: 'common'
+  },
+  {
+    id: 'daily_visitor',
+    name: 'Daily Visitor',
+    description: 'Visit the platform for 7 consecutive days.',
+    icon: 'Calendar',
+    category: 'streak',
+    level: 1,
+    criteria: 'Login for 7 consecutive days',
+    pointsBonus: 100,
+    rarity: 'common'
+  },
+
+  // UNCOMMON RARITY ACCOLADES
   {
     id: 'launch_supporter',
     name: 'Launch Supporter',
@@ -83,18 +117,6 @@ export const ACCOLADES: AccoladeDefinition[] = [
     rarity: 'uncommon'
   },
   {
-    id: 'whale_funder',
-    name: 'Whale Funder',
-    description: 'Provide $10,000+ in total funding across token launches.',
-    icon: 'Waves',
-    category: 'funding',
-    level: 3,
-    criteria: 'Contribute $10,000+ in total funding',
-    pointsBonus: 3000,
-    multiplier: 1.1,
-    rarity: 'rare'
-  },
-  {
     id: 'launch_loyalist',
     name: 'Launch Loyalist',
     description: 'Support token launches by holding funded tokens long-term.',
@@ -105,19 +127,6 @@ export const ACCOLADES: AccoladeDefinition[] = [
     pointsBonus: 750,
     multiplier: 1.05,
     rarity: 'uncommon'
-  },
-
-  // CREATOR CATEGORY
-  {
-    id: 'token_creator',
-    name: 'Token Creator',
-    description: 'Launch your first token on Gemlaunch.',
-    icon: 'Target',
-    category: 'creator',
-    level: 1,
-    criteria: 'Create 1 token',
-    pointsBonus: 200,
-    rarity: 'common'
   },
   {
     id: 'serial_creator',
@@ -132,18 +141,6 @@ export const ACCOLADES: AccoladeDefinition[] = [
     rarity: 'uncommon'
   },
   {
-    id: 'project_founder',
-    name: 'Project Founder',
-    description: 'Successfully launch a token that reaches $10K+ market cap.',
-    icon: 'Trophy',
-    category: 'creator',
-    level: 3,
-    criteria: 'Launch a token that reaches $10K+ market cap',
-    pointsBonus: 5000,
-    multiplier: 1.25,
-    rarity: 'epic'
-  },
-  {
     id: 'launch_master',
     name: 'Launch Master',
     description: 'Successfully completed a fair launch on the platform.',
@@ -154,19 +151,6 @@ export const ACCOLADES: AccoladeDefinition[] = [
     pointsBonus: 500,
     rarity: 'uncommon'
   },
-  {
-    id: 'presale_participant',
-    name: 'Presale Participant',
-    description: 'Participated in a token presale on the platform.',
-    icon: 'DollarSign',
-    category: 'funding',
-    level: 1,
-    criteria: 'Participate in a token presale',
-    pointsBonus: 150,
-    rarity: 'common'
-  },
-
-  // SOCIAL CATEGORY
   {
     id: 'referrer',
     name: 'Referrer',
@@ -179,136 +163,117 @@ export const ACCOLADES: AccoladeDefinition[] = [
     rarity: 'uncommon'
   },
   {
-    id: 'referral_rookie',
-    name: 'Referral Master',
-    description: 'Built a strong referral network of 10+ active users.',
-    icon: 'Users',
-    category: 'social',
+    id: 'consistent_user',
+    name: 'Consistent User',
+    description: 'Visit the platform for 30 consecutive days.',
+    icon: 'CalendarCheck',
+    category: 'streak',
     level: 2,
-    criteria: 'Refer 10 friends who join and earn points',
-    pointsBonus: 1500,
-    rarity: 'rare'
-  },
-  {
-    id: 'community_builder',
-    name: 'Community Builder',
-    description: 'Refer 10+ friends to Gemlaunch.',
-    icon: 'UserPlus',
-    category: 'social',
-    level: 2,
-    criteria: 'Refer 10+ friends',
-    pointsBonus: 1500,
+    criteria: 'Login for 30 consecutive days',
+    pointsBonus: 500,
     multiplier: 1.1,
     rarity: 'uncommon'
+  },
+
+  // RARE RARITY ACCOLADES
+  {
+    id: 'whale_funder',
+    name: 'Whale Funder',
+    description: 'Provide $10,000+ in total funding across token launches.',
+    icon: 'Waves',
+    category: 'funding',
+    level: 3,
+    criteria: 'Contribute $10,000+ in total funding',
+    pointsBonus: 3000,
+    multiplier: 1.1,
+    rarity: 'rare'
   },
   {
     id: 'influencer',
     name: 'Influencer',
-    description: 'Refer 50+ friends to Gemlaunch.',
+    description: 'Bring 20+ new users to the platform.',
     icon: 'Megaphone',
     category: 'social',
-    level: 3,
-    criteria: 'Refer 50+ friends',
-    pointsBonus: 10000,
+    level: 2,
+    criteria: 'Refer 20+ users who join and connect wallets',
+    pointsBonus: 2000,
     multiplier: 1.2,
     rarity: 'rare'
   },
-
-  // STREAK CATEGORY
   {
-    id: 'daily_active',
-    name: 'Daily Active',
-    description: 'Be active for 7 consecutive days.',
-    icon: 'Flame',
-    category: 'streak',
-    level: 1,
-    criteria: 'Be active for 7 consecutive days',
-    pointsBonus: 250,
-    rarity: 'common'
-  },
-  {
-    id: 'weekly_warrior',
-    name: 'Weekly Warrior',
-    description: 'Be active for 30 consecutive days.',
-    icon: 'Calendar',
-    category: 'streak',
-    level: 2,
-    criteria: 'Be active for 30 consecutive days',
-    pointsBonus: 1000,
-    multiplier: 1.05,
-    rarity: 'uncommon'
-  },
-  {
-    id: 'dedication_master',
-    name: 'Dedication Master',
-    description: 'Be active for 100 consecutive days.',
-    icon: 'Award',
+    id: 'platform_devotee',
+    name: 'Platform Devotee',
+    description: 'Visit the platform for 100 consecutive days.',
+    icon: 'CalendarHeart',
     category: 'streak',
     level: 3,
-    criteria: 'Be active for 100 consecutive days',
-    pointsBonus: 5000,
+    criteria: 'Login for 100 consecutive days',
+    pointsBonus: 2000,
+    multiplier: 1.25,
+    rarity: 'rare'
+  },
+  {
+    id: 'accolade_collector',
+    name: 'Accolade Collector',
+    description: 'Master achievement hunter who has earned 20 different accolades.',
+    icon: 'Shield',
+    category: 'elite',
+    level: 1,
+    criteria: 'Earn 20 different accolades',
+    pointsBonus: 2500,
     multiplier: 1.15,
     rarity: 'rare'
   },
 
-  // ELITE CATEGORY
+  // EPIC RARITY ACCOLADES
   {
-    id: 'point_collector',
-    name: 'Point Collector',
-    description: 'Accumulate 1,000+ total points.',
-    icon: 'Coins',
-    category: 'elite',
-    level: 1,
-    criteria: 'Accumulate 1,000+ total points',
-    pointsBonus: 200,
-    rarity: 'common'
-  },
-  {
-    id: 'point_master',
-    name: 'Point Master',
-    description: 'Accumulate 10,000+ total points.',
-    icon: 'CircleDollarSign',
-    category: 'elite',
-    level: 2,
-    criteria: 'Accumulate 10,000+ total points',
-    pointsBonus: 2000,
-    multiplier: 1.1,
-    rarity: 'uncommon'
-  },
-  {
-    id: 'point_legend',
-    name: 'Point Legend',
-    description: 'Accumulate 100,000+ total points.',
-    icon: 'Shield',
-    category: 'elite',
+    id: 'project_founder',
+    name: 'Project Founder',
+    description: 'Successfully launch a token that reaches $10K+ market cap.',
+    icon: 'Trophy',
+    category: 'creator',
     level: 3,
-    criteria: 'Accumulate 100,000+ total points',
-    pointsBonus: 25000,
+    criteria: 'Launch a token that reaches $10K+ market cap',
+    pointsBonus: 5000,
     multiplier: 1.25,
     rarity: 'epic'
   },
   {
-    id: 'gemlaunch_champion',
-    name: 'Gemlaunch Champion',
-    description: 'Reach the top 10 on the leaderboard.',
-    icon: 'Medal',
-    category: 'elite',
-    level: 4,
-    criteria: 'Reach top 10 on the leaderboard',
-    pointsBonus: 10000,
+    id: 'ambassador',
+    name: 'Ambassador',
+    description: 'Exceptional community contribution and leadership.',
+    icon: 'Award',
+    category: 'social',
+    level: 3,
+    criteria: 'Refer 50+ users and maintain high engagement',
+    pointsBonus: 5000,
     multiplier: 1.3,
+    rarity: 'epic'
+  },
+
+  // LEGENDARY RARITY ACCOLADES
+  {
+    id: 'volume_king',
+    name: 'Volume King',
+    description: 'Exceptional funding volume contribution.',
+    icon: 'Crown',
+    category: 'elite',
+    level: 1,
+    criteria: 'Contribute $100,000+ total volume',
+    pointsBonus: 10000,
+    multiplier: 1.5,
     rarity: 'legendary'
   },
   {
-    id: 'ecosystem_king',
-    name: 'Ecosystem King',
-    description: 'Reach #1 on the leaderboard.',
-    icon: 'Sceptre',
+    id: 'gemlaunch_legend',
+    name: 'Gemlaunch Legend',
+    description: 'Ultimate achievement for platform mastery.',
+    icon: 'Sparkles',
     category: 'elite',
-    level: 5,
-    criteria: 'Reach #1 on the leaderboard',
-    pointsBonus: 50000,
-    multiplier: 1.5,
+    level: 1,
+    criteria: 'Complete all major platform milestones',
+    pointsBonus: 25000,
+    multiplier: 2.0,
     rarity: 'legendary'
   }
 ];
@@ -322,11 +287,11 @@ export const getAccoladeById = (id: string) => {
 };
 
 export const RARITY_COLORS = {
-  common: '#9ca3af',
-  uncommon: '#22cda6',
-  rare: '#3b82f6',
-  epic: '#8b5cf6',
-  legendary: '#f59e0b'
+  common: '#9CA3AF',     // Gray
+  uncommon: '#22C55E',   // Green
+  rare: '#3B82F6',       // Blue
+  epic: '#A855F7',       // Purple
+  legendary: '#F59E0B'   // Orange/Gold
 };
 
 export const CATEGORY_NAMES = {

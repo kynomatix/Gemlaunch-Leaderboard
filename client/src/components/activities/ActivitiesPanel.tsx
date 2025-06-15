@@ -117,14 +117,7 @@ export default function ActivitiesPanel() {
       icon: Crown,
       color: "primary"
     },
-    {
-      type: "accolade_earned",
-      title: "Accolade Earned",
-      points: 0,
-      description: "Achievement unlocked",
-      icon: Crown,
-      color: "yellow"
-    }
+
   ];
 
   const mockRecentActivities = [

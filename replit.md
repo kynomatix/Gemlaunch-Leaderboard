@@ -190,3 +190,9 @@ Changelog:
   - Updated both frontend display and backend database configurations
   - Recalculated existing user points: User 4 (10,450), User 3 (7,700), User 5 (3,375)
   - Updated historical activities to reflect new point values while preserving accolade bonuses
+- June 15, 2025: Activities panel cleanup and accolade system enhancement
+  - Removed "Accolade Earned" 0-point activity from Point Earning Activities section
+  - Added new "Accolade Collector" rare achievement for earning 20 different accolades (2,500 points + 1.15x multiplier)
+  - Reordered all accolades by rarity: common → uncommon → rare → epic → legendary
+  - Preserved first 3 pioneer accolades (Genesis Member, Gemlaunch Pioneer, Early Adopter) at top as requested
+  - Enhanced achievement progression with clearer rarity-based organization
