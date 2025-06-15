@@ -112,7 +112,7 @@ export default function ActivitiesPanel() {
     {
       type: "welcome_bonus",
       title: "Welcome Bonus",
-      points: 1000,
+      points: 100,
       description: "First-time registration bonus",
       icon: Crown,
       color: "primary"
