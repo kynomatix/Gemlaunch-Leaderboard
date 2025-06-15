@@ -188,3 +188,5 @@ Changelog:
   - Maintained Volume Contribution at 1 point per $1
   - Left accolade point bonuses unchanged
   - Updated both frontend display and backend database configurations
+  - Recalculated existing user points: User 4 (10,450), User 3 (7,700), User 5 (3,375)
+  - Updated historical activities to reflect new point values while preserving accolade bonuses
