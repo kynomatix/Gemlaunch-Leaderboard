@@ -308,21 +308,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
           userId: user.id,
           activityType: "token_creation",
           points: 500,
-          metadata: { tokenName: "DEMO", tokenSymbol: "DMO" }
+          metadata: JSON.stringify({ tokenName: "DEMO", tokenSymbol: "DMO" })
         });
 
         await storage.createActivity({
           userId: user.id,
           activityType: "project_funding",
           points: 300,
-          metadata: { amount: "0.5 BNB", project: "DeFi Protocol" }
+          metadata: JSON.stringify({ amount: "0.5 BNB", project: "DeFi Protocol" })
         });
 
         await storage.createActivity({
           userId: user.id,
           activityType: "referral_bonus",
           points: 200,
-          metadata: { referredUser: "0x1234...5678" }
+          metadata: JSON.stringify({ referredUser: "0x1234...5678" })
         });
 
         // Create Gemlaunch Pioneer accolade for early users
@@ -330,7 +330,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           userId: user.id,
           accoladeType: "gemlaunch_pioneer",
           level: 1,
-          multiplier: "1.10"
+          multiplier: 1.10
         });
 
         await storage.updateUserPoints(user.id, 1100); // 100 + 500 + 300 + 200

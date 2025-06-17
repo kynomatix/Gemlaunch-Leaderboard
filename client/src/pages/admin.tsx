@@ -182,7 +182,7 @@ export default function Admin() {
               {isLoading ? (
                 <div className="text-center py-4">Loading configurations...</div>
               ) : (
-                pointConfigs?.map((config: any) => (
+                Array.isArray(pointConfigs) ? pointConfigs.map((config: any) => (
                   <div key={config.activityType} className="flex items-center justify-between">
                     <Label className="text-sm capitalize">
                       {config.activityType.replace('_', ' ')}:
@@ -201,7 +201,9 @@ export default function Admin() {
                       <span className="text-xs text-gray-400">pts</span>
                     </div>
                   </div>
-                ))
+                )) : (
+                  <div className="text-center py-4 text-gray-400">No configurations found</div>
+                )
               )}
             </CardContent>
           </Card>
@@ -260,28 +262,28 @@ export default function Admin() {
                   <div className="flex justify-between items-center">
                     <span className="text-sm">Connection Status</span>
                     <Badge 
-                      variant={blockchainStatus.isConnected ? "default" : "destructive"}
-                      className={blockchainStatus.isConnected ? "bg-green-600" : "bg-red-600"}
+                      variant={blockchainStatus?.isConnected ? "default" : "destructive"}
+                      className={blockchainStatus?.isConnected ? "bg-green-600" : "bg-red-600"}
                     >
-                      {blockchainStatus.isConnected ? "Connected" : "Disconnected"}
+                      {blockchainStatus?.isConnected ? "Connected" : "Disconnected"}
                     </Badge>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm">Last Block</span>
                     <span className="text-primary font-mono">
-                      #{blockchainStatus.lastBlockNumber.toLocaleString()}
+                      #{blockchainStatus?.lastBlockNumber?.toLocaleString() || "0"}
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm">Events Processed</span>
                     <span className="text-primary font-mono">
-                      {blockchainStatus.eventsProcessed.toLocaleString()}
+                      {blockchainStatus?.eventsProcessed?.toLocaleString() || "0"}
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm">Last Update</span>
                     <span className="text-gray-400 text-xs">
-                      {new Date(blockchainStatus.lastUpdate).toLocaleTimeString()}
+                      {blockchainStatus?.lastUpdate ? new Date(blockchainStatus.lastUpdate).toLocaleTimeString() : "Never"}
                     </span>
                   </div>
                   <Separator className="bg-red-500/30" />
@@ -292,6 +294,22 @@ export default function Admin() {
                   >
                     {processEventsMutation.isPending ? "Processing..." : "Process Pending Events"}
                   </Button>
+                  
+                  <Button
+                    onClick={() => monitorGemlaunchMutation.mutate()}
+                    disabled={monitorGemlaunchMutation.isPending}
+                    className="w-full bg-[#22cda6] hover:bg-[#22cda6]/90 text-black"
+                  >
+                    {monitorGemlaunchMutation.isPending ? "Monitoring..." : "Monitor Gemlaunch Contracts"}
+                  </Button>
+                  
+                  <div className="text-xs text-gray-400 space-y-1">
+                    <div>Real Contract Addresses:</div>
+                    <div className="font-mono">Fair Launch: 0x63fd...BA9DA</div>
+                    <div className="font-mono">Dutch Auction: 0x120d...575bd</div>
+                    <div className="font-mono">Private Sale: 0xFA19...B9427</div>
+                    <div className="font-mono">Token Factory: 0x3D61...C427</div>
+                  </div>
                 </>
               ) : (
                 <div className="text-center py-4 text-gray-400">
