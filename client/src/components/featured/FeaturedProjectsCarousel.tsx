@@ -230,22 +230,34 @@ export default function FeaturedProjectsCarousel() {
       </div>
 
       {/* Carousel */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative overflow-hidden">
         {visibleProjects.map((project, index) => (
-          <Card key={`${project.id}-${currentIndex}`} className="bg-[#253935] border-[#22cda6]/20 hover:border-[#22cda6]/40 transition-all duration-300 hover:shadow-lg hover:shadow-[#22cda6]/10">
-            <CardContent className="p-6">
+          <Card 
+            key={`${project.id}-${currentIndex}`} 
+            className="bg-[#253935] border-[#22cda6]/20 hover:border-[#22cda6]/60 transition-all duration-500 hover:shadow-xl hover:shadow-[#22cda6]/20 hover:scale-105 transform-gpu group relative overflow-hidden"
+            style={{
+              animation: `slideInUp 0.6s ease-out ${index * 0.15}s both`,
+            }}
+          >
+            {/* Animated background glow */}
+            <div className="absolute inset-0 bg-gradient-to-br from-[#22cda6]/10 via-transparent to-[#22cda6]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            
+            {/* Subtle animated border */}
+            <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-[#22cda6]/0 via-[#22cda6]/30 to-[#22cda6]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 animate-pulse"></div>
+            
+            <CardContent className="p-6 relative z-10">
               {/* Project Header */}
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center space-x-3">
                   {/* Project Logo Placeholder */}
-                  <div className="w-12 h-12 bg-gradient-to-br from-[#22cda6] to-[#1fb898] rounded-lg flex items-center justify-center">
-                    <span className="text-white font-bold text-lg">
+                  <div className="w-12 h-12 bg-gradient-to-br from-[#22cda6] to-[#1fb898] rounded-lg flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-lg group-hover:shadow-[#22cda6]/40">
+                    <span className="text-white font-bold text-lg group-hover:scale-110 transition-transform duration-300">
                       {project.symbol.slice(0, 2)}
                     </span>
                   </div>
                   <div>
-                    <h3 className="font-bold text-white text-lg">{project.name}</h3>
-                    <p className="text-[#22cda6] text-sm font-medium">${project.symbol}</p>
+                    <h3 className="font-bold text-white text-lg group-hover:text-[#22cda6] transition-colors duration-300">{project.name}</h3>
+                    <p className="text-[#22cda6] text-sm font-medium group-hover:scale-105 transition-transform duration-300">${project.symbol}</p>
                   </div>
                 </div>
                 
@@ -261,16 +273,16 @@ export default function FeaturedProjectsCarousel() {
 
               {/* Project Stats */}
               <div className="grid grid-cols-2 gap-4 mb-4">
-                <div className="text-center">
-                  <p className="text-[#22cda6] font-bold text-lg">{project.totalRaised}</p>
-                  <p className="text-gray-400 text-xs">Total Raised</p>
+                <div className="text-center group-hover:scale-105 transition-transform duration-300">
+                  <p className="text-[#22cda6] font-bold text-lg animate-pulse group-hover:animate-none">{project.totalRaised}</p>
+                  <p className="text-gray-400 text-xs group-hover:text-gray-300 transition-colors duration-300">Total Raised</p>
                 </div>
-                <div className="text-center">
+                <div className="text-center group-hover:scale-105 transition-transform duration-300">
                   <div className="flex items-center justify-center space-x-1">
-                    <Users className="h-4 w-4 text-[#22cda6]" />
+                    <Users className="h-4 w-4 text-[#22cda6] group-hover:scale-110 group-hover:text-[#1fb898] transition-all duration-300" />
                     <p className="text-[#22cda6] font-bold text-lg">{project.participants.toLocaleString()}</p>
                   </div>
-                  <p className="text-gray-400 text-xs">Participants</p>
+                  <p className="text-gray-400 text-xs group-hover:text-gray-300 transition-colors duration-300">Participants</p>
                 </div>
               </div>
 

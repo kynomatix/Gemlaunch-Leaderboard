@@ -162,41 +162,54 @@ export default function Leaderboard() {
       </div>
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
-        {/* Top Bar - Network Selection & Wallet */}
-        <div className="bg-[#253935] border-b border-[#3d5c4d] px-6 py-4">
+        {/* Top Bar - Authentic Gemlaunch Design */}
+        <div className="bg-[#0a0f0c] border-b border-[#22cda6]/10 px-8 py-4">
           <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-4">
-              <div className="bg-[#22cda6] text-black px-4 py-2 rounded-full flex items-center space-x-2">
-                <div className="w-4 h-4 bg-green-500 rounded-full"></div>
-                <span className="text-sm font-medium">BSC Mainnet</span>
-              </div>
+            {/* Logo */}
+            <div className="flex items-center">
+              <span className="text-[#22cda6] text-xl font-bold">Gemlaunch</span>
             </div>
             
-            {connectedWallet ? (
-              <div className="flex items-center space-x-2">
-                <div className="bg-[#0f1713] border border-[#3d5c4d] px-4 py-2 rounded-full">
-                  <span className="text-[#22cda6] text-sm font-mono">
-                    {connectedWallet.slice(0, 6)}...{connectedWallet.slice(-4)}
-                  </span>
+            {/* Network Status */}
+            <div className="flex-1 flex justify-center">
+              {connectedWallet ? (
+                <div className="bg-[#22cda6] text-black px-4 py-2 rounded-full text-sm font-medium">
+                  BSC Mainnet Connected
                 </div>
+              ) : (
+                <div className="bg-transparent border border-[#22cda6] text-[#22cda6] px-4 py-2 rounded-full text-sm font-medium">
+                  Not Connected
+                </div>
+              )}
+            </div>
+            
+            {/* Wallet Connection */}
+            <div className="flex items-center">
+              {connectedWallet ? (
+                <div className="flex items-center space-x-3">
+                  <div className="bg-[#0f1713] border border-[#22cda6]/20 px-4 py-2 rounded-full">
+                    <span className="text-[#22cda6] text-sm font-mono">
+                      {connectedWallet.slice(0, 6)}...{connectedWallet.slice(-4)}
+                    </span>
+                  </div>
+                  <Button
+                    onClick={disconnectWallet}
+                    variant="outline"
+                    size="sm"
+                    className="border-[#22cda6]/30 text-[#22cda6] hover:bg-[#22cda6]/10 rounded-full"
+                  >
+                    Disconnect
+                  </Button>
+                </div>
+              ) : (
                 <Button
-                  onClick={disconnectWallet}
-                  variant="outline"
-                  size="sm"
-                  className="border-[#3d5c4d] text-gray-400 hover:text-white"
+                  onClick={connectWallet}
+                  className="bg-transparent border border-[#22cda6] text-[#22cda6] hover:bg-[#22cda6] hover:text-black font-medium px-6 py-2 rounded-full transition-all duration-200"
                 >
-                  Disconnect
+                  Connecting...
                 </Button>
-              </div>
-            ) : (
-              <Button
-                onClick={connectWallet}
-                className="bg-[#22cda6] hover:bg-[#1fb898] text-black font-bold px-6 py-2"
-              >
-                <Wallet className="h-4 w-4 mr-2" />
-                Connect Wallet
-              </Button>
-            )}
+              )}
+            </div>
           </div>
         </div>
 
