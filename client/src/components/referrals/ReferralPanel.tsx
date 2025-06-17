@@ -27,6 +27,14 @@ export default function ReferralPanel() {
     return () => clearInterval(interval);
   }, []);
 
+  // Fetch user profile data for custom referral code
+  const { data: profile } = useQuery({
+    queryKey: ["/api/profile", connectedWallet],
+    queryFn: () => fetch(`/api/profile/${connectedWallet}`).then(res => res.json()),
+    enabled: !!connectedWallet,
+    staleTime: 30000,
+  });
+
   // Fetch user's referral data
   const { data: referralStats } = useQuery({
     queryKey: ["/api/referrals/stats", connectedWallet],
@@ -61,9 +69,12 @@ export default function ReferralPanel() {
   };
 
   const copyReferralLink = async () => {
-    if (!connectedWallet || !referralStats?.referralCode) return;
+    if (!connectedWallet) return;
     
-    const referralLink = `https://gemlaunch.io/?ref=${referralStats.referralCode}`;
+    // Use custom referral code if available, otherwise use the default referral code
+    const referralCode = profile?.customReferralCode || referralStats?.referralCode || connectedWallet.slice(0, 8);
+    const referralLink = `https://gemlaunch.io/?ref=${referralCode}`;
+    
     try {
       await navigator.clipboard.writeText(referralLink);
       setCopied(true);
@@ -123,7 +134,7 @@ export default function ReferralPanel() {
             <div className="bg-[#0f1713] rounded-lg p-4 border border-[#22cda6]/30">
               <div className="flex items-center justify-between">
                 <div className="font-mono text-sm text-gray-300 truncate mr-4">
-                  {referralStats?.referralCode ? `https://gemlaunch.io/?ref=${referralStats.referralCode}` : 'Loading...'}
+                  {connectedWallet ? `https://gemlaunch.io/?ref=${profile?.customReferralCode || referralStats?.referralCode || connectedWallet.slice(0, 8)}` : 'Loading...'}
                 </div>
                 <Button
                   onClick={copyReferralLink}
@@ -133,7 +144,7 @@ export default function ReferralPanel() {
                       ? "bg-green-600 hover:bg-green-700" 
                       : "bg-[#22cda6] hover:bg-[#1fb898]"
                   } text-black`}
-                  disabled={!referralStats?.referralCode}
+                  disabled={!connectedWallet}
                 >
                   {copied ? "Copied!" : <Copy className="h-4 w-4" />}
                 </Button>

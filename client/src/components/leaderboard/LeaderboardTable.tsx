@@ -150,7 +150,7 @@ export default function LeaderboardTable() {
               </div>
               <div className="bg-[#253935] rounded-lg p-3 min-h-[80px] flex flex-col justify-center">
                 <div className="font-bold text-sm truncate text-white">
-                  {topThree[1].walletAddress.slice(0, 6)}...{topThree[1].walletAddress.slice(-4)}
+                  {topThree[1].username || `${topThree[1].walletAddress.slice(0, 6)}...${topThree[1].walletAddress.slice(-4)}`}
                 </div>
                 <div className="text-[#22cda6] text-xs font-medium">
                   {topThree[1].totalPoints.toLocaleString()} pts
@@ -168,7 +168,7 @@ export default function LeaderboardTable() {
               </div>
               <div className="bg-[#22cda6]/20 border border-[#22cda6] rounded-lg p-4 min-h-[100px] flex flex-col justify-center">
                 <div className="font-bold text-white">
-                  {topThree[0].walletAddress.slice(0, 6)}...{topThree[0].walletAddress.slice(-4)}
+                  {topThree[0].username || `${topThree[0].walletAddress.slice(0, 6)}...${topThree[0].walletAddress.slice(-4)}`}
                 </div>
                 <div className="text-[#22cda6] font-bold">
                   {topThree[0].totalPoints.toLocaleString()} pts
@@ -186,7 +186,7 @@ export default function LeaderboardTable() {
               </div>
               <div className="bg-[#253935] rounded-lg p-3 min-h-[80px] flex flex-col justify-center">
                 <div className="font-bold text-sm truncate text-white">
-                  {topThree[2].walletAddress.slice(0, 6)}...{topThree[2].walletAddress.slice(-4)}
+                  {topThree[2].username || `${topThree[2].walletAddress.slice(0, 6)}...${topThree[2].walletAddress.slice(-4)}`}
                 </div>
                 <div className="text-[#22cda6] text-xs font-medium">
                   {topThree[2].totalPoints.toLocaleString()} pts
@@ -235,7 +235,7 @@ export default function LeaderboardTable() {
                   <div className="flex-1">
                     <div className="flex items-center space-x-2">
                       <span className="font-medium text-white">
-                        {user.walletAddress.slice(0, 6)}...{user.walletAddress.slice(-4)}
+                        {user.username || `${user.walletAddress.slice(0, 6)}...${user.walletAddress.slice(-4)}`}
                       </span>
                       
                       {/* Accolades Display */}
