@@ -181,8 +181,8 @@ export default function Admin() {
             <CardContent className="space-y-4">
               {isLoading ? (
                 <div className="text-center py-4">Loading configurations...</div>
-              ) : (
-                Array.isArray(pointConfigs) ? pointConfigs.map((config: any) => (
+              ) : Array.isArray(pointConfigs) ? (
+                pointConfigs.map((config: any) => (
                   <div key={config.activityType} className="flex items-center justify-between">
                     <Label className="text-sm capitalize">
                       {config.activityType.replace('_', ' ')}:
@@ -201,9 +201,9 @@ export default function Admin() {
                       <span className="text-xs text-gray-400">pts</span>
                     </div>
                   </div>
-                )) : (
-                  <div className="text-center py-4 text-gray-400">No configurations found</div>
-                )
+                ))
+              ) : (
+                <div className="text-center py-4 text-gray-400">No configurations found</div>
               )}
             </CardContent>
           </Card>
