@@ -196,3 +196,13 @@ Changelog:
   - Reordered all accolades by rarity: common → uncommon → rare → epic → legendary
   - Preserved first 3 pioneer accolades (Genesis Member, Gemlaunch Pioneer, Early Adopter) at top as requested
   - Enhanced achievement progression with clearer rarity-based organization
+- June 17, 2025: Wallet consolidation system and featured projects carousel
+  - Implemented comprehensive wallet consolidation system where multiple wallet addresses consolidate under main accounts
+  - Updated leaderboard to display usernames when available instead of wallet addresses for better readability
+  - Enhanced referral system to use custom referral codes when users have configured them
+  - Added database schema fields (isMainAccount, parentUserId) for wallet hierarchy management
+  - Created featured projects carousel replacing static statistics cards with rotating 3-project display
+  - Integrated special partner accolades system for featured projects with exclusive point rewards
+  - Auto-advancing carousel with manual navigation controls and project indicators
+  - Featured projects include MetaVerse Protocol, DeFi Nexus, GameFi Arena, and other partner projects
+  - Each featured project displays status (presale/fairlaunch/dutch auction), participants, funding raised, and exclusive accolades
