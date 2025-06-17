@@ -1,5 +1,6 @@
 import { storage } from "../storage";
 import { Web3 } from "web3";
+import { GEMLAUNCH_CONTRACTS, GEMLAUNCH_EVENTS, ACTIVITY_MAPPING } from '../contracts/gemlaunch-addresses.js';
 
 interface BlockchainStatus {
   isConnected: boolean;
@@ -19,7 +20,7 @@ class BlockchainService {
   };
 
   constructor() {
-    const rpcUrl = process.env.BNB_RPC_URL || "https://bsc-dataseed1.binance.org/";
+    const rpcUrl = process.env.BNB_RPC_URL || GEMLAUNCH_CONTRACTS.RPC_URL;
     this.web3 = new Web3(rpcUrl);
     this.initializeConnection();
   }
