@@ -1,7 +1,11 @@
-const Database = require('better-sqlite3');
-const path = require('path');
+import Database from 'better-sqlite3';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 
-const dbPath = path.join(__dirname, 'database.db');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const dbPath = join(__dirname, 'database.db');
 const db = new Database(dbPath);
 
 try {
