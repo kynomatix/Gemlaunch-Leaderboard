@@ -210,7 +210,7 @@ export default function ReferralPanel() {
             </div>
             <div className="flex justify-between items-center">
               <span>Total Earned</span>
-              <span className="text-green-400 font-medium">
+              <span className="text-[#22cda6] font-medium">
                 {(referralStats?.totalEarned || 0).toLocaleString()} points
               </span>
             </div>
@@ -243,7 +243,7 @@ export default function ReferralPanel() {
                         {new Date(referral.createdAt).toLocaleDateString()}
                       </div>
                     </div>
-                    <Badge variant="outline" className="border-green-400 text-green-400">
+                    <Badge variant="outline" className="border-[#22cda6] text-[#22cda6]">
                       +{referral.pointsEarned} pts
                     </Badge>
                   </div>
