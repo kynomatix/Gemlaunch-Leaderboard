@@ -104,8 +104,8 @@ export default function ActivitiesPanel() {
     {
       type: "referral",
       title: "Successful Referral",
-      points: 500,
-      description: "Each user who joins via your link",
+      points: 50,
+      description: "User joins and contributes $20+ or creates token/presale",
       icon: Users,
       color: "blue"
     },
@@ -138,7 +138,7 @@ export default function ActivitiesPanel() {
     {
       id: 3,
       activityType: "referral",
-      points: 500,
+      points: 50,
       createdAt: "2024-01-14T16:45:00Z",
       user: { username: "You" }
     }

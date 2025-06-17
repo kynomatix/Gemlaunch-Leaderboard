@@ -158,9 +158,18 @@ export default function ReferralPanel() {
             <div className="bg-[#0f1713] rounded-lg p-4">
               <h4 className="font-medium mb-2">Referral Rewards</h4>
               <div className="text-sm text-gray-400 space-y-1">
-                <div>• 500 points per successful referral</div>
+                <div>• 50 points per successful referral</div>
                 <div>• 2% of referee's points permanently</div>
                 <div>• Bonus multipliers for community leaders</div>
+              </div>
+              <div className="mt-3 pt-3 border-t border-gray-600">
+                <h5 className="text-xs font-medium text-[#22cda6] mb-1">Qualification Requirements</h5>
+                <div className="text-xs text-gray-500 space-y-1">
+                  <div>Referred user must actively participate:</div>
+                  <div>• Min $20 contributed to projects, OR</div>
+                  <div>• Create token/launch presale</div>
+                  <div className="text-[#22cda6]">Prevents sybil farming attacks</div>
+                </div>
               </div>
             </div>
           </div>
