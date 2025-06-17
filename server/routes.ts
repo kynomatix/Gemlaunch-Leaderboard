@@ -210,6 +210,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Monitor real Gemlaunch contracts for authentic activity
+  app.post("/api/blockchain/monitor-gemlaunch", async (req, res) => {
+    try {
+      await blockchainService.monitorGemlaunchContracts();
+      const status = blockchainService.getStatus();
+      res.json({ 
+        success: true, 
+        status,
+        message: "Gemlaunch contract monitoring completed",
+        contracts: [
+          "Fair Launch: 0x63fddF231BA74CEaA3D061b67FC08af2dFbBA9DA",
+          "Dutch Auction: 0x120d0166b1c132Cdaa2307549568634fd3F575bd", 
+          "Private Sale: 0xFA19F2Fb64Fc9cbdBA7407b573a6B82E0d6f1427",
+          "Token Factory: 0x3D61f62213EcE0917Abf64c6119D29C9dc18C427"
+        ]
+      });
+    } catch (error) {
+      console.error("Gemlaunch monitoring error:", error);
+      res.status(500).json({ error: "Failed to monitor Gemlaunch contracts" });
+    }
+  });
+
   // Get user referral stats
   app.get("/api/referrals/stats/:walletAddress", async (req, res) => {
     try {
@@ -278,7 +300,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           userId: user.id,
           activityType: "welcome_bonus",
           points: 100,
-          metadata: { reason: "Welcome to GemLaunch!" }
+          metadata: JSON.stringify({ reason: "Welcome to GemLaunch!" })
         });
 
         // Add sample activities for demo

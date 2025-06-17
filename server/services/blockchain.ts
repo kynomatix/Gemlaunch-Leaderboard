@@ -198,9 +198,9 @@ class BlockchainService {
             eventType: mapping.type,
             userAddress: userAddress.toLowerCase(),
             metadata: {
-              contractAddress: log.address,
-              transactionHash: log.transactionHash,
-              blockNumber: Number(log.blockNumber),
+              contractAddress: (log as any).address,
+              transactionHash: (log as any).transactionHash,
+              blockNumber: Number((log as any).blockNumber),
               points: mapping.points,
               description: mapping.description
             }
@@ -221,6 +221,74 @@ class BlockchainService {
       this.status.lastBlockNumber = Number(blockNumber);
     } catch (error) {
       console.error("Error updating block number:", error);
+    }
+  }
+
+  public async monitorGemlaunchContracts() {
+    try {
+      // Monitor all Gemlaunch contract addresses for events
+      const contractAddresses = [
+        GEMLAUNCH_CONTRACTS.FAIR_LAUNCH,
+        GEMLAUNCH_CONTRACTS.DUTCH_AUCTION,
+        GEMLAUNCH_CONTRACTS.PRIVATE_SALE,
+        GEMLAUNCH_CONTRACTS.STANDARD_TOKEN_FACTORY
+      ];
+
+      console.log("Starting Gemlaunch contract monitoring...");
+      
+      for (const contractAddress of contractAddresses) {
+        // Get recent events from the last 100 blocks
+        const latestBlock = await this.web3.eth.getBlockNumber();
+        const fromBlock = Number(latestBlock) - 100;
+
+        const events = await this.web3.eth.getPastLogs({
+          address: contractAddress,
+          fromBlock: fromBlock,
+          toBlock: 'latest'
+        });
+
+        console.log(`Found ${events.length} events for contract ${contractAddress}`);
+
+        for (const event of events) {
+          const parsedEvent = this.parseEventLog(event);
+          if (parsedEvent) {
+            await this.processGemlaunchActivity(parsedEvent);
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Error monitoring Gemlaunch contracts:", error);
+    }
+  }
+
+  private async processGemlaunchActivity(eventData: { eventType: string; userAddress: string; metadata?: any }) {
+    try {
+      // Check if user exists in our rewards system
+      const user = await storage.getUserByWalletAddress(eventData.userAddress);
+      if (!user) {
+        console.log(`User ${eventData.userAddress} not registered, skipping activity`);
+        return; // Only track activity for registered users
+      }
+
+      // Create activity record with real blockchain data
+      await storage.createActivity({
+        userId: user.id,
+        activityType: eventData.eventType,
+        points: eventData.metadata?.points || 0,
+        transactionHash: eventData.metadata?.transactionHash,
+        blockNumber: eventData.metadata?.blockNumber,
+        metadata: JSON.stringify({
+          contractAddress: eventData.metadata?.contractAddress,
+          description: eventData.metadata?.description
+        })
+      });
+
+      // Update user's total points
+      await storage.updateUserPoints(user.id, eventData.metadata?.points || 0);
+
+      console.log(`Processed ${eventData.eventType} activity for user ${eventData.userAddress}`);
+    } catch (error) {
+      console.error("Error processing Gemlaunch activity:", error);
     }
   }
 

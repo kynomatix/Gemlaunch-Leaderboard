@@ -98,6 +98,28 @@ export default function Admin() {
     },
   });
 
+  // Monitor Gemlaunch contracts mutation
+  const monitorGemlaunchMutation = useMutation({
+    mutationFn: async () => {
+      const response = await apiRequest("POST", "/api/blockchain/monitor-gemlaunch");
+      return response.json();
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["/api/blockchain/status"] });
+      toast({
+        title: "Gemlaunch monitoring completed",
+        description: "Scanned all real contract addresses for authentic activity.",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to monitor Gemlaunch contracts.",
+        variant: "destructive",
+      });
+    },
+  });
+
   const handlePointConfigUpdate = (activityType: string, newValue: string) => {
     const basePoints = parseInt(newValue);
     if (isNaN(basePoints) || basePoints < 0) return;
