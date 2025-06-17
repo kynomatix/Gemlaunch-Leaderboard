@@ -241,7 +241,7 @@ export default function Leaderboard() {
 
             {/* Leaderboard Section */}
             <Tabs defaultValue="leaderboard" className="w-full">
-              <TabsList className="grid w-full max-w-md grid-cols-3 bg-[#253935]">
+              <TabsList className="grid w-full max-w-lg grid-cols-4 bg-[#253935]">
                 <TabsTrigger value="leaderboard" className="data-[state=active]:bg-[#22cda6] data-[state=active]:text-black">
                   <Trophy className="h-4 w-4 mr-2" />
                   Leaderboard
@@ -253,6 +253,14 @@ export default function Leaderboard() {
                 <TabsTrigger value="activities" className="data-[state=active]:bg-[#22cda6] data-[state=active]:text-black">
                   <TrendingUp className="h-4 w-4 mr-2" />
                   Activities
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="profile" 
+                  className="data-[state=active]:bg-[#22cda6] data-[state=active]:text-black"
+                  onClick={() => window.location.href = '/profile'}
+                >
+                  <Settings className="h-4 w-4 mr-2" />
+                  Profile
                 </TabsTrigger>
               </TabsList>
 

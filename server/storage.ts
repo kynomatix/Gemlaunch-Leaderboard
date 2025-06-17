@@ -5,6 +5,7 @@ import {
   accolades, 
   pointConfigs, 
   blockchainEvents,
+  userWallets,
   type User, 
   type InsertUser,
   type Activity,
@@ -16,7 +17,9 @@ import {
   type PointConfig,
   type InsertPointConfig,
   type BlockchainEvent,
-  type InsertBlockchainEvent
+  type InsertBlockchainEvent,
+  type UserWallet,
+  type InsertUserWallet
 } from "@shared/schema";
 import { db } from "./sqlite-db";
 import { eq, desc, sql, sum, count, and, inArray } from "drizzle-orm";
