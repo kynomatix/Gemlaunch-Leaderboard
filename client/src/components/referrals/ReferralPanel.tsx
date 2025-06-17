@@ -148,7 +148,7 @@ export default function ReferralPanel() {
                 <div className="text-sm text-gray-400">Total Referrals</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-green-400">
+                <div className="text-2xl font-bold text-[22cda6]">
                   {referralStats?.totalEarned || 0}
                 </div>
                 <div className="text-sm text-gray-400">Points Earned</div>
@@ -166,7 +166,6 @@ export default function ReferralPanel() {
           </div>
         </CardContent>
       </Card>
-
       {/* Referral Stats and Recent Activity */}
       <div className="space-y-6">
         <Card className="bg-[#253935] border-[#22cda6]/20">
