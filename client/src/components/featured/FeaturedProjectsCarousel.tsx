@@ -201,9 +201,12 @@ export default function FeaturedProjectsCarousel() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
-          <Star className="h-6 w-6 text-[#22cda6]" />
-          <h2 className="text-xl font-bold text-white">Featured Partner Projects</h2>
-          <Badge variant="outline" className="text-[#22cda6] border-[#22cda6]">
+          <Star className="h-6 w-6 text-[#22cda6] animate-pulse hover:rotate-180 transition-transform duration-700" />
+          <h2 className="text-xl font-bold text-white relative">
+            Featured Partner Projects
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#22cda6]/20 to-transparent animate-pulse opacity-50"></div>
+          </h2>
+          <Badge variant="outline" className="text-[#22cda6] border-[#22cda6] hover:bg-[#22cda6]/10 hover:scale-105 transition-all duration-300 animate-pulse">
             Exclusive Accolades Available
           </Badge>
         </div>
@@ -214,17 +217,17 @@ export default function FeaturedProjectsCarousel() {
             variant="outline"
             size="sm"
             onClick={prevProject}
-            className="border-[#22cda6]/30 text-[#22cda6] hover:bg-[#22cda6]/10"
+            className="border-[#22cda6]/30 text-[#22cda6] hover:bg-[#22cda6]/20 hover:border-[#22cda6] hover:shadow-lg hover:shadow-[#22cda6]/30 transition-all duration-300 hover:scale-110"
           >
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="h-4 w-4 transition-transform duration-300 hover:scale-110" />
           </Button>
           <Button
             variant="outline"
             size="sm"
             onClick={nextProject}
-            className="border-[#22cda6]/30 text-[#22cda6] hover:bg-[#22cda6]/10"
+            className="border-[#22cda6]/30 text-[#22cda6] hover:bg-[#22cda6]/20 hover:border-[#22cda6] hover:shadow-lg hover:shadow-[#22cda6]/30 transition-all duration-300 hover:scale-110"
           >
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-4 w-4 transition-transform duration-300 hover:scale-110" />
           </Button>
         </div>
       </div>
