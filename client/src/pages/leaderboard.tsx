@@ -30,6 +30,7 @@ import LeaderboardTable from "@/components/leaderboard/LeaderboardTable";
 import AccoladesPanel from "@/components/leaderboard/AccoladesPanel";
 import ReferralPanel from "@/components/referrals/ReferralPanel";
 import ActivitiesPanel from "@/components/activities/ActivitiesPanel";
+import ProfilePanel from "@/components/profile/ProfilePanel";
 import { useWebSocket } from "@/hooks/useWebSocket";
 
 import Gemmy_Mascot from "@assets/Gemmy_Mascot.png";
@@ -254,11 +255,7 @@ export default function Leaderboard() {
                   <TrendingUp className="h-4 w-4 mr-2" />
                   Activities
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="profile" 
-                  className="data-[state=active]:bg-[#22cda6] data-[state=active]:text-black"
-                  onClick={() => window.location.href = '/profile'}
-                >
+                <TabsTrigger value="profile" className="data-[state=active]:bg-[#22cda6] data-[state=active]:text-black">
                   <Settings className="h-4 w-4 mr-2" />
                   Profile
                 </TabsTrigger>
@@ -279,6 +276,12 @@ export default function Leaderboard() {
               <TabsContent value="activities" className="mt-6">
                 <div className="bg-[#253935] rounded-lg p-6 border border-[#3d5c4d]">
                   <ActivitiesPanel />
+                </div>
+              </TabsContent>
+
+              <TabsContent value="profile" className="mt-6">
+                <div className="bg-[#253935] rounded-lg p-6 border border-[#3d5c4d]">
+                  <ProfilePanel connectedWallet={connectedWallet} />
                 </div>
               </TabsContent>
             </Tabs>
