@@ -27,6 +27,12 @@ export interface IStorage {
   getUserByWalletAddress(walletAddress: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   updateUserPoints(userId: number, points: number): Promise<void>;
+  updateUserProfile(walletAddress: string, profileData: Partial<User>): Promise<User>;
+  
+  // User wallet operations
+  getUserWallets(userId: number): Promise<UserWallet[]>;
+  addUserWallet(wallet: InsertUserWallet): Promise<UserWallet>;
+  removeUserWallet(walletId: number): Promise<void>;
   
   // Leaderboard operations
   getLeaderboard(limit?: number): Promise<Array<User & { rank: number }>>;
@@ -296,6 +302,39 @@ export class DatabaseStorage implements IStorage {
       .update(blockchainEvents)
       .set({ processed: true })
       .where(eq(blockchainEvents.id, eventId));
+  }
+
+  async updateUserProfile(walletAddress: string, profileData: Partial<User>): Promise<User> {
+    const [user] = await db
+      .update(users)
+      .set({
+        ...profileData,
+        updatedAt: new Date().toISOString(),
+      })
+      .where(eq(users.walletAddress, walletAddress))
+      .returning();
+    return user;
+  }
+
+  async getUserWallets(userId: number): Promise<UserWallet[]> {
+    return await db
+      .select()
+      .from(userWallets)
+      .where(eq(userWallets.userId, userId));
+  }
+
+  async addUserWallet(wallet: InsertUserWallet): Promise<UserWallet> {
+    const [newWallet] = await db
+      .insert(userWallets)
+      .values(wallet)
+      .returning();
+    return newWallet;
+  }
+
+  async removeUserWallet(walletId: number): Promise<void> {
+    await db
+      .delete(userWallets)
+      .where(eq(userWallets.id, walletId));
   }
 
   private generateReferralCode(): string {
