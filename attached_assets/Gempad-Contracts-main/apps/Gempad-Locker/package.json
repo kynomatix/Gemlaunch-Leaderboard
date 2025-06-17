@@ -1,0 +1,19 @@
+{
+  "name": "@gempad/locker",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "compile": "npx hardhat compile",
+    "deploy": "npx hardhat run",
+    "adeploy": "npx hardhat run  --network aGoerli",
+    "gdeploy": "npx hardhat run  --network goerli",
+    "coverage": "npx hardhat coverage",
+    "test": "npx hardhat test",
+    "test:coverage": "npx hardhat coverage",
+    "flat": "scripts/flat.sh",
+    "unflatten": " npx @devdavi/unflatten",
+    "export-abi": "npx hardhat export-abi",
+    "clear-abi": "npx hardhat clear-abi",
+    "build": "yarn run test && yarn run flat && yarn run export-abi"
+  }
+}

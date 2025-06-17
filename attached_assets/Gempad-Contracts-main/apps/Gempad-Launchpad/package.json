@@ -1,0 +1,27 @@
+{
+  "name": "@gempad/launchpad",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "compile": "npx hardhat compile",
+    "deploy": "npx hardhat run",
+    "bverify": "npx hardhat verify --network bsc",
+    "gverify": "npx hardhat verify --network goerli",
+    "adeploy": "npx hardhat run  --network aGoerli",
+    "bdeploy": "npx hardhat run  --network bsc",
+    "gdeploy": "npx hardhat run  --network goerli",
+    "coverage": "npx hardhat coverage",
+    "test": "npx hardhat test",
+    "unflatten": " npx @devdavi/unflatten",
+    "test:coverage": "npx hardhat coverage",
+    "flat": "scripts/flat.sh",
+    "export-abi": "npx hardhat export-abi",
+    "clear-abi": "npx hardhat clear-abi",
+    "build": "yarn run test && yarn run flat && yarn run export-abi"
+  },
+  "dependencies": {
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.9",
+    "axios": "^1.5.0",
+    "eth-token-recover": "^4.9.3"
+  }
+}

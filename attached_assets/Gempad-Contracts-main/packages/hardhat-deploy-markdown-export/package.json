@@ -1,0 +1,62 @@
+{
+  "name": "@gempad/hardhat-deploy-markdown-export",
+  "version": "0.3.6",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "browser": {
+    "fs": false
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "format": "prettier --write \"**/*.{ts,js}\"",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "peerDependencies": {},
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "author": "Gempad Inc.",
+  "module": "dist/hardhat-deploy-markdown-export.esm.js",
+  "size-limit": [
+    {
+      "path": "dist/hardhat-deploy-markdown-export.cjs.production.min.js",
+      "limit": "50 KB",
+      "ignore": [
+        "fs"
+      ]
+    },
+    {
+      "path": "dist/hardhat-deploy-markdown-export.esm.js",
+      "limit": "50 KB",
+      "ignore": [
+        "fs"
+      ]
+    }
+  ],
+  "devDependencies": {
+    "@types/node": "^15.14.9",
+    "@size-limit/preset-small-lib": "^5.0.5",
+    "find": "0.3.0",
+    "husky": "8.0.1",
+    "size-limit": "^5.0.5",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.3"
+  }
+}

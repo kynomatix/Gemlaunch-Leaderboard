@@ -1,0 +1,22 @@
+{
+  "name": "@gempad/gempadv2",
+  "version": "1.0.1",
+  "license": "MIT",
+  "scripts": {
+    "compile": "npx hardhat compile",
+    "deploy": "npx hardhat run",
+    "verify:bsc": "npx hardhat verify --network bsc",
+    "verify:goerli": "npx hardhat verify --network goerli",
+    "deploy:arbiGoerli": "npx hardhat run  --network aGoerli",
+    "deploy:bsc": "npx hardhat run  --network bsc",
+    "deploy:goerli": "npx hardhat run  --network goerli",
+    "coverage": "npx hardhat coverage",
+    "test": "npx hardhat test",
+    "unflatten": " npx @devdavi/unflatten",
+    "test:coverage": "npx hardhat coverage",
+    "flat": "scripts/flat.sh",
+    "export-abi": "npx hardhat export-abi",
+    "clear-abi": "npx hardhat clear-abi",
+    "build": "yarn run test && yarn run flat && yarn run export-abi"
+  }
+}

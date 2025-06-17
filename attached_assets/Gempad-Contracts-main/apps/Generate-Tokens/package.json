@@ -1,0 +1,26 @@
+{
+  "name": "@gempad/generatetokens",
+  "version": "1.0.1",
+  "scripts": {
+    "format:check": "prettier --check packages/**/*.{js,ts}",
+    "format:write": "prettier --write packages/**/*.{js,ts}",
+    "test": "npx hardhat test",
+    "verify": "npx hardhat verify",
+    "gverify": "npx hardhat verify --network goerli",
+    "bverify": "npx hardhat verify --network bsc",
+    "compile": "npx hardhat compile",
+    "deploy": "npx hardhat run",
+    "bdeploy": "npx hardhat run --network bsc",
+    "gdeploy": "npx hardhat run --network goerli",
+    "unflatten": " npx @devdavi/unflatten",
+    "format": "prettier --ignore-path .gitignore \"packages/**/*.+(ts|js|tsx)\" --write",
+    "lint": "eslint --ignore-path .gitignore \"packages/**/*.+(ts|js|tsx)\"",
+    "lint:fix": "yarn run lint --fix"
+  },
+  "dependencies": {
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.9",
+    "axios": "^1.5.0",
+    "eth-token-recover": "^4.9.3",
+    "@gempad/antibot": "*"
+  }
+}
