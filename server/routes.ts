@@ -274,6 +274,77 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Profile management endpoints
+  app.get("/api/profile/:walletAddress", async (req, res) => {
+    try {
+      const user = await storage.getUserByWalletAddress(req.params.walletAddress);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      res.json(user);
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+      res.status(500).json({ error: "Failed to fetch user profile" });
+    }
+  });
+
+  app.put("/api/profile/:walletAddress", async (req, res) => {
+    try {
+      const updatedUser = await storage.updateUserProfile(req.params.walletAddress, req.body);
+      res.json(updatedUser);
+    } catch (error) {
+      console.error("Error updating user profile:", error);
+      res.status(500).json({ error: "Failed to update user profile" });
+    }
+  });
+
+  app.get("/api/profile/wallets/:walletAddress", async (req, res) => {
+    try {
+      const user = await storage.getUserByWalletAddress(req.params.walletAddress);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      const userWallets = await storage.getUserWallets(user.id);
+      res.json(userWallets);
+    } catch (error) {
+      console.error("Error fetching user wallets:", error);
+      res.status(500).json({ error: "Failed to fetch user wallets" });
+    }
+  });
+
+  app.post("/api/profile/wallets/:walletAddress", async (req, res) => {
+    try {
+      const user = await storage.getUserByWalletAddress(req.params.walletAddress);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      
+      const walletData = {
+        userId: user.id,
+        walletAddress: req.body.address,
+        label: req.body.label,
+        isPrimary: false,
+        isActive: true,
+      };
+      
+      const newWallet = await storage.addUserWallet(walletData);
+      res.json(newWallet);
+    } catch (error) {
+      console.error("Error adding user wallet:", error);
+      res.status(500).json({ error: "Failed to add user wallet" });
+    }
+  });
+
+  app.delete("/api/profile/wallets/:walletId", async (req, res) => {
+    try {
+      await storage.removeUserWallet(parseInt(req.params.walletId));
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error removing user wallet:", error);
+      res.status(500).json({ error: "Failed to remove user wallet" });
+    }
+  });
+
   // Connect wallet - create or get user
   app.post("/api/wallet/connect", async (req, res) => {
     try {
