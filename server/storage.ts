@@ -128,39 +128,88 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getLeaderboard(limit = 100): Promise<Array<User & { rank: number; accolades: Accolade[] }>> {
-    // Get all users ordered by points
-    const rankedUsers = await db
-      .select()
-      .from(users)
-      .orderBy(desc(users.totalPoints))
-      .limit(limit);
+    // Get all users with their wallet information
+    const usersWithWallets = await db
+      .select({
+        id: users.id,
+        walletAddress: users.walletAddress,
+        username: users.username,
+        displayName: users.displayName,
+        totalPoints: users.totalPoints,
+        referralCode: users.referralCode,
+        customReferralCode: users.customReferralCode,
+        bio: users.bio,
+        websiteUrl: users.websiteUrl,
+        twitterHandle: users.twitterHandle,
+        discordHandle: users.discordHandle,
+        telegramHandle: users.telegramHandle,
+        profileImageUrl: users.profileImageUrl,
+        createdAt: users.createdAt,
+        updatedAt: users.updatedAt,
+        isMainAccount: users.isMainAccount,
+        parentUserId: users.parentUserId
+      })
+      .from(users);
+
+    // Filter to only main accounts and consolidate points from connected wallets
+    const mainAccounts = usersWithWallets.filter(user => user.isMainAccount);
+    const consolidatedUsers = mainAccounts.map(mainAccount => {
+      // Find all connected wallets for this main account
+      const connectedWallets = usersWithWallets.filter(user => 
+        user.parentUserId === mainAccount.id
+      );
+      
+      // Sum points from main account and all connected wallets
+      const totalConsolidatedPoints = mainAccount.totalPoints + 
+        connectedWallets.reduce((sum, wallet) => sum + wallet.totalPoints, 0);
+      
+      return {
+        ...mainAccount,
+        totalPoints: totalConsolidatedPoints
+      };
+    });
+
+    // Sort by consolidated points and add rank
+    const rankedUsers = consolidatedUsers
+      .sort((a, b) => b.totalPoints - a.totalPoints)
+      .slice(0, limit)
+      .map((user, index) => ({
+        ...user,
+        rank: index + 1
+      }));
     
-    // Add rank numbers
-    const rankedUsersWithRank = rankedUsers.map((user, index) => ({
-      ...user,
-      rank: index + 1
-    }));
-    
-    // Get all accolades for these users
+    // Get all accolades for these users and their connected wallets
     let userAccolades: Accolade[] = [];
     
     if (rankedUsers.length > 0) {
+      const allUserIds = rankedUsers.flatMap(user => {
+        const connectedWallets = usersWithWallets.filter(u => u.parentUserId === user.id);
+        return [user.id, ...connectedWallets.map(w => w.id)];
+      });
+      
       userAccolades = await db
         .select()
-        .from(accolades);
+        .from(accolades)
+        .where(inArray(accolades.userId, allUserIds));
     }
     
-    // Group accolades by user ID
+    // Group accolades by main user ID (consolidate accolades from connected wallets)
     const accoladesByUser: Record<number, Accolade[]> = {};
     userAccolades.forEach(accolade => {
-      if (!accoladesByUser[accolade.userId]) {
-        accoladesByUser[accolade.userId] = [];
+      // Find the main account for this accolade
+      const walletUser = usersWithWallets.find(u => u.id === accolade.userId);
+      const mainAccountId = walletUser?.parentUserId || walletUser?.id;
+      
+      if (mainAccountId) {
+        if (!accoladesByUser[mainAccountId]) {
+          accoladesByUser[mainAccountId] = [];
+        }
+        accoladesByUser[mainAccountId].push(accolade);
       }
-      accoladesByUser[accolade.userId].push(accolade);
     });
     
-    // Combine users with their accolades
-    return rankedUsersWithRank.map(user => ({
+    // Combine users with their consolidated accolades
+    return rankedUsers.map(user => ({
       ...user,
       accolades: accoladesByUser[user.id] || []
     }));

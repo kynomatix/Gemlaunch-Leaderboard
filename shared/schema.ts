@@ -19,6 +19,8 @@ export const users = sqliteTable("users", {
   referralCode: text("referral_code").unique(),
   referredBy: integer("referred_by"),
   isInfluencer: integer("is_influencer", { mode: 'boolean' }).default(false).notNull(),
+  isMainAccount: integer("is_main_account", { mode: 'boolean' }).default(true).notNull(),
+  parentUserId: integer("parent_user_id"),
   createdAt: text("created_at").default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: text("updated_at").default(sql`CURRENT_TIMESTAMP`).notNull(),
 });
