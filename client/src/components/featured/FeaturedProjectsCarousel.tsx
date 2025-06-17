@@ -201,12 +201,11 @@ export default function FeaturedProjectsCarousel() {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
-          <Star className="h-6 w-6 text-[#22cda6] animate-pulse hover:rotate-180 transition-transform duration-700" />
-          <h2 className="text-xl font-bold text-white relative">
+          <Star className="h-6 w-6 text-[#22cda6] hover:rotate-180 transition-transform duration-700" />
+          <h2 className="text-xl font-bold text-white">
             Featured Partner Projects
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#22cda6]/20 to-transparent animate-pulse opacity-50"></div>
           </h2>
-          <Badge variant="outline" className="text-[#22cda6] border-[#22cda6] hover:bg-[#22cda6]/10 hover:scale-105 transition-all duration-300 animate-pulse">
+          <Badge variant="outline" className="text-[#22cda6] border-[#22cda6] hover:bg-[#22cda6]/10 hover:scale-105 transition-all duration-300">
             Exclusive Accolades Available
           </Badge>
         </div>
@@ -246,7 +245,7 @@ export default function FeaturedProjectsCarousel() {
             <div className="absolute inset-0 bg-gradient-to-br from-[#22cda6]/10 via-transparent to-[#22cda6]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             
             {/* Subtle animated border */}
-            <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-[#22cda6]/0 via-[#22cda6]/30 to-[#22cda6]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 animate-pulse"></div>
+            <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-[#22cda6]/0 via-[#22cda6]/30 to-[#22cda6]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
             
             <CardContent className="p-6 relative z-10">
               {/* Project Header */}
@@ -277,7 +276,7 @@ export default function FeaturedProjectsCarousel() {
               {/* Project Stats */}
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <div className="text-center group-hover:scale-105 transition-transform duration-300">
-                  <p className="text-[#22cda6] font-bold text-lg animate-pulse group-hover:animate-none">{project.totalRaised}</p>
+                  <p className="text-[#22cda6] font-bold text-lg">{project.totalRaised}</p>
                   <p className="text-gray-400 text-xs group-hover:text-gray-300 transition-colors duration-300">Total Raised</p>
                 </div>
                 <div className="text-center group-hover:scale-105 transition-transform duration-300">
