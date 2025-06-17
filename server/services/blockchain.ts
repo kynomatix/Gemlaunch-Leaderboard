@@ -158,13 +158,14 @@ class BlockchainService {
         for (const log of logs) {
           // Parse event based on contract and topic
           const eventData = this.parseEventLog(log);
-          if (eventData) {
+          if (eventData && typeof log === 'object' && log !== null) {
+            const logObj = log as any;
             await storage.createBlockchainEvent({
-              transactionHash: log.transactionHash!,
-              blockNumber: Number(log.blockNumber),
+              transactionHash: logObj.transactionHash || '',
+              blockNumber: Number(logObj.blockNumber || 0),
               eventType: eventData.eventType,
-              contractAddress: log.address!,
               userAddress: eventData.userAddress,
+              metadata: JSON.stringify(eventData.metadata),
               processed: false
             });
           }
@@ -178,22 +179,40 @@ class BlockchainService {
   }
 
   private parseEventLog(log: any): { eventType: string; userAddress: string; metadata?: any } | null {
-    // This would contain the actual event parsing logic based on Gemlaunch contract ABIs
-    // For now, return null as we don't have the actual contract details
-    
-    // Example parsing logic:
-    // const eventSignature = log.topics[0];
-    // switch (eventSignature) {
-    //   case "0x...": // TokenCreated event signature
-    //     return {
-    //       eventType: "TokenCreated",
-    //       userAddress: `0x${log.topics[1].slice(26)}`, // Extract address from topic
-    //       metadata: { /* decoded event data */ }
-    //     };
-    //   // ... other events
-    // }
-    
-    return null;
+    try {
+      const eventTopic = log.topics?.[0];
+      if (!eventTopic) return null;
+
+      // Map event topics to activity types using real Gemlaunch event signatures
+      for (const [eventSig, mapping] of Object.entries(ACTIVITY_MAPPING)) {
+        const eventHash = this.web3.utils.keccak256(eventSig);
+        if (eventTopic === eventHash) {
+          // Extract user address from indexed parameters (topic[1] is typically the user)
+          const userAddress = log.topics?.[1] ? 
+            `0x${log.topics[1].slice(26)}` : // Remove padding from address
+            null;
+          
+          if (!userAddress) continue;
+
+          return {
+            eventType: mapping.type,
+            userAddress: userAddress.toLowerCase(),
+            metadata: {
+              contractAddress: log.address,
+              transactionHash: log.transactionHash,
+              blockNumber: Number(log.blockNumber),
+              points: mapping.points,
+              description: mapping.description
+            }
+          };
+        }
+      }
+
+      return null;
+    } catch (error) {
+      console.error("Error parsing Gemlaunch event:", error);
+      return null;
+    }
   }
 
   private async updateBlockNumber() {

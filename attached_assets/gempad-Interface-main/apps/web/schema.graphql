@@ -1,0 +1,158 @@
+interface BaseEntity {
+  id: ID!
+  chainId: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+enum LockStatus {
+  Locked
+  Withdrawn
+}
+
+enum AirdropStatus {
+  Upcomming
+  Live
+  End
+  Cancelled
+}
+
+type User implements BaseEntity @entity {
+  id: ID! # wallet address
+  chainId: Int!
+  locks: [Lock!] @derivedFrom(field: "owner")
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type Token implements BaseEntity @entity {
+  id: ID! # token address
+  chainId: Int!
+  name: String!
+  symbol: String
+  decimals: Int!
+  totalSupply: BigInt!
+  usdPrice: Float!
+  image: String
+  isLiquidityToken: Boolean!
+  token0: Token
+  token1: Token
+  reserve0: BigInt
+  reserve1: BigInt
+  nextUnlock: DateTime
+  tokenLockedCount: Int!
+  tokenLocked: Float!
+  tokenLockedInUsd: Float!
+  locks: [Lock!] @derivedFrom(field: "token")
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type Transaction implements BaseEntity @entity {
+  id: ID! # hash
+  chainId: Int!
+  hash: String!
+  index: Int!
+  from: String
+  to: String
+  value: BigInt!
+  gas: BigInt!
+  gasPrice: BigInt!
+  blockNumber: Int!
+  lock: Lock
+  vesting: Vesting
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type Lock implements BaseEntity @entity {
+  id: ID! # lock id pf smart contract
+  chainId: Int!
+  owner: User!
+  token: Token!
+  amount: BigInt!
+  unlockDate: DateTime!
+  depositDate: DateTime!
+  status: LockStatus!
+  transactions: [Transaction!] @derivedFrom(field: "lock")
+  createdAt: DateTime!
+  updatedAt: DateTime
+  tge: BigInt
+  cycleShare: BigInt
+  interval: BigInt
+  title: String
+}
+
+type LockTemp @entity {
+  id: ID!
+  title: String!
+}
+
+type Airdrop implements BaseEntity @entity {
+  id: ID!
+  chainId: Int!
+  owner: User!
+  token: Token!
+  name: String!
+  status: AirdropStatus!
+  tge: BigInt!
+  cycle: BigInt!
+  interval: BigInt!
+  isVesting: Boolean!
+  contractAddress: String!
+  allocations: [Allocation] @derivedFrom(field: "airdrop")
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type Allocation @entity {
+  airdrop: Airdrop!
+  addresses: [String]
+  amounts: [String]
+}
+
+type Vesting implements BaseEntity @entity {
+  id: ID! # the address of the newly created vesting contract
+  chainId: Int!
+  token: Token!
+  creator: User!
+  merkleRoot: String!
+  dataUri: String!
+  totalAmount: BigInt!
+  claimers: [Claimer!] @derivedFrom(field: "vesting")
+  transactions: [Transaction!] @derivedFrom(field: "vesting")
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type Claimer implements BaseEntity @entity {
+  id: ID!
+  chainId: Int!
+  token: Token!
+  user: User!
+  amount: String!
+  start: Int! # date in seconds
+  end: Int! # date in seconds
+  cliff: Int!
+  cadance: Int!
+  percentageOnStart: Int!
+  revocable: Boolean!
+  index: Int!
+  vesting: Vesting!
+  merkleProof: [String]!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type Aggregation implements BaseEntity @entity {
+  id: ID! # 1
+  chainId: Int!
+  tokenLockedCount: Int!
+  tokenLocked: Float!
+  tokenLockedInUsd: Float!
+  liquidityLockedCount: Int!
+  liquidityLocked: Float!
+  liquidityLockedInUsd: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}

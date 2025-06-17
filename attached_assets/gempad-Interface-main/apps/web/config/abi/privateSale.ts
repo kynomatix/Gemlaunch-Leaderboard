@@ -1,0 +1,716 @@
+export const PrivateSaleAbi = [
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: false,
+                internalType: 'uint256',
+                name: 'Id',
+                type: 'uint256',
+            },
+            {
+                indexed: false,
+                internalType: 'enum GempadPrivateSale.Mode',
+                name: 'mode',
+                type: 'uint8',
+            },
+            {
+                indexed: false,
+                internalType: 'address',
+                name: 'token',
+                type: 'address',
+            },
+            {
+                indexed: false,
+                internalType: 'uint256',
+                name: 'amount',
+                type: 'uint256',
+            },
+        ],
+        name: 'AntibotInfoAdded',
+        type: 'event',
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: false,
+                internalType: 'uint256',
+                name: 'Id',
+                type: 'uint256',
+            },
+            {
+                indexed: false,
+                internalType: 'enum GempadPrivateSale.Status',
+                name: 'status',
+                type: 'uint8',
+            },
+        ],
+        name: 'Cancelled',
+        type: 'event',
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: false,
+                internalType: 'uint256',
+                name: 'Id',
+                type: 'uint256',
+            },
+            {
+                indexed: false,
+                internalType: 'enum GempadPrivateSale.Status',
+                name: 'status',
+                type: 'uint8',
+            },
+            {
+                indexed: false,
+                internalType: 'uint256',
+                name: 'finalizeTime',
+                type: 'uint256',
+            },
+        ],
+        name: 'Finalized',
+        type: 'event',
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: false,
+                internalType: 'uint256',
+                name: 'Id',
+                type: 'uint256',
+            },
+            {
+                indexed: false,
+                internalType: 'address',
+                name: 'sender',
+                type: 'address',
+            },
+            {
+                indexed: false,
+                internalType: 'uint256',
+                name: 'amount',
+                type: 'uint256',
+            },
+        ],
+        name: 'FundsDeposited',
+        type: 'event',
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: false,
+                internalType: 'uint8',
+                name: 'version',
+                type: 'uint8',
+            },
+        ],
+        name: 'Initialized',
+        type: 'event',
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: true,
+                internalType: 'address',
+                name: 'previousOwner',
+                type: 'address',
+            },
+            {
+                indexed: true,
+                internalType: 'address',
+                name: 'newOwner',
+                type: 'address',
+            },
+        ],
+        name: 'OwnershipTransferred',
+        type: 'event',
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: false,
+                internalType: 'uint256',
+                name: 'Id',
+                type: 'uint256',
+            },
+            {
+                indexed: false,
+                internalType: 'uint256',
+                name: 'saleTime',
+                type: 'uint256',
+            },
+        ],
+        name: 'PublicSaleEnabled',
+        type: 'event',
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: false,
+                internalType: 'address[]',
+                name: 'account',
+                type: 'address[]',
+            },
+            {
+                indexed: false,
+                internalType: 'address',
+                name: 'sender',
+                type: 'address',
+            },
+            {
+                indexed: false,
+                internalType: 'bool',
+                name: 'status',
+                type: 'bool',
+            },
+        ],
+        name: 'WhitelistAdded',
+        type: 'event',
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: false,
+                internalType: 'address[]',
+                name: 'account',
+                type: 'address[]',
+            },
+            {
+                indexed: false,
+                internalType: 'address',
+                name: 'sender',
+                type: 'address',
+            },
+            {
+                indexed: false,
+                internalType: 'bool',
+                name: 'status',
+                type: 'bool',
+            },
+        ],
+        name: 'WhitelistRemoved',
+        type: 'event',
+    },
+    {
+        inputs: [],
+        name: 'Id',
+        outputs: [
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'uint256',
+                name: '_id',
+                type: 'uint256',
+            },
+            {
+                internalType: 'address',
+                name: '_owner',
+                type: 'address',
+            },
+            {
+                components: [
+                    {
+                        internalType: 'string',
+                        name: 'name',
+                        type: 'string',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'softCap',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'hardCap',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'minBuyLimit',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'maxBuyLimit',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'startTime',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'endTime',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'finalizeTime',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'publicSaleTime',
+                        type: 'uint256',
+                    },
+                ],
+                internalType: 'struct GempadPrivateSale.PrivateSaleInfo',
+                name: 'info',
+                type: 'tuple',
+            },
+            {
+                components: [
+                    {
+                        internalType: 'uint256',
+                        name: 'initialRelease',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'cyclePercent',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'cycleInterval',
+                        type: 'uint256',
+                    },
+                ],
+                internalType: 'struct GempadPrivateSale.VestingInfo',
+                name: '_vesting',
+                type: 'tuple',
+            },
+            {
+                internalType: 'enum GempadPrivateSale.Mode',
+                name: '_mode',
+                type: 'uint8',
+            },
+            {
+                internalType: 'address payable',
+                name: '_feeReceiver',
+                type: 'address',
+            },
+            {
+                internalType: 'address',
+                name: '_fundToken',
+                type: 'address',
+            },
+        ],
+        name: '__GempadPrivateSale_init',
+        outputs: [],
+        stateMutability: 'payable',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address payable',
+                name: 'receiver',
+                type: 'address',
+            },
+            {
+                internalType: 'string',
+                name: 'serviceName',
+                type: 'string',
+            },
+        ],
+        name: '__ServicePayer_init',
+        outputs: [],
+        stateMutability: 'payable',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address[]',
+                name: '_participants',
+                type: 'address[]',
+            },
+        ],
+        name: 'addWhitelist',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'antibotToken',
+        outputs: [
+            {
+                internalType: 'contract IERC20',
+                name: '',
+                type: 'address',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'cancel',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'claimRefund',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'claimTokens',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'claimableTokens',
+        outputs: [
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'claimedAmount',
+        outputs: [
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address',
+                name: '',
+                type: 'address',
+            },
+        ],
+        name: 'depositOf',
+        outputs: [
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address',
+                name: '_token',
+                type: 'address',
+            },
+            {
+                internalType: 'uint256',
+                name: '_amount',
+                type: 'uint256',
+            },
+        ],
+        name: 'enableAntibotMode',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'uint256',
+                name: '_startTime',
+                type: 'uint256',
+            },
+        ],
+        name: 'enablePublicSale',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'finalize',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'fundByTokens',
+        outputs: [
+            {
+                internalType: 'bool',
+                name: '',
+                type: 'bool',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'fundToken',
+        outputs: [
+            {
+                internalType: 'contract IERC20',
+                name: '',
+                type: 'address',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'getAllInvestors',
+        outputs: [
+            {
+                internalType: 'address[]',
+                name: '',
+                type: 'address[]',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'getCurrentMode',
+        outputs: [
+            {
+                internalType: 'enum GempadPrivateSale.Mode',
+                name: 'mode',
+                type: 'uint8',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'getCurrentStatus',
+        outputs: [
+            {
+                internalType: 'enum GempadPrivateSale.Status',
+                name: 'status',
+                type: 'uint8',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'uint256',
+                name: '_amount',
+                type: 'uint256',
+            },
+        ],
+        name: 'investFunds',
+        outputs: [],
+        stateMutability: 'payable',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'isInitialized',
+        outputs: [
+            {
+                internalType: 'bool',
+                name: '',
+                type: 'bool',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address',
+                name: '_address',
+                type: 'address',
+            },
+        ],
+        name: 'isWhitelisted',
+        outputs: [
+            {
+                internalType: 'bool',
+                name: '',
+                type: 'bool',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'owner',
+        outputs: [
+            {
+                internalType: 'address',
+                name: '',
+                type: 'address',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address[]',
+                name: '_participants',
+                type: 'address[]',
+            },
+        ],
+        name: 'removeWhitelist',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'renounceOwnership',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'saleInfo',
+        outputs: [
+            {
+                internalType: 'string',
+                name: 'name',
+                type: 'string',
+            },
+            {
+                internalType: 'uint256',
+                name: 'softCap',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256',
+                name: 'hardCap',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256',
+                name: 'minBuyLimit',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256',
+                name: 'maxBuyLimit',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256',
+                name: 'startTime',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256',
+                name: 'endTime',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256',
+                name: 'finalizeTime',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256',
+                name: 'publicSaleTime',
+                type: 'uint256',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'totalSale',
+        outputs: [
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address',
+                name: 'newOwner',
+                type: 'address',
+            },
+        ],
+        name: 'transferOwnership',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'vesting',
+        outputs: [
+            {
+                internalType: 'uint256',
+                name: 'initialRelease',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256',
+                name: 'cyclePercent',
+                type: 'uint256',
+            },
+            {
+                internalType: 'uint256',
+                name: 'cycleInterval',
+                type: 'uint256',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+] as const;

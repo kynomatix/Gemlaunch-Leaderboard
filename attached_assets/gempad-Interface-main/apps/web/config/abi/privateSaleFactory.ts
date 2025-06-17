@@ -1,0 +1,340 @@
+export const PrivateSaleFactoryABI = [
+    {
+        inputs: [
+            {
+                internalType: 'address',
+                name: '_initBlueprint',
+                type: 'address',
+            },
+        ],
+        stateMutability: 'nonpayable',
+        type: 'constructor',
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: true,
+                internalType: 'address',
+                name: 'previousOwner',
+                type: 'address',
+            },
+            {
+                indexed: true,
+                internalType: 'address',
+                name: 'newOwner',
+                type: 'address',
+            },
+        ],
+        name: 'OwnershipTransferred',
+        type: 'event',
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: false,
+                internalType: 'uint256',
+                name: 'id',
+                type: 'uint256',
+            },
+            {
+                components: [
+                    {
+                        internalType: 'string',
+                        name: 'name',
+                        type: 'string',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'softCap',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'hardCap',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'minBuyLimit',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'maxBuyLimit',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'startTime',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'endTime',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'finalizeTime',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'publicSaleTime',
+                        type: 'uint256',
+                    },
+                ],
+                indexed: false,
+                internalType: 'struct GempadPrivateSaleFactory.PrivateSaleInfo',
+                name: 'info',
+                type: 'tuple',
+            },
+            {
+                components: [
+                    {
+                        internalType: 'uint256',
+                        name: 'initialRelease',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'cyclePercent',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'cycleInterval',
+                        type: 'uint256',
+                    },
+                ],
+                indexed: false,
+                internalType: 'struct GempadPrivateSaleFactory.VestingInfo',
+                name: 'vesting',
+                type: 'tuple',
+            },
+            {
+                indexed: false,
+                internalType: 'enum GempadPrivateSaleFactory.Mode',
+                name: 'mode',
+                type: 'uint8',
+            },
+            {
+                indexed: false,
+                internalType: 'address',
+                name: 'fundToken',
+                type: 'address',
+            },
+            {
+                indexed: false,
+                internalType: 'address',
+                name: 'privateSale',
+                type: 'address',
+            },
+        ],
+        name: 'PrivateSaleCreated',
+        type: 'event',
+    },
+    {
+        inputs: [],
+        name: 'IdCounter',
+        outputs: [
+            {
+                internalType: 'uint256',
+                name: '',
+                type: 'uint256',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                components: [
+                    {
+                        internalType: 'string',
+                        name: 'name',
+                        type: 'string',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'softCap',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'hardCap',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'minBuyLimit',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'maxBuyLimit',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'startTime',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'endTime',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'finalizeTime',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'publicSaleTime',
+                        type: 'uint256',
+                    },
+                ],
+                internalType: 'struct GempadPrivateSaleFactory.PrivateSaleInfo',
+                name: 'info',
+                type: 'tuple',
+            },
+            {
+                components: [
+                    {
+                        internalType: 'uint256',
+                        name: 'initialRelease',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'cyclePercent',
+                        type: 'uint256',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'cycleInterval',
+                        type: 'uint256',
+                    },
+                ],
+                internalType: 'struct GempadPrivateSaleFactory.VestingInfo',
+                name: '_vesting',
+                type: 'tuple',
+            },
+            {
+                internalType: 'enum GempadPrivateSaleFactory.Mode',
+                name: 'mode',
+                type: 'uint8',
+            },
+            {
+                internalType: 'address payable',
+                name: 'feeReceiver',
+                type: 'address',
+            },
+            {
+                internalType: 'address',
+                name: 'fundToken',
+                type: 'address',
+            },
+        ],
+        name: 'createPrivateSale',
+        outputs: [],
+        stateMutability: 'payable',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'getAllPrivateSales',
+        outputs: [
+            {
+                internalType: 'address[]',
+                name: '',
+                type: 'address[]',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'getImplementation',
+        outputs: [
+            {
+                internalType: 'address',
+                name: '',
+                type: 'address',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'getPrivateSaleBeacon',
+        outputs: [
+            {
+                internalType: 'address',
+                name: '',
+                type: 'address',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address',
+                name: '_user',
+                type: 'address',
+            },
+        ],
+        name: 'getUserPrivateSales',
+        outputs: [
+            {
+                internalType: 'address[]',
+                name: '',
+                type: 'address[]',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'owner',
+        outputs: [
+            {
+                internalType: 'address',
+                name: '',
+                type: 'address',
+            },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+    },
+    {
+        inputs: [],
+        name: 'renounceOwnership',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+    {
+        inputs: [
+            {
+                internalType: 'address',
+                name: 'newOwner',
+                type: 'address',
+            },
+        ],
+        name: 'transferOwnership',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+    },
+] as const;

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "globalDependencies": [
+    "**/.env.*local"
+  ],
+  "tasks": {
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**",
+        ".next/**/*",
+        "!.next/cache/**",
+        "!.vercel/**/*"
+      ]
+    },
+    "test": {
+      "outputs": [
+        "coverage/**"
+      ],
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "test:config": {
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "lint": {
+      "outputs": []
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "start": {
+      "cache": false
+    },
+    "build:list": {
+      "outputs": [
+        "list/**"
+      ]
+    },
+    "integration-test": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": []
+    },
+    "clean": {
+      "cache": false
+    }
+  }
+}

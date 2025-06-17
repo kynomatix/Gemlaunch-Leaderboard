@@ -1,0 +1,60 @@
+{
+    "name": "my-turborepo",
+    "version": "1.0.0",
+    "packageManager": "pnpm@8.6.10",
+    "private": true,
+    "scripts": {
+        "preinstall": "npx only-allow pnpm",
+        "build": "turbo run build",
+        "dev": "turbo run dev",
+        "lint": "turbo run lint --filter=web",
+        "clean": "turbo clean",
+        "pre-commit": "lint-staged",
+        "storybook": "turbo run start --filter=uikit...",
+        "build:storybook": "turbo run build:storybook --filter=uikit...",
+        "prepare": "husky install",
+        "format:check": "prettier --check \"apps/web/**/*.{js,jsx,ts,tsx,json}\"",
+        "format:write": "prettier --write \"apps/web/**/*.{js,jsx,ts,tsx,json}\""
+    },
+    "engines": {
+        "node": ">=v18.18.2"
+    },
+    "husky": {
+        "hooks": {
+            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+        }
+    },
+    "lint-staged": {
+        "*.{js,jsx,ts,tsx}": [
+            "eslint --fix",
+            "pnpm run format",
+            "git add"
+        ]
+    },
+    "devDependencies": {
+        "@dapp/eslint-config-dapp": "workspace:*",
+        "@dapp/tsconfig": "workspace:*",
+        "@stylelint/postcss-css-in-js": "^0.37.2",
+        "@types/node": "^18.16.2",
+        "encoding": "^0.1.13",
+        "@sentry/cli": "^1.26.1",
+        "@sentry/webpack-plugin": "^1.1.0",
+        "eslint": "^8.48.0",
+        "eslint-plugin-address": "^0.0.2",
+        "eslint-plugin-lodash": "^7.4.0",
+        "serve": "^12.0.0",
+        "husky": "^8.0.3",
+        "lint-staged": "^14.0.1",
+        "tsx": "^3.12.6",
+        "typescript": "5.2.2",
+        "prettier": "^3.0.3",
+        "turbo": "latest",
+        "vitest": "^0.27.2"
+    },
+    "dependencies": {
+        "@svgr/webpack": "^8.0.1",
+        "crypto": "^1.0.1",
+        "encoding": "^0.1.13",
+        "ws": "^8.13.0"
+    }
+}

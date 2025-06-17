@@ -1,0 +1,32 @@
+{
+  "name": "@dapp/tokens",
+  "license": "MIT",
+  "version": "0.4.3",
+  "description": "Tokens for dapp",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "sideEffects": false,
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "prepublishOnly": "pnpm run build",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "dependencies": {
+    "@dapp/chains": "workspace:*",
+    "@dapp/sdk": "workspace:*",
+    "@dapp/token-lists": "workspace:*"
+  },
+  "devDependencies": {
+    "@dapp/utils": "workspace:*",
+    "tsup": "^6.7.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  }
+}

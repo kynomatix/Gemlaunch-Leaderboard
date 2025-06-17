@@ -1,0 +1,35 @@
+name: Vercel Staging Deployment
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_STAGING_PROJECT_ID }}
+on:
+  push:
+    branches:
+      - some
+jobs:
+  Deploy-Staging:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+      - name: Install Typescript
+        run: npm install -g typescript
+      - name: Set pnpm configuration
+        run: pnpm config set package-manager-strict false
+
+      - name: Install dependencies and build
+        run: |
+          pnpm install
+          pnpm run build
+      - name: Pull Vercel Environment Information
+        run: pnpm vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build Project Artifacts
+        run: pnpm vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy Project Artifacts to Vercel
+        run: pnpm vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}

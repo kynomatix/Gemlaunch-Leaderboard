@@ -1,0 +1,17 @@
+{
+  "extends": "@dapp/tsconfig/base.json",
+  "compilerOptions": {
+    "jsx": "react",
+    "resolveJsonModule": true,
+    "target": "ES2020",
+    "sourceMap": true,
+    "noEmitOnError": false, // Allows the build to continue even if there are errors
+        "strict": false, // Disables all strict type-checking options
+        "noUnusedLocals": false, // Disable unused variable checking
+        "noUnusedParameters": false, // Disable unused function parameter checking
+        "noImplicitAny": false, // Allow implicit 'any' type
+        "skipLibCheck": true, // Skip type checking of all declaration files
+        "esModuleInterop": true // Ensure compatibility with commonjs modules
+      }
+    }
+    

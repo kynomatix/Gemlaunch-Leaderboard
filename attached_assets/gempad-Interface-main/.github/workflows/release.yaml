@@ -1,0 +1,67 @@
+name: Connect to Server and List Files
+
+on:
+  push:
+    branches:
+      - some
+
+jobs:
+  Deploying-Application:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install Typescript
+        run: npm install -g typescript
+
+      - name: Connect to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          script: |
+            ls -la
+            cd ~/testing/gempad-Interface
+            rm -rf gempad-Interface
+            ls
+
+            # Start SSH agent and add SSH key
+            eval "$(ssh-agent -s)"
+            ssh-add ~/.ssh/id_root <<< "${{ secrets.SSH_PASSPHRASE }}"
+
+            # Clone the Git repo using SSH
+            git clone ${{ secrets.APP_INTERFACE }}
+
+      - name: Set pnpm configuration
+        run: pnpm config set package-manager-strict false
+
+      - name: Install project dependencies
+        run: |
+          ls -la 
+          pwd
+          pnpm install
+          pnpm build
+
+      - name: Creating Optimized Build
+        run: |
+          pwd
+          pnpm build
+
+      # - name: Pull Vercel Environment Information
+      #   run: pnpm vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      # - name: Build Project Artifacts
+      #   run: pnpm vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      # - name: Deploy Project Artifacts to Vercel
+      #   run: pnpm vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}

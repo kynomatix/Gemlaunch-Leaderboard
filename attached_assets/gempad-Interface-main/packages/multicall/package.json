@@ -1,0 +1,36 @@
+{
+  "name": "@dapp/multicall",
+  "version": "3.1.1",
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest --run",
+    "coverage": "vitest run --coverage",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.mjs",
+  "dependencies": {
+    "@dapp/sdk": "workspace:*",
+    "viem": "^1.10.9"
+  },
+  "devDependencies": {
+    "@dapp/tsconfig": "workspace:*",
+    "@dapp/utils": "workspace:*",
+    "tsup": "^6.7.0",
+    "vitest": "^0.27.2"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  }
+}
