@@ -29,6 +29,7 @@ import StatsOverview from "@/components/leaderboard/StatsOverview";
 import LeaderboardTable from "@/components/leaderboard/LeaderboardTable";
 import AccoladesPanel from "@/components/leaderboard/AccoladesPanel";
 import ReferralPanel from "@/components/referrals/ReferralPanel";
+import ReferralLeaderboard from "@/components/referrals/ReferralLeaderboard";
 import ActivitiesPanel from "@/components/activities/ActivitiesPanel";
 import ProfilePanel from "@/components/profile/ProfilePanel";
 import FeaturedProjectsCarousel from "@/components/featured/FeaturedProjectsCarousel";

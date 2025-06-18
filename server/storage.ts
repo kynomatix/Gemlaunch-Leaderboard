@@ -50,6 +50,7 @@ export interface IStorage {
   createReferral(referral: InsertReferral): Promise<Referral>;
   getUserReferrals(userId: number): Promise<Array<Referral & { referee: User }>>;
   getReferralStats(userId: number): Promise<{ count: number; totalPoints: number }>;
+  getReferralLeaderboard(limit?: number): Promise<Array<{ user: User; qualifiedReferrals: number; totalReferralPoints: number; rank: number }>>;
   
   // Accolade operations
   getUserAccolades(userId: number): Promise<Accolade[]>;
@@ -122,7 +123,7 @@ export class DatabaseStorage implements IStorage {
       .update(users)
       .set({ 
         totalPoints: sql`${users.totalPoints} + ${points}`,
-        updatedAt: new Date()
+        updatedAt: new Date().toISOString()
       })
       .where(eq(users.id, userId));
   }
@@ -330,9 +331,50 @@ export class DatabaseStorage implements IStorage {
       .update(pointConfigs)
       .set({ 
         basePoints,
-        updatedAt: new Date()
+        updatedAt: new Date().toISOString()
       })
       .where(eq(pointConfigs.activityType, activityType));
+  }
+
+  async getReferralLeaderboard(limit = 100): Promise<Array<{ user: User; qualifiedReferrals: number; totalReferralPoints: number; rank: number }>> {
+    // Get users with qualified referral counts and points
+    const referralStats = await db
+      .select({
+        referrerId: referrals.referrerId,
+        qualifiedReferrals: sql<number>`count(case when ${referrals.isQualified} = 1 then 1 end)`,
+        totalReferralPoints: sql<number>`sum(case when ${referrals.isQualified} = 1 then ${referrals.pointsEarned} else 0 end)`
+      })
+      .from(referrals)
+      .groupBy(referrals.referrerId);
+
+    // Get user details and combine with referral stats
+    const usersWithReferrals = await db
+      .select()
+      .from(users)
+      .leftJoin(referralStats, eq(users.id, referralStats.referrerId))
+      .where(eq(users.isMainAccount, true)); // Only main accounts in leaderboard
+
+    const leaderboardData = usersWithReferrals
+      .map(row => ({
+        user: row.users,
+        qualifiedReferrals: row.referrals?.qualifiedReferrals || 0,
+        totalReferralPoints: row.referrals?.totalReferralPoints || 0
+      }))
+      .filter(entry => entry.qualifiedReferrals > 0) // Only show users with qualified referrals
+      .sort((a, b) => {
+        // Sort by qualified referrals first, then by referral points
+        if (b.qualifiedReferrals !== a.qualifiedReferrals) {
+          return b.qualifiedReferrals - a.qualifiedReferrals;
+        }
+        return b.totalReferralPoints - a.totalReferralPoints;
+      })
+      .slice(0, limit)
+      .map((entry, index) => ({
+        ...entry,
+        rank: index + 1
+      }));
+
+    return leaderboardData;
   }
 
   async createBlockchainEvent(event: InsertBlockchainEvent): Promise<BlockchainEvent> {

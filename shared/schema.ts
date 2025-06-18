@@ -41,6 +41,8 @@ export const referrals = sqliteTable("referrals", {
   referrerId: integer("referrer_id").notNull(),
   refereeId: integer("referee_id").notNull(),
   pointsEarned: integer("points_earned").default(0).notNull(),
+  isQualified: integer("is_qualified", { mode: 'boolean' }).default(false).notNull(), // Must invest $20+ or create token/presale
+  qualificationAmount: real("qualification_amount").default(0.00).notNull(), // Investment amount for qualification
   createdAt: text("created_at").default(sql`CURRENT_TIMESTAMP`).notNull(),
 });
 
