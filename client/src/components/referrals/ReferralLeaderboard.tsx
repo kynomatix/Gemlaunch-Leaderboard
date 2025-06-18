@@ -75,11 +75,12 @@ export default function ReferralLeaderboard() {
                 <TooltipTrigger>
                   {renderIcon('Shield', 'h-4 w-4 text-orange-400')}
                 </TooltipTrigger>
-                <TooltipContent className="max-w-xs bg-[#253935] border-[#22cda6]">
+                <TooltipContent className="max-w-sm bg-[#253935] border-[#22cda6]">
                   <div className="text-sm text-white">
-                    <div className="font-medium">Anti-Sybil Protection</div>
-                    <div className="text-xs text-gray-400 mt-1">
-                      Only qualified referrals count. Referees must invest $20+ or create tokens/presales.
+                    <div className="font-medium mb-2">Anti-Sybil Protection Active</div>
+                    <div className="text-xs text-gray-400 leading-relaxed">
+                      Only qualified referrals count toward rankings. Referees must invest $20+ or create tokens/presales. 
+                      This prevents self-referral farming and ensures genuine community growth.
                     </div>
                   </div>
                 </TooltipContent>
@@ -191,19 +192,7 @@ export default function ReferralLeaderboard() {
           ))}
         </div>
 
-        {/* Anti-Sybil Notice */}
-        <div className="p-4 bg-[#22cda6]/5 border-t border-[#22cda6]/20">
-          <div className="flex items-start space-x-3">
-            {renderIcon('Shield', 'h-5 w-5 text-orange-400 mt-0.5 flex-shrink-0')}
-            <div>
-              <div className="text-white font-medium text-sm mb-1">Anti-Sybil Protection Active</div>
-              <div className="text-gray-400 text-xs leading-relaxed">
-                Only qualified referrals count toward rankings. Referees must invest $20+ or create tokens/presales. 
-                This prevents self-referral farming and ensures genuine community growth.
-              </div>
-            </div>
-          </div>
-        </div>
+
       </CardContent>
     </Card>
   );

@@ -206,3 +206,11 @@ Changelog:
   - Auto-advancing carousel with manual navigation controls and project indicators
   - Featured projects include MetaVerse Protocol, DeFi Nexus, GameFi Arena, and other partner projects
   - Each featured project displays status (presale/fairlaunch/dutch auction), participants, funding raised, and exclusive accolades
+- June 18, 2025: Season 1 gamification and anti-sybil referral system
+  - Added Season 1 branding to main leaderboard with BNB Chain focus indicators
+  - Created Referral Champions leaderboard section positioned under main leaderboard
+  - Implemented anti-sybil protection requiring $20+ investment or token/presale creation for referral qualification
+  - Added milestone badge system: Pro (5+), Expert (10+), Master (25+), Legend (50+) qualified referrals
+  - Consolidated anti-sybil protection information into comprehensive header tooltip
+  - Designed social media tracking framework using OpenAI GPT-4 for content quality assessment
+  - Planned Twitter/Discord integration with LLM-powered spam filtering and authentic engagement rewards
