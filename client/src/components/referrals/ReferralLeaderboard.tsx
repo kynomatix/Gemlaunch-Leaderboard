@@ -143,7 +143,12 @@ export default function ReferralLeaderboard() {
                         </TooltipTrigger>
                         <TooltipContent className="bg-[#253935] border-[#22cda6]">
                           <div className="text-sm text-white">
-                            Referrals who invested $20+ or created tokens/presales
+                            <div className="font-medium">Anti-Sybil Protection:</div>
+                            <div className="text-xs text-gray-400 mt-1">
+                              • Referees must invest $20+ in launches<br/>
+                              • OR create their own token/presale<br/>  
+                              • Prevents self-referral farming
+                            </div>
                           </div>
                         </TooltipContent>
                       </Tooltip>

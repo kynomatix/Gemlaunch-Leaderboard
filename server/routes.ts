@@ -256,6 +256,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get referral leaderboard
+  app.get("/api/referrals/leaderboard", async (req, res) => {
+    try {
+      const limit = parseInt(req.query.limit as string) || 100;
+      const leaderboard = await storage.getReferralLeaderboard(limit);
+      res.json(leaderboard);
+    } catch (error) {
+      console.error("Error fetching referral leaderboard:", error);
+      res.status(500).json({ error: "Failed to fetch referral leaderboard" });
+    }
+  });
+
   // Get user recent referrals
   app.get("/api/referrals/recent/:walletAddress", async (req, res) => {
     try {

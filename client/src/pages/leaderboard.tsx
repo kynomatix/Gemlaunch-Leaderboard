@@ -277,8 +277,16 @@ export default function Leaderboard() {
               </TabsList>
 
               <TabsContent value="leaderboard" className="mt-6">
-                <div className="bg-[#253935] rounded-lg p-6 border border-[#3d5c4d]">
-                  <LeaderboardTable />
+                <div className="space-y-6">
+                  {/* Main Leaderboard */}
+                  <div className="bg-[#253935] rounded-lg p-6 border border-[#3d5c4d]">
+                    <LeaderboardTable />
+                  </div>
+                  
+                  {/* Referral Champions Section */}
+                  <div className="bg-[#253935] rounded-lg p-6 border border-[#3d5c4d]">
+                    <ReferralLeaderboard />
+                  </div>
                 </div>
               </TabsContent>
 
