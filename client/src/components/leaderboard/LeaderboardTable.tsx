@@ -128,9 +128,18 @@ export default function LeaderboardTable() {
     <Card className="bg-[#253935] border-[#22cda6]/20 overflow-hidden">
       <CardHeader className="border-b border-[#22cda6]/20">
         <CardTitle className="text-xl font-bold text-white flex items-center justify-between">
-          <div className="flex items-center">
-            {renderIcon('Crown', 'h-6 w-6 text-[#22cda6] mr-3')}
-            Global Leaderboard
+          <div>
+            <div className="flex items-center">
+              {renderIcon('Crown', 'h-6 w-6 text-[#22cda6] mr-3')}
+              Global Leaderboard
+            </div>
+            <div className="flex items-center space-x-2 mt-1 text-sm">
+              <span className="text-orange-400 font-medium">Season 1</span>
+              <span className="text-gray-400">•</span>
+              <span className="text-gray-400">BNB Chain</span>
+              <span className="text-gray-400">•</span>
+              <span className="text-gray-400">GEM Token Airdrop Eligible</span>
+            </div>
           </div>
           <div className="flex items-center space-x-2 text-sm text-gray-400">
             {renderIcon('Clock', 'h-4 w-4')}
