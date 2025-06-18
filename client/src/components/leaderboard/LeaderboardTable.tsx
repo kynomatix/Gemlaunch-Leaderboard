@@ -137,8 +137,6 @@ export default function LeaderboardTable() {
               <span className="text-orange-400 font-medium">Season 1</span>
               <span className="text-gray-400">•</span>
               <span className="text-gray-400">BNB Chain</span>
-              <span className="text-gray-400">•</span>
-              <span className="text-gray-400">GEM Token Airdrop Eligible</span>
             </div>
           </div>
           <div className="flex items-center space-x-2 text-sm text-gray-400">

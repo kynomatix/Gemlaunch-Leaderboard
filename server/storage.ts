@@ -339,17 +339,17 @@ export class DatabaseStorage implements IStorage {
   async getReferralLeaderboard(limit = 100): Promise<Array<{ user: User; qualifiedReferrals: number; totalReferralPoints: number; rank: number }>> {
     // Create sample anti-sybil protected referral leaderboard
     // This demonstrates the qualification system where referrals must invest $20+ or create tokens/presales
-    const users = await db.select().from(users).where(eq(users.isMainAccount, true));
+    const allUsers = await db.select().from(users).where(eq(users.isMainAccount, true));
     
     const sampleLeaderboard = [
       {
-        user: users[0], // User with highest activity
+        user: allUsers[0], // User with highest activity
         qualifiedReferrals: 12,
         totalReferralPoints: 3600, // 12 referrals * 300 points each (qualified)
         rank: 1
       },
       {
-        user: users[1], // User with moderate activity  
+        user: allUsers[1], // User with moderate activity  
         qualifiedReferrals: 5,
         totalReferralPoints: 1500, // 5 qualified referrals * 300 points each
         rank: 2
