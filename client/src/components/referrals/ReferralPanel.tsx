@@ -4,13 +4,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Link, Copy, Users, TrendingUp, ExternalLink, Wallet } from "lucide-react";
+import { Link, Copy, Users, TrendingUp, ExternalLink, Wallet, ChevronDown, ChevronRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { web3Service } from "@/lib/web3";
 
 export default function ReferralPanel() {
   const [copied, setCopied] = useState(false);
   const [connectedWallet, setConnectedWallet] = useState<string | null>(null);
+  const [showQualifications, setShowQualifications] = useState(false);
   const { toast } = useToast();
 
   // Check wallet connection on component mount and set up polling
@@ -174,13 +175,25 @@ export default function ReferralPanel() {
                 <div>• Bonus multipliers for community leaders</div>
               </div>
               <div className="mt-3 pt-3 border-t border-gray-600">
-                <h5 className="text-xs font-medium text-[#22cda6] mb-1">Qualification Requirements</h5>
-                <div className="text-xs text-gray-500 space-y-1">
-                  <div>Referred user must actively participate:</div>
-                  <div>• Min $20 contributed to projects, OR</div>
-                  <div>• Create token/launch presale</div>
-                  <div className="text-[#22cda6]">Prevents sybil farming attacks</div>
-                </div>
+                <button 
+                  onClick={() => setShowQualifications(!showQualifications)}
+                  className="flex items-center justify-between w-full text-left group hover:bg-gray-700/30 rounded p-2 -m-2 transition-colors"
+                >
+                  <h5 className="text-xs font-medium text-[#22cda6]">Qualification Requirements</h5>
+                  {showQualifications ? (
+                    <ChevronDown className="h-3 w-3 text-gray-400 group-hover:text-[#22cda6] transition-colors" />
+                  ) : (
+                    <ChevronRight className="h-3 w-3 text-gray-400 group-hover:text-[#22cda6] transition-colors" />
+                  )}
+                </button>
+                {showQualifications && (
+                  <div className="text-xs text-gray-500 space-y-1 mt-2 pl-2">
+                    <div>Referred user must actively participate:</div>
+                    <div>• Min $20 contributed to projects, OR</div>
+                    <div>• Create token/launch presale</div>
+                    <div className="text-[#22cda6]">Prevents sybil farming attacks</div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
