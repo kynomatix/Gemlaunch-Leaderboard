@@ -251,5 +251,6 @@ Changelog:
 - June 19, 2025: Fixed accolade system and authentic scrollbar styling
   - Cleaned up duplicate pioneer accolades and assigned accurate accolades based on real Gemlaunch activity
   - Fixed current user display to show proper wallet address, points, and rank in bottom section
-  - Implemented authentic Gempad scrollbar styling with #22CDA6 accent and #1a2b21 grey background
+  - Implemented authentic Gempad scrollbar styling with transparent background and #22CDA6 thumb only
+  - Removed all grey elements from page styling to match official Gemlaunch color palette exactly
   - Added proper table-container class for horizontal scroll styling matching official codebase

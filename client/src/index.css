@@ -161,6 +161,7 @@ body {
 /* Authentic Gempad scrollbar styling */
 ::-webkit-scrollbar {
   width: 12px;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -171,6 +172,10 @@ body {
 }
 
 ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-track-piece {
   background: transparent;
 }
 
