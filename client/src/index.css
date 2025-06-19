@@ -111,8 +111,8 @@ body {
   --gem-primary-hover: #1bb6b4;     /* Primary hover state */
   --gem-accent: #22cda6;            /* Accent color */
   --gem-text: #ffffff;              /* Primary text */
-  --gem-text-muted: #9ca3af;        /* Muted text */
-  --gem-text-secondary: #6b7280;    /* Secondary text */
+  --gem-text-muted: #ffffff;        /* Muted text */
+  --gem-text-secondary: #ffffff;    /* Secondary text */
   --gem-border: #3d5c4d;            /* Border color */
   --gem-border-light: #4a6a57;      /* Light border variant */
   --gem-success: #22cda6;           /* Success color */
@@ -122,7 +122,7 @@ body {
   --background: var(--gem-background);
   --foreground: var(--gem-text);
   --muted: var(--gem-card);
-  --muted-foreground: var(--gem-text-muted);
+  --muted-foreground: var(--gem-text);
   --popover: var(--gem-background);
   --popover-foreground: var(--gem-text);
   --card: var(--gem-card);
