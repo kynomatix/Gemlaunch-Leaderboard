@@ -146,8 +146,9 @@ export default function LeaderboardTable() {
           </div>
         </CardTitle>
       </CardHeader>
-      {/* Top 3 Podium */}
+      {/* Top 10 Podium */}
       <div className="p-6 bg-gradient-to-br from-[#253935] to-[#1a2b21]">
+        {/* Top 3 Podium */}
         <div className="flex justify-center items-end space-x-4 mb-6">
           {/* 2nd Place */}
           {topThree[1] && (
@@ -203,6 +204,27 @@ export default function LeaderboardTable() {
             </div>
           )}
         </div>
+
+        {/* Ranks 4-10 */}
+        {users.slice(3, 10).length > 0 && (
+          <div className="grid grid-cols-7 gap-2 mt-4">
+            {users.slice(3, 10).map((user: any) => (
+              <div key={user.id} className="text-center">
+                <div className="w-10 h-10 bg-[#1a2b21] border border-[#22cda6]/30 rounded-full flex items-center justify-center mb-2 mx-auto">
+                  <span className="text-xs font-bold text-[#22cda6]">{user.rank}</span>
+                </div>
+                <div className="bg-[#253935] rounded p-2">
+                  <div className="font-medium text-xs truncate text-white">
+                    {user.username || `${user.walletAddress.slice(0, 4)}...`}
+                  </div>
+                  <div className="text-[#22cda6] text-xs font-medium">
+                    {user.totalPoints.toLocaleString()}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       {/* Top 10 Rankings List */}
       <div className="bg-[#253935]">
