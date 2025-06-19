@@ -12,8 +12,8 @@ import {
   Star, 
   Crown, 
   Link,
-  Home,
-  Plus,
+  LayoutGrid,
+  Coins,
   Send,
   Shield,
   Gift,
@@ -26,11 +26,14 @@ import {
   BarChart3,
   UserPlus,
   Lock,
-  Coins,
+  Minus,
   ArrowUpDown,
   ArrowRightLeft,
-  Bot,
-  Users2
+  ShieldCheck,
+  Play,
+  Info,
+  Menu,
+  Target
 } from "lucide-react";
 import { web3Service } from "@/lib/web3";
 import { useToast } from "@/hooks/use-toast";
@@ -132,11 +135,11 @@ export default function Leaderboard() {
   };
 
   const sidebarItems = [
-    { id: 1, icon: Home, label: "Home", active: false, hasDropdown: false },
-    { id: 2, icon: Coins, label: "Create Token", active: false, hasDropdown: false },
+    { id: 1, icon: LayoutGrid, label: "Home", active: false, hasDropdown: false },
+    { id: 2, icon: Target, label: "Create Token", active: false, hasDropdown: false },
     { 
       id: 3, 
-      icon: Rocket, 
+      icon: Send, 
       label: "Launchpad", 
       active: false, 
       hasDropdown: true,
@@ -148,7 +151,7 @@ export default function Leaderboard() {
         { label: "View Pools", href: "/view-pool" }
       ]
     },
-    { id: 4, icon: ArrowRightLeft, label: "Exchange", active: false, hasDropdown: false },
+    { id: 4, icon: Minus, label: "Exchange", active: false, hasDropdown: false },
     { 
       id: 5, 
       icon: Shield, 
@@ -183,12 +186,12 @@ export default function Leaderboard() {
         { label: "Airdrop List", href: "/airdrop-list" }
       ]
     },
-    { id: 8, icon: Trophy, label: "Leaderboard", active: true, hasDropdown: false },
-    { id: 9, icon: Bot, label: "Anti-Bot", active: false, hasDropdown: false },
-    { id: 10, icon: Users2, label: "Multi-Sender", active: false, hasDropdown: false },
+    { id: 8, icon: Crown, label: "Leaderboard", active: true, hasDropdown: false },
+    { id: 9, icon: ShieldCheck, label: "Anti-Bot", active: false, hasDropdown: false },
+    { id: 10, icon: Play, label: "Multi-Sender", active: false, hasDropdown: false },
     { 
       id: 11, 
-      icon: Users, 
+      icon: Info, 
       label: "Socials", 
       active: false, 
       hasDropdown: true,
@@ -197,7 +200,7 @@ export default function Leaderboard() {
         { label: "Telegram", href: "https://t.me/gemlaunchio" }
       ]
     },
-    { id: 12, icon: FileText, label: "Docs", active: false, hasDropdown: false },
+    { id: 12, icon: Menu, label: "Docs", active: false, hasDropdown: false },
     { id: 13, icon: Settings, label: "Admin", active: false, hasDropdown: false }
   ];
 
