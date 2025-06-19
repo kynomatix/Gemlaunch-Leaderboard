@@ -343,14 +343,54 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getReferralLeaderboard(limit = 100): Promise<Array<{ user: User; qualifiedReferrals: number; totalReferralPoints: number; rank: number }>> {
-    // Create sample anti-sybil protected referral leaderboard
-    // This demonstrates the qualification system where referrals must invest $20+ or create tokens/presales
-    const allUsers = await db.select().from(users).where(eq(users.isMainAccount, true));
-    
-    const sampleLeaderboard = [
-      {
-        user: allUsers[0], // User with highest activity
-        qualifiedReferrals: 12,
+    // Get real referral data - only show users with actual qualified referrals
+    const referralStats = await db
+      .select({
+        referrerId: referrals.referrerId,
+        qualifiedReferrals: sql<number>`count(*)`,
+        totalReferralPoints: sql<number>`sum(${referrals.pointsEarned})`
+      })
+      .from(referrals)
+      .where(eq(referrals.isQualified, true))
+      .groupBy(referrals.referrerId)
+      .having(sql`count(*) > 0`);
+
+    if (referralStats.length === 0) {
+      return [];
+    }
+
+    // Get user details for referrers
+    const referrerIds = referralStats.map(stat => stat.referrerId);
+    const referrerUsers = await db
+      .select()
+      .from(users)
+      .where(inArray(users.id, referrerIds));
+
+    // Combine stats with user data
+    const leaderboard = referralStats.map(stat => {
+      const user = referrerUsers.find(u => u.id === stat.referrerId)!;
+      return {
+        user,
+        qualifiedReferrals: stat.qualifiedReferrals,
+        totalReferralPoints: stat.totalReferralPoints || 0,
+        rank: 0 // Will be set below
+      };
+    });
+
+    // Sort by qualified referrals (primary) and total points (secondary)
+    leaderboard.sort((a, b) => {
+      if (a.qualifiedReferrals !== b.qualifiedReferrals) {
+        return b.qualifiedReferrals - a.qualifiedReferrals;
+      }
+      return b.totalReferralPoints - a.totalReferralPoints;
+    });
+
+    // Add ranks
+    return leaderboard.slice(0, limit).map((entry, index) => ({
+      ...entry,
+      rank: index + 1
+    }));
+  }
         totalReferralPoints: 3600, // 12 referrals * 300 points each (qualified)
         rank: 1
       },
