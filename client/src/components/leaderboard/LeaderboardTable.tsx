@@ -1,25 +1,48 @@
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import * as LucideIcons from "lucide-react";
 import { web3Service } from "@/lib/web3";
 import { ACCOLADES } from "@shared/accolades";
+import { useState, useEffect } from "react";
 
 export default function LeaderboardTable() {
-  const { data: leaderboard, isLoading } = useQuery({
+  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 10;
+
+  const { data: users = [], isLoading } = useQuery({
     queryKey: ["/api/leaderboard"],
     refetchInterval: 30000, // Refresh every 30 seconds
   });
 
-  const connectedWallet = web3Service.getAccount();
+  // Calculate pagination
+  const totalPages = Math.ceil(users.length / usersPerPage);
+  const startIndex = (currentPage - 1) * usersPerPage;
+  const endIndex = startIndex + usersPerPage;
+  const paginatedUsers = users.slice(startIndex, endIndex);
   
-  // Find current user in leaderboard data
-  const users = Array.isArray(leaderboard) ? leaderboard : [];
-  const currentUser = connectedWallet 
-    ? users.find((user: any) => user.walletAddress.toLowerCase() === connectedWallet.toLowerCase())
-    : null;
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  // Get top 3 for podium
+  const topThree = users.slice(0, 3);
+
+  // Auto-connect wallet and check current user
+  useEffect(() => {
+    const checkWallet = async () => {
+      const connectedAddress = await web3Service.getConnectedAccount();
+      if (connectedAddress && users.length > 0) {
+        const user = users.find((u: any) => u.walletAddress.toLowerCase() === connectedAddress.toLowerCase());
+        setCurrentUser(user);
+      }
+    };
+    checkWallet();
+  }, [users]);
 
   if (isLoading) {
     return (
@@ -235,9 +258,9 @@ export default function LeaderboardTable() {
           </h3>
         </div>
         
-        <div className="divide-y divide-[#22cda6]/10">
-          {/* Show all users */}
-          {users.map((user: any, index: number) => (
+        <div className="divide-y divide-[#22cda6]/10 max-h-[600px] overflow-y-auto">
+          {/* Show paginated users */}
+          {paginatedUsers.map((user: any, index: number) => (
             <div 
               key={user.id} 
               className="p-4 hover:bg-[#1a2b21] transition-all"
@@ -295,8 +318,74 @@ export default function LeaderboardTable() {
               </div>
             </div>
           ))}
+        </div>
 
-          {/* Current User Position */}
+        {/* Pagination Controls */}
+        {totalPages > 1 && (
+          <div className="p-4 border-t border-[#22cda6]/20 bg-[#1a2b21]">
+            <div className="flex items-center justify-between">
+              <div className="text-sm text-gray-400">
+                Showing {startIndex + 1}-{Math.min(endIndex, users.length)} of {users.length} users
+              </div>
+              
+              <div className="flex items-center space-x-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className="bg-[#253935] border-[#22cda6]/30 text-white hover:bg-[#22cda6]/20"
+                >
+                  {renderIcon('ChevronLeft', 'h-4 w-4')}
+                </Button>
+                
+                <div className="flex space-x-1">
+                  {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                    let pageNum;
+                    if (totalPages <= 5) {
+                      pageNum = i + 1;
+                    } else if (currentPage <= 3) {
+                      pageNum = i + 1;
+                    } else if (currentPage >= totalPages - 2) {
+                      pageNum = totalPages - 4 + i;
+                    } else {
+                      pageNum = currentPage - 2 + i;
+                    }
+                    
+                    return (
+                      <Button
+                        key={pageNum}
+                        variant={currentPage === pageNum ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => handlePageChange(pageNum)}
+                        className={
+                          currentPage === pageNum
+                            ? "bg-[#22cda6] text-black hover:bg-[#22cda6]/80"
+                            : "bg-[#253935] border-[#22cda6]/30 text-white hover:bg-[#22cda6]/20"
+                        }
+                      >
+                        {pageNum}
+                      </Button>
+                    );
+                  })}
+                </div>
+                
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className="bg-[#253935] border-[#22cda6]/30 text-white hover:bg-[#22cda6]/20"
+                >
+                  {renderIcon('ChevronRight', 'h-4 w-4')}
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Current User Position */}
+        <div className="border-t border-[#22cda6]/20">
           <div className="p-4 bg-[#22cda6]/10 border border-[#22cda6]/30">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
