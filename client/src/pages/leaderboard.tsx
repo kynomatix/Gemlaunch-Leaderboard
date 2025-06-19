@@ -21,7 +21,11 @@ import {
   Zap,
   Settings,
   ChevronDown,
-  Wallet
+  ChevronRight,
+  Wallet,
+  BarChart3,
+  UserPlus,
+  Lock
 } from "lucide-react";
 import { web3Service } from "@/lib/web3";
 import { useToast } from "@/hooks/use-toast";
@@ -115,54 +119,136 @@ export default function Leaderboard() {
   };
 
   const sidebarItems = [
-    { icon: Home, label: "Home", active: false },
-    { icon: Plus, label: "Create Token", active: false },
-    { icon: Rocket, label: "Launchpad", active: false, hasDropdown: true },
-    { icon: Send, label: "Exchange", active: false },
-    { icon: Shield, label: "Private Sale", active: false, hasDropdown: true },
-    { icon: Shield, label: "Lock", active: false, hasDropdown: true },
-    { icon: Gift, label: "Airdrop", active: false, hasDropdown: true },
-    { icon: Send, label: "Multi-Sender", active: false },
-    { icon: FileText, label: "Socials", active: false, hasDropdown: true },
-    { icon: FileText, label: "Docs", active: false },
-    { icon: Trophy, label: "Leaderboard", active: true },
-    { icon: Zap, label: "Anti-Bot", active: false },
-    { icon: Settings, label: "Admin", active: false }
+    { id: 1, icon: Home, label: "Home", active: false, hasDropdown: false },
+    { id: 2, icon: Plus, label: "Create Token", active: false, hasDropdown: false },
+    { 
+      id: 3, 
+      icon: Rocket, 
+      label: "Launchpad", 
+      active: false, 
+      hasDropdown: true,
+      children: [
+        { label: "Create Launchpad", href: "/create-launchpad" },
+        { label: "Create Fair Launch", href: "/create-fair-launch" },
+        { label: "Create Dutch Auction", href: "/create-dutch-auction" },
+        { label: "View Pools", href: "/view-pools" }
+      ]
+    },
+    { id: 4, icon: BarChart3, label: "Exchange", active: false, hasDropdown: false },
+    { 
+      id: 5, 
+      icon: Shield, 
+      label: "Private Sale", 
+      active: false, 
+      hasDropdown: true,
+      children: [
+        { label: "Create Private Sale", href: "/create-private-sale" },
+        { label: "Private Sale List", href: "/private-sale-list" }
+      ]
+    },
+    { 
+      id: 6, 
+      icon: Lock, 
+      label: "Lock", 
+      active: false, 
+      hasDropdown: true,
+      children: [
+        { label: "Create Lock", href: "/create-lock" },
+        { label: "Token", href: "/token" },
+        { label: "Liquidity", href: "/liquidity" }
+      ]
+    },
+    { 
+      id: 7, 
+      icon: Gift, 
+      label: "Airdrop", 
+      active: false, 
+      hasDropdown: true,
+      children: [
+        { label: "Create Airdrop", href: "/create-airdrop" },
+        { label: "Airdrop List", href: "/airdrop-list" }
+      ]
+    },
+    { id: 8, icon: UserPlus, label: "Multi-Sender", active: false, hasDropdown: false },
+    { id: 9, icon: FileText, label: "Docs", active: false, hasDropdown: false },
+    { id: 10, icon: Trophy, label: "Leaderboard", active: true, hasDropdown: false },
+    { id: 11, icon: Zap, label: "Anti-Bot", active: false, hasDropdown: false },
+    { id: 12, icon: Settings, label: "Admin", active: false, hasDropdown: false }
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex">
-      {/* Sidebar */}
-      <div className="w-64 bg-sidebar-background border-r border-sidebar-border">
-        {/* Logo */}
-        <div className="p-4 border-b border-sidebar-border">
-          <div className="flex items-center space-x-2">
+    <div className="min-h-screen bg-[#0a0f0c] text-white flex">
+      {/* Authentic Gemlaunch Sidebar */}
+      <div 
+        className={`${sidebarExpanded ? 'w-64' : 'w-14'} bg-[#0B1B18] transition-all duration-200 ease-in-out fixed left-0 top-0 h-full z-50 overflow-hidden flex flex-col`}
+        onMouseEnter={() => setSidebarExpanded(true)}
+        onMouseLeave={() => {
+          setSidebarExpanded(false);
+          setExpandedItems({});
+        }}
+      >
+        {/* Logo Section */}
+        <div className="p-4 flex items-center justify-center h-16">
+          {sidebarExpanded ? (
             <span className="text-xl font-bold text-white">Gemlaunch</span>
-            <ChevronDown className="h-4 w-4 text-sidebar-foreground ml-auto" />
-          </div>
+          ) : (
+            <div className="w-6 h-6 bg-[#22cda6] rounded flex items-center justify-center">
+              <span className="text-black text-xs font-bold">G</span>
+            </div>
+          )}
         </div>
 
         {/* Navigation */}
-        <nav className="py-4">
-          {sidebarItems.map((item, index) => (
-            <div key={index} className="px-4 py-1">
-              <div className={`flex items-center space-x-3 px-3 py-2 rounded-lg cursor-pointer transition-colors ${
-                item.active 
-                  ? "bg-sidebar-primary text-sidebar-primary-foreground" 
-                  : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-              }`}>
-                <item.icon className="h-4 w-4" />
-                <span className="text-sm">{item.label}</span>
-                {item.hasDropdown && (
-                  <ChevronDown className="h-3 w-3 ml-auto" />
+        <nav className="flex-1 px-2 py-4 space-y-2">
+          {sidebarItems.map((item) => (
+            <div key={item.id}>
+              <div 
+                className={`flex items-center px-3 py-2 rounded cursor-pointer transition-all duration-200 group ${
+                  item.active 
+                    ? "bg-[#22cda6]/20 text-[#22cda6]" 
+                    : "text-white hover:bg-[#22cda6]/10"
+                }`}
+                onClick={() => {
+                  if (item.hasDropdown) {
+                    setExpandedItems(prev => ({ ...prev, [item.id]: !prev[item.id] }));
+                  }
+                }}
+              >
+                <item.icon className={`h-4 w-4 ${!sidebarExpanded ? 'mx-auto' : 'mr-3'}`} />
+                {sidebarExpanded && (
+                  <>
+                    <span className="text-sm font-medium flex-1">{item.label}</span>
+                    {item.hasDropdown && (
+                      <ChevronRight 
+                        className={`h-3 w-3 transition-transform ${
+                          expandedItems[item.id] ? 'rotate-90' : ''
+                        }`} 
+                      />
+                    )}
+                  </>
                 )}
               </div>
+              
+              {/* Dropdown Items */}
+              {item.hasDropdown && expandedItems[item.id] && sidebarExpanded && (
+                <div className="ml-6 mt-1 space-y-1">
+                  {item.children?.map((child, childIndex) => (
+                    <div 
+                      key={childIndex}
+                      className="px-3 py-2 text-xs text-gray-300 hover:text-[#22cda6] cursor-pointer rounded transition-colors"
+                    >
+                      {child.label}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </nav>
       </div>
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col">
+
+      {/* Main Content Area */}
+      <div className={`flex-1 flex flex-col transition-all duration-200 ${sidebarExpanded ? 'ml-64' : 'ml-14'}`}>
         {/* Top Bar - Authentic Gemlaunch Design */}
         <div className="bg-[#0a0f0c] border-b border-[#22cda6]/10 px-8 py-4">
           <div className="flex justify-between items-center">
