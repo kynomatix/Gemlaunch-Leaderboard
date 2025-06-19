@@ -44,6 +44,8 @@ import Gemmy_Mascot from "@assets/Gemmy_Mascot.png";
 export default function Leaderboard() {
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [connectedWallet, setConnectedWallet] = useState<string | null>(null);
+  const [sidebarExpanded, setSidebarExpanded] = useState(false);
+  const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>({});
   const { toast } = useToast();
   
   // Connect to WebSocket for real-time updates
