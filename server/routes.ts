@@ -357,6 +357,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Admin endpoint to view all accolades
+  app.get('/api/admin/accolades/all', async (req, res) => {
+    try {
+      const accolades = await storage.getAllAccolades();
+      res.json(accolades);
+    } catch (error) {
+      console.error('Error fetching all accolades:', error);
+      res.status(500).json({ message: 'Failed to fetch accolades' });
+    }
+  });
+
+  // Admin endpoint to reset pioneer accolades
+  app.post('/api/admin/accolades/reset-pioneers', async (req, res) => {
+    try {
+      await storage.resetPioneerAccolades();
+      
+      // Broadcast update to connected clients
+      broadcastUpdate({
+        type: 'accolades_reset',
+        message: 'Pioneer accolades have been reset and recalculated'
+      });
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error('Error resetting pioneer accolades:', error);
+      res.status(500).json({ message: 'Failed to reset pioneer accolades' });
+    }
+  });
+
   // Connect wallet - create or get user
   app.post("/api/wallet/connect", async (req, res) => {
     try {
