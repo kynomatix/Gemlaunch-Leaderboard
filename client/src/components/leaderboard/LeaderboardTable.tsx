@@ -218,12 +218,12 @@ export default function LeaderboardTable() {
           {users.slice(0, 10).map((user: any, index: number) => (
             <div 
               key={user.id} 
-              className="p-2 hover:bg-[#1a2b21] transition-all"
+              className="p-4 hover:bg-[#1a2b21] transition-all"
             >
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-4">
                   {/* Rank Badge */}
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold ${
                     user.rank <= 3 
                       ? 'bg-gradient-to-br from-[#22cda6] to-[#1a9b99] text-black' 
                       : 'bg-[#1a2b21] text-[#22cda6] border border-[#22cda6]/30'
@@ -232,9 +232,9 @@ export default function LeaderboardTable() {
                   </div>
                   
                   {/* User Avatar */}
-                  <Avatar className="w-8 h-8">
+                  <Avatar className="w-10 h-10">
                     {user.avatar && <AvatarImage src={user.avatar} alt={user.username || 'User avatar'} />}
-                    <AvatarFallback className="bg-[#1a2b21] text-[#22cda6] text-xs font-medium">
+                    <AvatarFallback className="bg-[#1a2b21] text-[#22cda6] text-sm font-medium">
                       {user.walletAddress.slice(2, 4).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
@@ -242,31 +242,32 @@ export default function LeaderboardTable() {
                   {/* User Info */}
                   <div className="flex-1">
                     <div className="flex items-center space-x-2">
-                      <span className="font-medium text-white text-sm">
+                      <span className="font-medium text-white">
                         {user.username || `${user.walletAddress.slice(0, 6)}...${user.walletAddress.slice(-4)}`}
                       </span>
                       
                       {/* Accolades Display */}
-                      {user.accolades && user.accolades.length > 0 && (
-                        <div className="flex">
-                          {renderAccolades(user.accolades.slice(0, 2))}
-                        </div>
-                      )}
+                      <div className="mt-1">
+                        {renderAccolades(user.accolades || [])}
+                      </div>
                     </div>
                     
-                    <div className="text-xs text-gray-400">
-                      {user.totalPoints.toLocaleString()} pts
+                    <div className="text-xs text-gray-400 mt-1">
+                      {user.totalPoints.toLocaleString()} total points
                       {user.accolades && user.accolades.length > 0 && (
-                        <span className="ml-2">• {user.accolades.length} accolade{user.accolades.length !== 1 ? 's' : ''}</span>
+                        <span className="ml-2">• {user.accolades.length} achievement{user.accolades.length !== 1 ? 's' : ''}</span>
                       )}
                     </div>
                   </div>
                 </div>
                 
-                {/* Points */}
+                {/* Points & Rank */}
                 <div className="text-right">
-                  <div className="font-bold text-[#22cda6] text-sm">
+                  <div className="font-bold text-[#22cda6] text-lg">
                     {user.totalPoints.toLocaleString()}
+                  </div>
+                  <div className="text-xs text-gray-400">
+                    Rank #{user.rank}
                   </div>
                 </div>
               </div>
