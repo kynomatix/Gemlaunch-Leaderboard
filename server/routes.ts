@@ -368,21 +368,135 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Admin endpoint to reset pioneer accolades
-  app.post('/api/admin/accolades/reset-pioneers', async (req, res) => {
+  // Admin endpoint to fix accolades manually
+  app.post('/api/admin/accolades/fix', async (req, res) => {
     try {
-      await storage.resetPioneerAccolades();
+      // Manually clean up and fix accolades
+      const { db } = await import('./sqlite-db');
+      const { accolades, users, activities } = await import('@shared/schema');
+      const { eq } = await import('drizzle-orm');
       
-      // Broadcast update to connected clients
+      // Delete all existing accolades
+      await db.delete(accolades);
+      
+      // Get all users
+      const allUsers = await db.select().from(users).orderBy(users.createdAt);
+      
+      // For each user, assign correct accolades based on their join order and activities
+      for (let i = 0; i < allUsers.length; i++) {
+        const user = allUsers[i];
+        const joinOrder = i + 1;
+        
+        // Pioneer accolades based on join order (only one)
+        if (joinOrder <= 10) {
+          await storage.createAccolade({
+            userId: user.id,
+            accoladeId: 'genesis_member',
+            name: 'Genesis Member'
+          });
+        } else if (joinOrder <= 50) {
+          await storage.createAccolade({
+            userId: user.id,
+            accoladeId: 'gemlaunch_pioneer',
+            name: 'Gemlaunch Pioneer'
+          });
+        } else if (joinOrder <= 1000) {
+          await storage.createAccolade({
+            userId: user.id,
+            accoladeId: 'early_adopter',
+            name: 'Early Adopter'
+          });
+        }
+        
+        // Get user activities to determine other accolades
+        const userActivities = await db.select().from(activities).where(eq(activities.userId, user.id));
+        
+        const tokenCreations = userActivities.filter(a => a.activityType === 'token_creation').length;
+        const fairLaunches = userActivities.filter(a => a.activityType === 'fair_launch').length;
+        const presaleLaunches = userActivities.filter(a => a.activityType === 'presale_launch').length;
+        const totalVolume = userActivities.reduce((sum, a) => {
+          if (a.activityType === 'volume_contribution') {
+            const metadata = JSON.parse(a.metadata || '{}');
+            return sum + (parseFloat(metadata.amount) || 0);
+          }
+          return sum;
+        }, 0);
+        
+        // Award activity-based accolades
+        if (tokenCreations >= 1) {
+          await storage.createAccolade({
+            userId: user.id,
+            accoladeId: 'token_creator',
+            name: 'Token Creator'
+          });
+        }
+        
+        if (tokenCreations >= 5) {
+          await storage.createAccolade({
+            userId: user.id,
+            accoladeId: 'prolific_creator',
+            name: 'Prolific Creator'
+          });
+        }
+        
+        if (fairLaunches >= 1) {
+          await storage.createAccolade({
+            userId: user.id,
+            accoladeId: 'fair_launcher',
+            name: 'Fair Launcher'
+          });
+        }
+        
+        if (presaleLaunches >= 1) {
+          await storage.createAccolade({
+            userId: user.id,
+            accoladeId: 'presale_master',
+            name: 'Presale Master'
+          });
+        }
+        
+        if (totalVolume >= 100) {
+          await storage.createAccolade({
+            userId: user.id,
+            accoladeId: 'funding_veteran',
+            name: 'Funding Veteran'
+          });
+        }
+        
+        if (totalVolume >= 1000) {
+          await storage.createAccolade({
+            userId: user.id,
+            accoladeId: 'whale_funder',
+            name: 'Whale Funder'
+          });
+        }
+      }
+      
+      // Recalculate points for all users
+      for (const user of allUsers) {
+        const userAccolades = await storage.getUserAccolades(user.id);
+        const { ACCOLADES } = await import('@shared/accolades');
+        const accoladeBonus = userAccolades.reduce((total, accolade) => {
+          const def = ACCOLADES.find(a => a.id === accolade.accoladeId);
+          return total + (def?.pointsBonus || 0);
+        }, 0);
+
+        const userActivities = await storage.getUserActivities(user.id);
+        const basePoints = userActivities.reduce((total, activity) => total + activity.points, 0);
+        const totalPoints = basePoints + accoladeBonus;
+        
+        await db.update(users).set({ totalPoints }).where(eq(users.id, user.id));
+      }
+      
       broadcastUpdate({
-        type: 'accolades_reset',
-        message: 'Pioneer accolades have been reset and recalculated'
+        type: 'accolades_fixed',
+        message: 'All accolades have been cleaned up and recalculated'
       });
       
-      res.json({ success: true });
+      res.json({ success: true, message: 'Accolades fixed successfully' });
     } catch (error) {
-      console.error('Error resetting pioneer accolades:', error);
-      res.status(500).json({ message: 'Failed to reset pioneer accolades' });
+      console.error('Error fixing accolades:', error);
+      res.status(500).json({ message: 'Failed to fix accolades' });
     }
   });
 

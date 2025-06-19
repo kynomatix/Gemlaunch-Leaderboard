@@ -437,26 +437,27 @@ export class DatabaseStorage implements IStorage {
     await db.delete(users).where(eq(users.id, userId));
   }
 
-  async getAllAccolades(): Promise<Array<Accolade & { user: User }>> {
-    return await db
+  async getAllAccolades(): Promise<Array<any>> {
+    const result = await db
       .select({
-        id: accolades.id,
-        userId: accolades.userId,
-        accoladeId: accolades.accoladeId,
-        name: accolades.name,
-        earnedAt: accolades.earnedAt,
+        accolade: accolades,
         user: users
       })
       .from(accolades)
       .innerJoin(users, eq(accolades.userId, users.id))
-      .orderBy(users.createdAt, accolades.earnedAt);
+      .orderBy(users.createdAt);
+    
+    return result.map(r => ({
+      ...r.accolade,
+      user: r.user
+    }));
   }
 
   async resetPioneerAccolades(): Promise<void> {
-    // Delete all existing pioneer accolades
-    await db.delete(accolades).where(
-      inArray(accolades.accoladeId, ['genesis_member', 'gemlaunch_pioneer', 'early_adopter'])
-    );
+    // Delete pioneer accolades manually
+    await db.delete(accolades).where(eq(accolades.accoladeId, 'genesis_member'));
+    await db.delete(accolades).where(eq(accolades.accoladeId, 'gemlaunch_pioneer'));
+    await db.delete(accolades).where(eq(accolades.accoladeId, 'early_adopter'));
 
     // Get all users sorted by creation date
     const allUsers = await db.select().from(users).orderBy(users.createdAt);
