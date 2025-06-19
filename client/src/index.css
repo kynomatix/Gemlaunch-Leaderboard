@@ -158,15 +158,25 @@ body {
   --chart-5: #8b5cf6;
 }
 
-/* Exact Gempad scrollbar styling */
+/* Force scrollbar to match page background */
+html, body {
+  background-color: #0a0f0c;
+  scrollbar-width: thin;
+  scrollbar-color: #22CDA6 #0a0f0c;
+}
+
 ::-webkit-scrollbar {
   width: 12px;
+  background: #0a0f0c;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0f0c;
 }
 
 ::-webkit-scrollbar-thumb {
   height: 4rem;
-  /* border-radius: 0.5rem; */
-  border: 4px solid transparent;
+  border: 4px solid #0a0f0c;
   background-clip: content-box;
   background-color: #22CDA6;
 }
