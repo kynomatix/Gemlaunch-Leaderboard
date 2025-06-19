@@ -41,7 +41,7 @@ import { useWebSocket } from "@/hooks/useWebSocket";
 
 import Gemmy_Mascot from "@assets/Gemmy_Mascot.png";
 
-import Logo from "@assets/Logo.png";
+
 
 export default function Leaderboard() {
   const [currentUser, setCurrentUser] = useState<any>(null);
@@ -192,9 +192,9 @@ export default function Leaderboard() {
           onClick={() => setSidebarExpanded(!sidebarExpanded)}
         >
           <img 
-            src={Logo} 
+            src="/Logo.png" 
             alt="Gemlaunch" 
-            className={`${sidebarExpanded ? 'h-8 w-auto' : 'w-6 h-6'} object-contain`}
+            className={`${sidebarExpanded ? 'h-8 w-auto' : 'w-6 h-6'} object-contain pl-[5px] pr-[5px] pt-[5px] pb-[5px]`}
           />
         </div>
 
@@ -208,9 +208,12 @@ export default function Leaderboard() {
                     ? "bg-[#22cda6]/20 text-[#22cda6]" 
                     : "text-white hover:bg-[#22cda6]/10"
                 }`}
-                onMouseEnter={() => {
+                onClick={() => {
                   if (item.hasDropdown && sidebarExpanded) {
-                    setExpandedItems(prev => ({ ...prev, [item.id]: true }));
+                    setExpandedItems(prev => ({ 
+                      ...prev, 
+                      [item.id]: !prev[item.id] 
+                    }));
                   }
                 }}
               >
