@@ -37,18 +37,24 @@ class GemlaunchScanner {
     const userMap = new Map<string, OnChainUser>();
     
     try {
-      // Get current block number if toBlock is 'latest'
+      // Get current block number if toBlock is 'latest'  
       const currentBlock = toBlock === 'latest' ? await this.web3.eth.getBlockNumber() : toBlock;
       const endBlock = Number(currentBlock);
+      
+      // Limit scan range to avoid rate limits
+      const maxBlockRange = 1000;
+      const actualFromBlock = Math.max(fromBlock, endBlock - maxBlockRange);
+      
+      console.log(`Adjusted scan range: blocks ${actualFromBlock} to ${endBlock} (${endBlock - actualFromBlock} blocks)`);
       
       // For each contract, scan for transaction history
       for (const contractAddress of this.contractAddresses) {
         try {
           console.log(`Scanning contract: ${contractAddress}`);
           
-          // Get recent transactions to this contract
+          // Get recent transactions to this contract with smaller range
           const logs = await this.web3.eth.getPastLogs({
-            fromBlock,
+            fromBlock: actualFromBlock,
             toBlock: endBlock,
             address: contractAddress
           });
