@@ -429,6 +429,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Blockchain scanning endpoint for discovering real Gemlaunch users
+  app.post('/api/admin/scan-blockchain', async (req, res) => {
+    try {
+      const { gemlaunchScanner } = await import('./scanner');
+      
+      console.log('🔍 Starting blockchain scan for Gemlaunch users...');
+      
+      // Scan recent blocks (last 30 days approximately)  
+      const currentBlock = await gemlaunchScanner['web3'].eth.getBlockNumber();
+      const blocksPerDay = 28800; // Approximately 3 seconds per block on BSC
+      const fromBlock = Math.max(0, Number(currentBlock) - (blocksPerDay * 30));
+      
+      const users = await gemlaunchScanner.scanHistoricalUsers(fromBlock);
+      
+      if (users.length > 0) {
+        await gemlaunchScanner.importUsersToDatabase(users);
+        
+        // Broadcast update to connected clients
+        broadcastUpdate({
+          type: 'blockchain_scan_complete',
+          data: { 
+            usersFound: users.length,
+            message: `Found ${users.length} new users from blockchain scan`
+          }
+        });
+      }
+      
+      res.json({ 
+        success: true, 
+        usersFound: users.length,
+        scannedBlocks: blocksPerDay * 30,
+        fromBlock,
+        toBlock: currentBlock,
+        users: users.slice(0, 10) // Return first 10 users for preview
+      });
+    } catch (error) {
+      console.error('Error scanning blockchain:', error);
+      res.status(500).json({ 
+        success: false, 
+        message: 'Failed to scan blockchain',
+        error: error.message 
+      });
+    }
+  });
+
   const httpServer = createServer(app);
 
   // WebSocket setup for real-time updates
