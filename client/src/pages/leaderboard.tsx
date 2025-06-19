@@ -25,7 +25,12 @@ import {
   Wallet,
   BarChart3,
   UserPlus,
-  Lock
+  Lock,
+  Coins,
+  ArrowUpDown,
+  ArrowRightLeft,
+  Bot,
+  Users2
 } from "lucide-react";
 import { web3Service } from "@/lib/web3";
 import { useToast } from "@/hooks/use-toast";
@@ -128,7 +133,7 @@ export default function Leaderboard() {
 
   const sidebarItems = [
     { id: 1, icon: Home, label: "Home", active: false, hasDropdown: false },
-    { id: 2, icon: Plus, label: "Create Token", active: false, hasDropdown: false },
+    { id: 2, icon: Coins, label: "Create Token", active: false, hasDropdown: false },
     { 
       id: 3, 
       icon: Rocket, 
@@ -139,10 +144,11 @@ export default function Leaderboard() {
         { label: "Create Launchpad", href: "/create-launchpad" },
         { label: "Create Fair Launch", href: "/create-fair-launch" },
         { label: "Create Dutch Auction", href: "/create-dutch-auction" },
-        { label: "View Pools", href: "/view-pools" }
+        { label: "Create Subscription", href: "/create-subscription" },
+        { label: "View Pools", href: "/view-pool" }
       ]
     },
-    { id: 4, icon: BarChart3, label: "Exchange", active: false, hasDropdown: false },
+    { id: 4, icon: ArrowRightLeft, label: "Exchange", active: false, hasDropdown: false },
     { 
       id: 5, 
       icon: Shield, 
@@ -177,11 +183,22 @@ export default function Leaderboard() {
         { label: "Airdrop List", href: "/airdrop-list" }
       ]
     },
-    { id: 8, icon: UserPlus, label: "Multi-Sender", active: false, hasDropdown: false },
-    { id: 9, icon: FileText, label: "Docs", active: false, hasDropdown: false },
-    { id: 10, icon: Trophy, label: "Leaderboard", active: true, hasDropdown: false },
-    { id: 11, icon: Zap, label: "Anti-Bot", active: false, hasDropdown: false },
-    { id: 12, icon: Settings, label: "Admin", active: false, hasDropdown: false }
+    { id: 8, icon: Trophy, label: "Leaderboard", active: true, hasDropdown: false },
+    { id: 9, icon: Bot, label: "Anti-Bot", active: false, hasDropdown: false },
+    { id: 10, icon: Users2, label: "Multi-Sender", active: false, hasDropdown: false },
+    { 
+      id: 11, 
+      icon: Users, 
+      label: "Socials", 
+      active: false, 
+      hasDropdown: true,
+      children: [
+        { label: "Twitter", href: "https://x.com/gemlaunchio" },
+        { label: "Telegram", href: "https://t.me/gemlaunchio" }
+      ]
+    },
+    { id: 12, icon: FileText, label: "Docs", active: false, hasDropdown: false },
+    { id: 13, icon: Settings, label: "Admin", active: false, hasDropdown: false }
   ];
 
   return (
