@@ -43,6 +43,10 @@ import Gemmy_Mascot from "@assets/Gemmy_Mascot.png";
 
 
 
+import Logo from "@assets/Logo.png";
+
+
+
 export default function Leaderboard() {
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [connectedWallet, setConnectedWallet] = useState<string | null>(null);
@@ -192,7 +196,7 @@ export default function Leaderboard() {
           onClick={() => setSidebarExpanded(!sidebarExpanded)}
         >
           <img 
-            src="/Logo.png" 
+            src={Logo} 
             alt="Gemlaunch" 
             className={`${sidebarExpanded ? 'h-8 w-auto' : 'w-6 h-6'} object-contain pl-[5px] pr-[5px] pt-[5px] pb-[5px]`}
           />
