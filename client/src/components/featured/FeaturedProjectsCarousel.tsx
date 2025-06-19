@@ -230,7 +230,6 @@ export default function FeaturedProjectsCarousel() {
           </Button>
         </div>
       </div>
-
       {/* Carousel */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative overflow-hidden">
         {visibleProjects.map((project, index) => (
@@ -263,7 +262,7 @@ export default function FeaturedProjectsCarousel() {
                   </div>
                 </div>
                 
-                <Badge className={`${getStatusColor(project.status)} text-white text-xs`}>
+                <Badge className="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-orange-600 text-white text-xs text-center">
                   {getStatusText(project.status)}
                 </Badge>
               </div>
@@ -322,7 +321,6 @@ export default function FeaturedProjectsCarousel() {
           </Card>
         ))}
       </div>
-
       {/* Carousel Indicators */}
       <div className="flex justify-center mt-6 space-x-2">
         {Array.from({ length: Math.ceil(featuredProjects.length / 3) }).map((_, index) => (
