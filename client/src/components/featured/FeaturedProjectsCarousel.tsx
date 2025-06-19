@@ -193,6 +193,16 @@ export default function FeaturedProjectsCarousel() {
     }
   };
 
+  const getStatusBadgeClass = (status: string) => {
+    switch (status) {
+      case 'presale': return 'bg-blue-600 text-white';
+      case 'fairlaunch': return 'bg-[#22cda6] text-black';
+      case 'dutch_auction': return 'bg-purple-600 text-white';
+      case 'completed': return 'bg-gray-600 text-white';
+      default: return 'bg-orange-600 text-white';
+    }
+  };
+
   // Show 3 projects at a time
   const visibleProjects = featuredProjects.slice(currentIndex, currentIndex + 3);
 
@@ -262,7 +272,7 @@ export default function FeaturedProjectsCarousel() {
                   </div>
                 </div>
                 
-                <Badge className="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-orange-600 text-white text-xs text-center">
+                <Badge className={`inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 text-xs text-center ${getStatusBadgeClass(project.status)}`}>
                   {getStatusText(project.status)}
                 </Badge>
               </div>
