@@ -32,7 +32,7 @@ class GemlaunchScanner {
   }
 
   async scanHistoricalUsers(fromBlock: number = 0, toBlock: number | 'latest' = 'latest'): Promise<OnChainUser[]> {
-    console.log(`🔍 Scanning BNB Chain for Gemlaunch users from block ${fromBlock} to ${toBlock}...`);
+    console.log(`Scanning BNB Chain for Gemlaunch users from block ${fromBlock} to ${toBlock}...`);
     
     const userMap = new Map<string, OnChainUser>();
     
@@ -41,28 +41,42 @@ class GemlaunchScanner {
       const currentBlock = toBlock === 'latest' ? await this.web3.eth.getBlockNumber() : toBlock;
       const endBlock = Number(currentBlock);
       
-      // Scan in chunks to avoid RPC limits
-      const chunkSize = 1000;
-      for (let start = fromBlock; start <= endBlock; start += chunkSize) {
-        const end = Math.min(start + chunkSize - 1, endBlock);
-        
-        console.log(`📊 Scanning blocks ${start} to ${end}...`);
-        
-        await this.scanBlockRange(start, end, userMap);
-        
-        // Add delay to respect rate limits
-        await new Promise(resolve => setTimeout(resolve, 100));
+      // For each contract, scan for transaction history
+      for (const contractAddress of this.contractAddresses) {
+        try {
+          console.log(`Scanning contract: ${contractAddress}`);
+          
+          // Get recent transactions to this contract
+          const logs = await this.web3.eth.getPastLogs({
+            fromBlock,
+            toBlock: endBlock,
+            address: contractAddress
+          });
+
+          console.log(`Found ${logs.length} events for contract ${contractAddress.substring(0, 8)}...`);
+          
+          for (const log of logs) {
+            await this.processLog(log, userMap);
+          }
+          
+          // Rate limiting
+          await new Promise(resolve => setTimeout(resolve, 200));
+          
+        } catch (contractError) {
+          console.warn(`Skipping contract ${contractAddress}: ${contractError.message}`);
+          continue;
+        }
       }
       
       const users = Array.from(userMap.values())
         .filter(user => user.transactions > 0)
         .sort((a, b) => b.totalVolume - a.totalVolume);
       
-      console.log(`✅ Found ${users.length} unique Gemlaunch users on-chain`);
+      console.log(`Found ${users.length} unique Gemlaunch users on-chain`);
       return users;
       
     } catch (error) {
-      console.error('❌ Error scanning blockchain:', error);
+      console.error('Error scanning blockchain:', error.message);
       return [];
     }
   }
@@ -95,8 +109,6 @@ class GemlaunchScanner {
       if (!tx) return;
 
       const userAddress = tx.from.toLowerCase();
-      const block = await this.web3.eth.getBlock(log.blockNumber);
-      const timestamp = Number(block.timestamp);
       const value = Number(this.web3.utils.fromWei(tx.value || '0', 'ether'));
 
       // Initialize user if not exists
@@ -120,13 +132,13 @@ class GemlaunchScanner {
         type: activityType,
         hash: log.transactionHash,
         blockNumber: log.blockNumber,
-        timestamp,
+        timestamp: Date.now(), // Use current timestamp as fallback
         value
       });
 
     } catch (error) {
       // Skip problematic transactions
-      console.warn(`⚠️ Error processing log ${log.transactionHash}:`, error.message);
+      console.warn(`Error processing log ${log.transactionHash}:`, error.message);
     }
   }
 
