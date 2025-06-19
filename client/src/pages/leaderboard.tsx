@@ -241,7 +241,7 @@ export default function Leaderboard() {
                 <item.icon className={`h-4 w-4 ${!sidebarExpanded ? 'mx-auto' : 'mr-3'}`} />
                 {sidebarExpanded && (
                   <>
-                    <span className="text-sm font-medium flex-1">{item.label}</span>
+                    <span className="text-sm font-medium flex-1 font-gilroy-light">{item.label}</span>
                     {item.hasDropdown && (
                       <ChevronRight 
                         className={`h-3 w-3 transition-transform ${
@@ -259,7 +259,7 @@ export default function Leaderboard() {
                   {item.children?.map((child, childIndex) => (
                     <div 
                       key={childIndex}
-                      className="px-3 py-2 text-xs text-gray-300 hover:text-[#22cda6] cursor-pointer rounded transition-colors"
+                      className="px-3 py-2 text-xs text-gray-300 hover:text-[#22cda6] cursor-pointer rounded transition-colors font-gilroy-light"
                     >
                       {child.label}
                     </div>
@@ -295,11 +295,11 @@ export default function Leaderboard() {
             {/* Network Status */}
             <div className="flex-1 flex justify-center">
               {connectedWallet ? (
-                <div className="bg-[#22cda6] text-black px-4 py-2 rounded-full text-sm font-medium">
+                <div className="bg-[#22cda6] text-black px-4 py-2 rounded-full text-sm font-medium font-gilroy-light">
                   BSC Mainnet Connected
                 </div>
               ) : (
-                <div className="bg-transparent border border-[#22cda6] text-[#22cda6] px-4 py-2 rounded-full text-sm font-medium">
+                <div className="bg-transparent border border-[#22cda6] text-[#22cda6] px-4 py-2 rounded-full text-sm font-medium font-gilroy-light">
                   Not Connected
                 </div>
               )}
@@ -310,7 +310,7 @@ export default function Leaderboard() {
               {connectedWallet ? (
                 <div className="flex items-center space-x-3">
                   <div className="bg-[#0f1713] border border-[#22cda6]/20 px-4 py-2 rounded-full">
-                    <span className="text-[#22cda6] text-sm font-mono">
+                    <span className="text-[#22cda6] text-sm font-neue-machina">
                       {connectedWallet.slice(0, 6)}...{connectedWallet.slice(-4)}
                     </span>
                   </div>
@@ -318,7 +318,7 @@ export default function Leaderboard() {
                     onClick={disconnectWallet}
                     variant="outline"
                     size="sm"
-                    className="border-[#22cda6]/30 text-[#22cda6] hover:bg-[#22cda6]/10 rounded-full"
+                    className="border-[#22cda6]/30 text-[#22cda6] hover:bg-[#22cda6]/10 rounded-full font-gilroy-light"
                   >
                     Disconnect
                   </Button>
@@ -350,14 +350,14 @@ export default function Leaderboard() {
                     />
                   </div>
                   <div className="flex-1">
-                    <h2 className="text-2xl font-bold text-[#22cda6] mb-2">
+                    <h2 className="text-2xl font-bold text-[#22cda6] mb-2 font-gilroy-bold">
                       Welcome to Gemlaunch Rewards Program!
                     </h2>
-                    <p className="text-base text-[#9ca3af] mb-3">
+                    <p className="text-base text-[#9ca3af] mb-3 font-gilroy-light">
                       Earn points for every on-chain activity: token creation, fair launches, presales, contributing to project funding, and referrals. 
                       Build your ranking for exclusive airdrops and rewards.
                     </p>
-                    <div className="flex items-center space-x-4 text-sm text-[#22cda6]">
+                    <div className="flex items-center space-x-4 text-sm text-[#22cda6] font-gilroy-light">
                       <span className="flex items-center">
                         <Trophy className="h-4 w-4 mr-1" />
                         Compete for Rankings
@@ -379,19 +379,19 @@ export default function Leaderboard() {
             {/* Leaderboard Section */}
             <Tabs defaultValue="leaderboard" className="w-full">
               <TabsList className="grid w-full max-w-lg grid-cols-4 bg-[#253935]">
-                <TabsTrigger value="leaderboard" className="data-[state=active]:bg-[#22cda6] data-[state=active]:text-black">
+                <TabsTrigger value="leaderboard" className="data-[state=active]:bg-[#22cda6] data-[state=active]:text-black font-gilroy-light">
                   <Trophy className="h-4 w-4 mr-2" />
                   Leaderboard
                 </TabsTrigger>
-                <TabsTrigger value="referrals" className="data-[state=active]:bg-[#22cda6] data-[state=active]:text-black">
+                <TabsTrigger value="referrals" className="data-[state=active]:bg-[#22cda6] data-[state=active]:text-black font-gilroy-light">
                   <Users className="h-4 w-4 mr-2" />
                   Referrals
                 </TabsTrigger>
-                <TabsTrigger value="activities" className="data-[state=active]:bg-[#22cda6] data-[state=active]:text-black">
+                <TabsTrigger value="activities" className="data-[state=active]:bg-[#22cda6] data-[state=active]:text-black font-gilroy-light">
                   <TrendingUp className="h-4 w-4 mr-2" />
                   Activities
                 </TabsTrigger>
-                <TabsTrigger value="profile" className="data-[state=active]:bg-[#22cda6] data-[state=active]:text-black">
+                <TabsTrigger value="profile" className="data-[state=active]:bg-[#22cda6] data-[state=active]:text-black font-gilroy-light">
                   <Settings className="h-4 w-4 mr-2" />
                   Profile
                 </TabsTrigger>

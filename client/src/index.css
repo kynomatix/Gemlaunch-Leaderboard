@@ -2,6 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Set default font for body */
+body {
+  font-family: 'Gilroy-Light', sans-serif;
+}
+
+/* Authentic Gempad Fonts */
+@font-face {
+  font-family: 'Gilroy-Light';
+  src: url('/Gilroy-Light.otf') format('opentype');
+  font-display: swap;
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Gilroy-ExtraBold';
+  src: url('/Gilroy-ExtraBold.otf') format('opentype');
+  font-display: swap;
+  font-weight: 800;
+}
+
+@font-face {
+  font-family: 'NeueMachina-Regular';
+  src: url('/NeueMachina-Regular.otf') format('opentype');
+  font-display: swap;
+  font-weight: 400;
+}
+
 /* Custom animations for Featured Projects Carousel */
 @keyframes slideInUp {
   0% {

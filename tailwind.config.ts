@@ -5,6 +5,11 @@ export default {
   content: ["./client/index.html", "./client/src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        'gilroy-light': ['Gilroy-Light', 'sans-serif'],
+        'gilroy-bold': ['Gilroy-ExtraBold', 'sans-serif'],
+        'neue-machina': ['NeueMachina-Regular', 'sans-serif'],
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
