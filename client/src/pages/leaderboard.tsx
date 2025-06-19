@@ -189,23 +189,11 @@ export default function Leaderboard() {
           className="p-4 flex items-center justify-center h-16 cursor-pointer"
           onClick={() => setSidebarExpanded(!sidebarExpanded)}
         >
-          {sidebarExpanded ? (
-            <div className="h-8 flex items-center">
-              <img 
-                src="/Logo.png" 
-                alt="Gemlaunch" 
-                className="h-full w-auto"
-              />
-            </div>
-          ) : (
-            <div className="w-6 h-6 flex items-center justify-center">
-              <img 
-                src="/Logo.png" 
-                alt="G" 
-                className="w-full h-full object-contain"
-              />
-            </div>
-          )}
+          <img 
+            src="/Logo.png" 
+            alt="Gemlaunch" 
+            className={`${sidebarExpanded ? 'h-8 w-auto' : 'w-6 h-6'} object-contain`}
+          />
         </div>
 
         {/* Navigation */}
