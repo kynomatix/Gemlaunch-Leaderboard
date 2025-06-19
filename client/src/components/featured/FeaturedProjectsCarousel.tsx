@@ -197,7 +197,7 @@ export default function FeaturedProjectsCarousel() {
     switch (status) {
       case 'presale': return 'bg-blue-600 text-white';
       case 'fairlaunch': return 'bg-[#22cda6] text-black';
-      case 'dutch_auction': return 'bg-purple-600 text-white';
+      case 'dutch_auction': return 'bg-orange-600 text-white';
       case 'completed': return 'bg-gray-600 text-white';
       default: return 'bg-orange-600 text-white';
     }
