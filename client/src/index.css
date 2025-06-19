@@ -158,35 +158,36 @@ body {
   --chart-5: #8b5cf6;
 }
 
-/* Force remove all scrollbar track backgrounds */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #22CDA6 transparent;
+/* Custom scrollbar - hide track completely */
+html {
+  overflow-y: scroll;
 }
 
-::-webkit-scrollbar {
+body::-webkit-scrollbar {
   width: 8px;
-  background: rgba(0,0,0,0) !important;
 }
 
-::-webkit-scrollbar-track {
-  background: rgba(0,0,0,0) !important;
-  border: none !important;
-  box-shadow: none !important;
+body::-webkit-scrollbar-track {
+  display: none;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #22CDA6 !important;
+body::-webkit-scrollbar-thumb {
+  background: #22CDA6;
   border-radius: 4px;
-  border: none !important;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #22CDA6 !important;
+/* For all elements */
+*::-webkit-scrollbar {
+  width: 8px;
 }
 
-::-webkit-scrollbar-corner {
-  background: rgba(0,0,0,0) !important;
+*::-webkit-scrollbar-track {
+  display: none;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #22CDA6;
+  border-radius: 4px;
 }
 
 /* Horizontal scrollbar for tables */
