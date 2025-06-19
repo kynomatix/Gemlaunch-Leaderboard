@@ -391,19 +391,6 @@ export class DatabaseStorage implements IStorage {
       rank: index + 1
     }));
   }
-        totalReferralPoints: 3600, // 12 referrals * 300 points each (qualified)
-        rank: 1
-      },
-      {
-        user: allUsers[1], // User with moderate activity  
-        qualifiedReferrals: 5,
-        totalReferralPoints: 1500, // 5 qualified referrals * 300 points each
-        rank: 2
-      }
-    ].filter(entry => entry.user); // Only include if user exists
-
-    return sampleLeaderboard;
-  }
 
   async createBlockchainEvent(event: InsertBlockchainEvent): Promise<BlockchainEvent> {
     const [newEvent] = await db
