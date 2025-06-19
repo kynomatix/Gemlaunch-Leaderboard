@@ -192,10 +192,36 @@ export default function Leaderboard() {
         {/* Logo Section */}
         <div className="p-4 flex items-center justify-center h-16">
           {sidebarExpanded ? (
-            <span className="text-xl font-bold text-white">Gemlaunch</span>
+            <div className="h-8 flex items-center">
+              {/* Full logo when expanded - replace with your logo import */}
+              <img 
+                src="/path/to/gemlaunch-logo-full.svg" 
+                alt="Gemlaunch" 
+                className="h-full w-auto"
+                onError={(e) => {
+                  // Fallback to text if image fails to load
+                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.nextElementSibling.style.display = 'block';
+                }}
+              />
+              <span className="text-xl font-bold text-white hidden">Gemlaunch</span>
+            </div>
           ) : (
-            <div className="w-6 h-6 bg-[#22cda6] rounded flex items-center justify-center">
-              <span className="text-black text-xs font-bold">G</span>
+            <div className="w-6 h-6 flex items-center justify-center">
+              {/* Compact logo when collapsed - replace with your compact logo import */}
+              <img 
+                src="/path/to/gemlaunch-logo-compact.svg" 
+                alt="G" 
+                className="w-full h-full"
+                onError={(e) => {
+                  // Fallback to colored circle if image fails to load
+                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.nextElementSibling.style.display = 'flex';
+                }}
+              />
+              <div className="w-6 h-6 bg-[#22cda6] rounded hidden items-center justify-center">
+                <span className="text-black text-xs font-bold">G</span>
+              </div>
             </div>
           )}
         </div>
@@ -256,7 +282,20 @@ export default function Leaderboard() {
           <div className="flex justify-between items-center">
             {/* Logo */}
             <div className="flex items-center">
-              <span className="text-[#22cda6] text-xl font-bold">Gemlaunch</span>
+              <div className="h-8 flex items-center">
+                {/* Top bar logo - replace with your logo import */}
+                <img 
+                  src="/path/to/gemlaunch-logo-full.svg" 
+                  alt="Gemlaunch" 
+                  className="h-full w-auto"
+                  onError={(e) => {
+                    // Fallback to text if image fails to load
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.nextElementSibling.style.display = 'block';
+                  }}
+                />
+                <span className="text-[#22cda6] text-xl font-bold hidden">Gemlaunch</span>
+              </div>
             </div>
             
             {/* Network Status */}
