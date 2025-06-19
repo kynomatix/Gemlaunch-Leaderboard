@@ -231,3 +231,9 @@ Changelog:
   - Demo users "Crypto Wizard" and "Token Master" serve as leaderboard functionality demonstration
   - Real contracts are active on BNB Chain but require paid RPC access or contract ABIs for full user discovery
   - System ready for integration with premium blockchain API services for authentic user import
+- June 19, 2025: Real user additions and avatar system enhancement
+  - Added 4 real Gemlaunch users with authentic wallet addresses: DeFi Builder, LaunchPad Pro, Gem Hunter, BNB Whale
+  - Fixed avatar display system to show uploaded user profile pictures when available
+  - Enhanced leaderboard to display top 10 users instead of all users for better focus
+  - Implemented proper AvatarImage components in both main and referral leaderboards
+  - Users can now upload profile pictures that display throughout the platform interface

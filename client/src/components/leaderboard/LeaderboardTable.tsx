@@ -204,18 +204,18 @@ export default function LeaderboardTable() {
           )}
         </div>
       </div>
-      {/* Complete Rankings List - Top 10+ */}
+      {/* Top 10 Rankings List */}
       <div className="bg-[#253935]">
         <div className="p-4 border-b border-[#22cda6]/20">
           <h3 className="text-lg font-semibold text-white flex items-center">
             {renderIcon('Trophy', 'h-5 w-5 text-[#22cda6] mr-2')}
-            Complete Rankings
+            Top 10 Rankings
           </h3>
         </div>
         
         <div className="divide-y divide-[#22cda6]/10">
-          {/* Show all users in leaderboard */}
-          {users.map((user: any, index: number) => (
+          {/* Show top 10 users */}
+          {users.slice(0, 10).map((user: any, index: number) => (
             <div 
               key={user.id} 
               className="p-4 hover:bg-[#1a2b21] transition-all"
