@@ -41,8 +41,8 @@ class GemlaunchScanner {
       const currentBlock = toBlock === 'latest' ? await this.web3.eth.getBlockNumber() : toBlock;
       const endBlock = Number(currentBlock);
       
-      // Limit scan range to avoid rate limits
-      const maxBlockRange = 1000;
+      // Limit scan range to avoid rate limits - use much smaller range
+      const maxBlockRange = 100;
       const actualFromBlock = Math.max(fromBlock, endBlock - maxBlockRange);
       
       console.log(`Adjusted scan range: blocks ${actualFromBlock} to ${endBlock} (${endBlock - actualFromBlock} blocks)`);
