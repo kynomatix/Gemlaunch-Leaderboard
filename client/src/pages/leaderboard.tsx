@@ -296,7 +296,7 @@ export default function Leaderboard() {
             </div>
             
             {/* Network Status */}
-            <div className="flex-1 flex justify-center">
+            <div className="flex-1 flex justify-start">
               {connectedWallet ? (
                 <div className="bg-[#22cda6] text-black px-4 py-2 rounded-full text-sm font-medium font-gilroy-light">
                   BSC Mainnet Connected
