@@ -334,13 +334,13 @@ export default function ActivitiesPanel() {
             <CardContent className="pt-0">
               <div className="space-y-3">
                 <p className="text-[#9ca3af] text-xs leading-relaxed">
-                  To ensure equitable distribution and maintain program integrity, comprehensive anti-sybil analysis will be conducted 
-                  at the conclusion of the airdrop qualification period. Participants engaging in coordinated multi-account activities, 
-                  artificial transaction patterns, or other forms of ecosystem manipulation will be identified and excluded from final 
-                  reward distributions.
+                  Users can connect multiple wallets to consolidate their legitimate activities under one account. This multi-wallet 
+                  feature helps verify authentic participation from the same entity across different addresses. Comprehensive anti-sybil 
+                  analysis will be conducted to identify coordinated farming attempts, artificial transaction patterns, or ecosystem 
+                  manipulation while preserving rewards for genuine users with multiple wallets.
                 </p>
                 <p className="text-[#22cda6] text-xs font-medium">
-                  Authentic participation and genuine community engagement are the foundation of Gemlaunch's reward ecosystem.
+                  Authentic participation across your connected wallets is rewarded. Sybil farming across separate accounts is not.
                 </p>
               </div>
             </CardContent>
