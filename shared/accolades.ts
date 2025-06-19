@@ -95,6 +95,28 @@ export const ACCOLADES: AccoladeDefinition[] = [
 
   // UNCOMMON RARITY ACCOLADES
   {
+    id: 'funding_veteran',
+    name: 'Funding Veteran', 
+    description: 'Veteran token funder with significant investment activity.',
+    icon: 'Shield',
+    category: 'funding',
+    level: 2,
+    criteria: 'Fund 10+ different token launches',
+    pointsBonus: 800,
+    rarity: 'uncommon'
+  },
+  {
+    id: 'launch_master',
+    name: 'Launch Master',
+    description: 'Master of token launches with multiple successful projects.',
+    icon: 'Trophy',
+    category: 'creator',
+    level: 2,
+    criteria: 'Successfully launch 5+ tokens',
+    pointsBonus: 1000,
+    rarity: 'uncommon'
+  },
+  {
     id: 'launch_supporter',
     name: 'Launch Supporter',
     description: 'Support multiple token launches with funding.',
