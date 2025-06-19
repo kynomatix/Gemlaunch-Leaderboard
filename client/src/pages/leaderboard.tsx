@@ -41,6 +41,8 @@ import { useWebSocket } from "@/hooks/useWebSocket";
 
 import Gemmy_Mascot from "@assets/Gemmy_Mascot.png";
 
+import Logo from "@assets/Logo.png";
+
 export default function Leaderboard() {
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [connectedWallet, setConnectedWallet] = useState<string | null>(null);
@@ -190,7 +192,7 @@ export default function Leaderboard() {
           onClick={() => setSidebarExpanded(!sidebarExpanded)}
         >
           <img 
-            src="/Logo.png" 
+            src={Logo} 
             alt="Gemlaunch" 
             className={`${sidebarExpanded ? 'h-8 w-auto' : 'w-6 h-6'} object-contain`}
           />
@@ -244,7 +246,6 @@ export default function Leaderboard() {
           ))}
         </nav>
       </div>
-
       {/* Main Content Area */}
       <div className={`flex-1 flex flex-col transition-all duration-200 ${sidebarExpanded ? 'ml-64' : 'ml-14'}`}>
         {/* Top Bar - Authentic Gemlaunch Design */}
