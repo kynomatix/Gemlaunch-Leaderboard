@@ -258,21 +258,21 @@ export default function FeaturedProjectsCarousel() {
             
             <CardContent className="p-6 relative z-10">
               {/* Project Header */}
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center space-x-3">
+              <div className="flex items-start justify-between mb-4 gap-4">
+                <div className="flex items-center space-x-3 flex-1 min-w-0">
                   {/* Project Logo Placeholder */}
                   <div className="w-12 h-12 bg-gradient-to-br from-[#22cda6] to-[#1fb898] rounded-lg flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-lg group-hover:shadow-[#22cda6]/40">
                     <span className="text-white font-bold text-lg group-hover:scale-110 transition-transform duration-300">
                       {project.symbol.slice(0, 2)}
                     </span>
                   </div>
-                  <div>
-                    <h3 className="font-bold text-white text-lg group-hover:text-[#22cda6] transition-colors duration-300">{project.name}</h3>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-bold text-white text-lg group-hover:text-[#22cda6] transition-colors duration-300 truncate">{project.name}</h3>
                     <p className="text-[#22cda6] text-sm font-medium group-hover:scale-105 transition-transform duration-300">${project.symbol}</p>
                   </div>
                 </div>
                 
-                <Badge className={`inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 text-xs text-center ${getStatusBadgeClass(project.status)}`}>
+                <Badge className={`inline-flex items-center rounded-full border px-3 py-1 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 text-xs text-center flex-shrink-0 ${getStatusBadgeClass(project.status)}`}>
                   {getStatusText(project.status)}
                 </Badge>
               </div>
