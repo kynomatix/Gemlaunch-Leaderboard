@@ -141,13 +141,13 @@ body {
   --radius: 0.5rem;
   
   /* Sidebar colors */
-  --sidebar-background: var(--gem-sidebar);
-  --sidebar-foreground: var(--gem-text-muted);
+  --sidebar-background: #0f1713;
+  --sidebar-foreground: var(--gem-text);
   --sidebar-primary: var(--gem-primary);
   --sidebar-primary-foreground: var(--gem-sidebar);
-  --sidebar-accent: var(--gem-card-hover);
+  --sidebar-accent: var(--gem-primary);
   --sidebar-accent-foreground: var(--gem-text);
-  --sidebar-border: var(--gem-border);
+  --sidebar-border: transparent;
   --sidebar-ring: var(--gem-primary);
   
   /* Chart colors */
