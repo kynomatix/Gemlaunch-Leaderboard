@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import * as LucideIcons from "lucide-react";
 import { web3Service } from "@/lib/web3";
@@ -233,6 +233,7 @@ export default function LeaderboardTable() {
                   
                   {/* User Avatar */}
                   <Avatar className="w-10 h-10">
+                    {user.avatar && <AvatarImage src={user.avatar} alt={user.username || 'User avatar'} />}
                     <AvatarFallback className="bg-[#1a2b21] text-[#22cda6] text-sm font-medium">
                       {user.walletAddress.slice(2, 4).toUpperCase()}
                     </AvatarFallback>
@@ -281,6 +282,7 @@ export default function LeaderboardTable() {
                   {currentUser ? currentUser.rank : '?'}
                 </div>
                 <Avatar className="w-10 h-10">
+                  {currentUser?.avatar && <AvatarImage src={currentUser.avatar} alt={currentUser.username || 'Your avatar'} />}
                   <AvatarFallback className="bg-[#22cda6] text-black">
                     {renderIcon('User', 'h-5 w-5')}
                   </AvatarFallback>

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import * as LucideIcons from "lucide-react";
 
@@ -110,6 +110,7 @@ export default function ReferralLeaderboard() {
                   {/* User Info */}
                   <div className="flex items-center space-x-3">
                     <Avatar className="h-10 w-10 border-2 border-[#22cda6]/30">
+                      {leader.user.avatar && <AvatarImage src={leader.user.avatar} alt={leader.user.username || 'User avatar'} />}
                       <AvatarFallback className="bg-[#22cda6]/20 text-[#22cda6] font-medium">
                         {leader.user.username?.slice(0, 2).toUpperCase() || 
                          formatWalletAddress(leader.user.walletAddress).slice(0, 2).toUpperCase()}
