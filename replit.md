@@ -254,3 +254,10 @@ Changelog:
   - Implemented authentic Gempad scrollbar styling with transparent background and #22CDA6 thumb only
   - Removed all grey elements from page styling to match official Gemlaunch color palette exactly
   - Added proper table-container class for horizontal scroll styling matching official codebase
+- June 19, 2025: Complete accolade system overhaul and proper assignment
+  - Fixed duplicate accolade issue where all users showed identical rocket icons
+  - Removed mock referral data from Referral Champions section to show only authentic qualified referrals
+  - Assigned proper accolades based on actual user activities: Genesis Member (first 10), Pioneer (first 50), Token Creator, etc.
+  - Each user now displays unique achievement icons (Crown, Rocket, Star, Target, Coins) reflecting their specific accomplishments
+  - Removed "No accolades yet" text display for clean interface when users have no achievements
+  - System now prevents duplicate accolade assignments and maintains data integrity for fair competition

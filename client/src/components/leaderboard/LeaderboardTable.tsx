@@ -86,7 +86,7 @@ export default function LeaderboardTable() {
 
   const renderAccolades = (accolades: any[]) => {
     if (!accolades || accolades.length === 0) {
-      return <span className="text-xs text-gray-400">No accolades yet</span>;
+      return null; // Don't show any text for users with no accolades
     }
 
     // Show first 2 accolades as icons inline, then a badge count for the rest
