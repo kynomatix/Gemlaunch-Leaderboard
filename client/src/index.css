@@ -161,19 +161,16 @@ body {
 /* Authentic Gempad scrollbar styling */
 ::-webkit-scrollbar {
   width: 12px;
-  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
+  height: 4rem;
+  border: 4px solid transparent;
+  background-clip: content-box;
   background-color: #22CDA6;
-  border-radius: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-corner {
   background: transparent;
 }
 
