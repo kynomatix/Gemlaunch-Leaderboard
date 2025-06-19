@@ -64,6 +64,11 @@ export interface IStorage {
   createBlockchainEvent(event: InsertBlockchainEvent): Promise<BlockchainEvent>;
   getUnprocessedEvents(): Promise<BlockchainEvent[]>;
   markEventProcessed(eventId: number): Promise<void>;
+  
+  // Admin operations
+  deleteUser(userId: number): Promise<void>;
+  getAllAccolades(): Promise<Array<Accolade & { user: User }>>;
+  resetPioneerAccolades(): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -417,6 +422,95 @@ export class DatabaseStorage implements IStorage {
 
   private generateReferralCode(): string {
     return Math.random().toString(36).substring(2, 10).toUpperCase();
+  }
+
+  async deleteUser(userId: number): Promise<void> {
+    // Delete related records first
+    await db.delete(accolades).where(eq(accolades.userId, userId));
+    await db.delete(activities).where(eq(activities.userId, userId));
+    await db.delete(referrals).where(eq(referrals.referrerId, userId));
+    await db.delete(referrals).where(eq(referrals.refereeId, userId));
+    await db.delete(userWallets).where(eq(userWallets.userId, userId));
+    
+    // Delete the user
+    await db.delete(users).where(eq(users.id, userId));
+  }
+
+  async getAllAccolades(): Promise<Array<Accolade & { user: User }>> {
+    return await db
+      .select({
+        id: accolades.id,
+        userId: accolades.userId,
+        accoladeId: accolades.accoladeId,
+        name: accolades.name,
+        earnedAt: accolades.earnedAt,
+        user: users
+      })
+      .from(accolades)
+      .innerJoin(users, eq(accolades.userId, users.id))
+      .orderBy(users.createdAt, accolades.earnedAt);
+  }
+
+  async resetPioneerAccolades(): Promise<void> {
+    // Delete all existing pioneer accolades
+    await db.delete(accolades).where(
+      inArray(accolades.accoladeId, ['genesis_member', 'gemlaunch_pioneer', 'early_adopter'])
+    );
+
+    // Get all users sorted by creation date
+    const allUsers = await db.select().from(users).orderBy(users.createdAt);
+
+    // Award pioneer accolades based on actual join order
+    for (let i = 0; i < allUsers.length; i++) {
+      const user = allUsers[i];
+      const joinOrder = i + 1;
+
+      // Genesis Member (first 10 users)
+      if (joinOrder <= 10) {
+        await this.createAccolade({
+          userId: user.id,
+          accoladeId: 'genesis_member',
+          name: 'Genesis Member'
+        });
+      }
+
+      // Gemlaunch Pioneer (first 50 users)
+      if (joinOrder <= 50) {
+        await this.createAccolade({
+          userId: user.id,
+          accoladeId: 'gemlaunch_pioneer',
+          name: 'Gemlaunch Pioneer'
+        });
+      }
+
+      // Early Adopter (first 1000 users)
+      if (joinOrder <= 1000) {
+        await this.createAccolade({
+          userId: user.id,
+          accoladeId: 'early_adopter',
+          name: 'Early Adopter'
+        });
+      }
+    }
+
+    // Recalculate points for all users
+    for (const user of allUsers) {
+      const userAccolades = await this.getUserAccolades(user.id);
+      const accoladeBonus = userAccolades.reduce((total, accolade) => {
+        const def = ACCOLADES.find(a => a.id === accolade.accoladeId);
+        return total + (def?.pointsBonus || 0);
+      }, 0);
+
+      // Get base points from activities
+      const userActivities = await this.getUserActivities(user.id);
+      const basePoints = userActivities.reduce((total, activity) => total + activity.points, 0);
+
+      const totalPoints = basePoints + accoladeBonus;
+      
+      await db.update(users)
+        .set({ totalPoints })
+        .where(eq(users.id, user.id));
+    }
   }
 }
 
