@@ -237,3 +237,8 @@ Changelog:
   - Enhanced leaderboard to display top 10 users instead of all users for better focus
   - Implemented proper AvatarImage components in both main and referral leaderboards
   - Users can now upload profile pictures that display throughout the platform interface
+- June 19, 2025: Leaderboard cleanup for fair competition
+  - Removed all demo/fake accounts to ensure fair competition for real users
+  - Leaderboard now contains only authentic wallet addresses with verified on-chain activity
+  - Enhanced podium system: top 3 prominently displayed, ranks 4-10 in grid below, complete rankings section shows all users
+  - Maintained "Complete Rankings" section title to display full user list transparency
