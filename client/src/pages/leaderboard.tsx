@@ -193,9 +193,8 @@ export default function Leaderboard() {
         <div className="p-4 flex items-center justify-center h-16">
           {sidebarExpanded ? (
             <div className="h-8 flex items-center">
-              {/* Full logo when expanded - replace with your logo import */}
               <img 
-                src="/path/to/gemlaunch-logo-full.svg" 
+                src="/Logo.png" 
                 alt="Gemlaunch" 
                 className="h-full w-auto"
                 onError={(e) => {
@@ -208,11 +207,10 @@ export default function Leaderboard() {
             </div>
           ) : (
             <div className="w-6 h-6 flex items-center justify-center">
-              {/* Compact logo when collapsed - replace with your compact logo import */}
               <img 
-                src="/path/to/gemlaunch-logo-compact.svg" 
+                src="/Logo.png" 
                 alt="G" 
-                className="w-full h-full"
+                className="w-full h-full object-contain"
                 onError={(e) => {
                   // Fallback to colored circle if image fails to load
                   e.currentTarget.style.display = 'none';
@@ -283,9 +281,8 @@ export default function Leaderboard() {
             {/* Logo */}
             <div className="flex items-center">
               <div className="h-8 flex items-center">
-                {/* Top bar logo - replace with your logo import */}
                 <img 
-                  src="/path/to/gemlaunch-logo-full.svg" 
+                  src="/Logo.png" 
                   alt="Gemlaunch" 
                   className="h-full w-auto"
                   onError={(e) => {
