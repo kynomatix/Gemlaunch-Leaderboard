@@ -32,16 +32,17 @@ export default function LeaderboardTable() {
   // Get top 3 for podium
   const topThree = users.slice(0, 3);
 
-  // Auto-connect wallet and check current user
+  // Find current user from connected wallet
   useEffect(() => {
-    const checkWallet = async () => {
-      const connectedAddress = await web3Service.getConnectedAccount();
-      if (connectedAddress && users.length > 0) {
-        const user = users.find((u: any) => u.walletAddress.toLowerCase() === connectedAddress.toLowerCase());
-        setCurrentUser(user);
+    const connectedWallet = web3Service.getAccount();
+    if (connectedWallet && users.length > 0) {
+      const user = users.find((u: any) => u.walletAddress.toLowerCase() === connectedWallet.toLowerCase());
+      if (user) {
+        // Add rank to current user
+        const userWithRank = { ...user, rank: users.findIndex((u: any) => u.id === user.id) + 1 };
+        setCurrentUser(userWithRank);
       }
-    };
-    checkWallet();
+    }
   }, [users]);
 
   if (isLoading) {
