@@ -183,27 +183,19 @@ export default function Leaderboard() {
       {/* Authentic Gemlaunch Sidebar */}
       <div 
         className={`${sidebarExpanded ? 'w-64' : 'w-14'} bg-[#0B1B18] transition-all duration-200 ease-in-out fixed left-0 top-0 h-full z-50 overflow-hidden flex flex-col`}
-        onMouseEnter={() => setSidebarExpanded(true)}
-        onMouseLeave={() => {
-          setSidebarExpanded(false);
-          setExpandedItems({});
-        }}
       >
         {/* Logo Section */}
-        <div className="p-4 flex items-center justify-center h-16">
+        <div 
+          className="p-4 flex items-center justify-center h-16 cursor-pointer"
+          onClick={() => setSidebarExpanded(!sidebarExpanded)}
+        >
           {sidebarExpanded ? (
             <div className="h-8 flex items-center">
               <img 
                 src="/Logo.png" 
                 alt="Gemlaunch" 
                 className="h-full w-auto"
-                onError={(e) => {
-                  // Fallback to text if image fails to load
-                  e.currentTarget.style.display = 'none';
-                  e.currentTarget.nextElementSibling.style.display = 'block';
-                }}
               />
-              <span className="text-xl font-bold text-white hidden">Gemlaunch</span>
             </div>
           ) : (
             <div className="w-6 h-6 flex items-center justify-center">
@@ -211,15 +203,7 @@ export default function Leaderboard() {
                 src="/Logo.png" 
                 alt="G" 
                 className="w-full h-full object-contain"
-                onError={(e) => {
-                  // Fallback to colored circle if image fails to load
-                  e.currentTarget.style.display = 'none';
-                  e.currentTarget.nextElementSibling.style.display = 'flex';
-                }}
               />
-              <div className="w-6 h-6 bg-[#22cda6] rounded hidden items-center justify-center">
-                <span className="text-black text-xs font-bold">G</span>
-              </div>
             </div>
           )}
         </div>
@@ -234,9 +218,9 @@ export default function Leaderboard() {
                     ? "bg-[#22cda6]/20 text-[#22cda6]" 
                     : "text-white hover:bg-[#22cda6]/10"
                 }`}
-                onClick={() => {
-                  if (item.hasDropdown) {
-                    setExpandedItems(prev => ({ ...prev, [item.id]: !prev[item.id] }));
+                onMouseEnter={() => {
+                  if (item.hasDropdown && sidebarExpanded) {
+                    setExpandedItems(prev => ({ ...prev, [item.id]: true }));
                   }
                 }}
               >
@@ -291,7 +275,7 @@ export default function Leaderboard() {
                     e.currentTarget.nextElementSibling.style.display = 'block';
                   }}
                 />
-                <span className="text-[#22cda6] text-xl font-bold hidden">Gemlaunch</span>
+                
               </div>
             </div>
             
