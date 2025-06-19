@@ -54,7 +54,6 @@ export default function LeaderboardTable() {
     );
   }
 
-  const topThree = users.slice(0, 3);
   const remaining = users.slice(3);
 
   const getAccoladeData = (type: string) => {
