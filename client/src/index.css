@@ -158,25 +158,22 @@ body {
   --chart-5: #8b5cf6;
 }
 
-/* Authentic Gempad scrollbar styling */
+/* Authentic Gempad scrollbar styling - only teal thumb visible */
 ::-webkit-scrollbar {
-  width: 12px;
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  height: 4rem;
-  border: 4px solid transparent;
-  background-clip: content-box;
-  background-color: #22CDA6;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: none;
 }
 
-::-webkit-scrollbar-track-piece {
-  background: transparent;
+::-webkit-scrollbar-thumb {
+  background: #22CDA6;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #22CDA6;
 }
 
 /* Horizontal scrollbar for tables */
