@@ -248,3 +248,8 @@ Changelog:
   - Set 600px max height with scroll to prevent endless scrolling and maintain section accessibility
   - Pioneer accolade counters reset and verified for accurate production launch readiness
   - Ensured Referral Champions and Featured Projects sections remain easily accessible above fold
+- June 19, 2025: Fixed accolade system and authentic scrollbar styling
+  - Cleaned up duplicate pioneer accolades and assigned accurate accolades based on real Gemlaunch activity
+  - Fixed current user display to show proper wallet address, points, and rank in bottom section
+  - Implemented authentic Gempad scrollbar styling with #22CDA6 accent and #1a2b21 grey background
+  - Added proper table-container class for horizontal scroll styling matching official codebase

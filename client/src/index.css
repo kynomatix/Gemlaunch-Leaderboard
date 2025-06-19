@@ -171,7 +171,8 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #1a2b21;
+  border-radius: 6px;
 }
 
 /* Horizontal scrollbar for tables */
