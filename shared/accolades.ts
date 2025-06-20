@@ -196,6 +196,30 @@ export const ACCOLADES: AccoladeDefinition[] = [
     multiplier: 1.1,
     rarity: 'uncommon'
   },
+  {
+    id: 'social_influencer',
+    name: 'Social Influencer',
+    description: 'Created 25 high-quality social media mentions',
+    icon: 'MessageCircle',
+    category: 'social',
+    level: 1,
+    criteria: 'Create 25 authentic social media mentions with 70+ authenticity score',
+    pointsBonus: 1000,
+    multiplier: 1.1,
+    rarity: 'uncommon'
+  },
+  {
+    id: 'community_voice',
+    name: 'Community Voice',
+    description: 'Consistent quality social engagement',
+    icon: 'Users',
+    category: 'social',
+    level: 1,
+    criteria: 'Maintain 80+ average authenticity score across 10+ mentions',
+    pointsBonus: 750,
+    multiplier: 1.05,
+    rarity: 'common'
+  },
 
   // RARE RARITY ACCOLADES
   {

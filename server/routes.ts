@@ -268,6 +268,65 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Social media analysis endpoint
+  app.post("/api/social/analyze-mention", async (req, res) => {
+    try {
+      const { mentionText, username, walletAddress } = req.body;
+      
+      if (!mentionText || !username || !walletAddress) {
+        return res.status(400).json({ error: "Missing required fields" });
+      }
+
+      // Import the social media analyzer
+      const { socialMediaAnalyzer } = await import("../services/ai");
+      
+      if (!socialMediaAnalyzer.isConfigured()) {
+        return res.status(503).json({ error: "Social media analysis service not configured" });
+      }
+
+      const analysis = await socialMediaAnalyzer.analyzeMentionAuthenticity(mentionText, username);
+      
+      // Award points based on authenticity and quality
+      const basePoints = 10; // Base points for social media mention
+      const qualityMultiplier = analysis.qualityScore / 10;
+      const authenticityMultiplier = analysis.authenticityScore / 100;
+      
+      const pointsEarned = Math.round(basePoints * qualityMultiplier * authenticityMultiplier);
+      
+      // Only award points if not spam and meets minimum thresholds
+      if (!analysis.isSpam && analysis.authenticityScore >= 60 && analysis.qualityScore >= 5) {
+        const user = await storage.getUserByWalletAddress(walletAddress);
+        if (user) {
+          await storage.createActivity({
+            userId: user.id,
+            activityType: 'social_mention',
+            points: pointsEarned,
+            metadata: {
+              platform: 'twitter',
+              username,
+              authenticityScore: analysis.authenticityScore,
+              qualityScore: analysis.qualityScore,
+              reasoning: analysis.reasoning
+            }
+          });
+          
+          await storage.updateUserPoints(user.id, pointsEarned);
+          broadcastUpdate({ type: 'SOCIAL_ACTIVITY', user, points: pointsEarned });
+        }
+      }
+      
+      res.json({
+        analysis,
+        pointsEarned: analysis.isSpam || analysis.authenticityScore < 60 ? 0 : pointsEarned,
+        awarded: !analysis.isSpam && analysis.authenticityScore >= 60 && analysis.qualityScore >= 5
+      });
+      
+    } catch (error) {
+      console.error("Error analyzing social mention:", error);
+      res.status(500).json({ error: "Failed to analyze social mention" });
+    }
+  });
+
   // Get user recent referrals
   app.get("/api/referrals/recent/:walletAddress", async (req, res) => {
     try {
