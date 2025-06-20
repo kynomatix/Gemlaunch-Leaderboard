@@ -272,3 +272,4 @@ Changelog:
   - Enhanced profile page to prominently feature social media accounts as required for point rewards
   - Added validation requiring X (Twitter) or Discord usernames for social media point eligibility
   - Social rewards system now properly checks for configured social media accounts before awarding points
+  - REMOVED old Replicate/Llama integration to prevent accidental API charges - now exclusively using Hugging Face Mixtral
