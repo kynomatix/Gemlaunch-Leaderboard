@@ -277,3 +277,5 @@ Changelog:
   - Fixed database schema issues with missing qualification_amount column for referrals system
   - Integrated Social Rewards as main navigation tab between Activities and Profile for easy access
   - Social media analysis system now properly accessible through main interface instead of hidden page
+  - Cleaned up redundant SocialRewards page and removed /social route since functionality moved to main tabs
+  - Removed temporary migration and scanning scripts to keep codebase clean and focused
