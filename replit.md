@@ -275,3 +275,5 @@ Changelog:
   - REMOVED old Replicate/Llama integration to prevent accidental API charges - now exclusively using Hugging Face Mixtral
   - Added scrollable Recent Activity section with 5 events visible and authentic Gempad scrollbar styling
   - Fixed database schema issues with missing qualification_amount column for referrals system
+  - Integrated Social Rewards as main navigation tab between Activities and Profile for easy access
+  - Social media analysis system now properly accessible through main interface instead of hidden page

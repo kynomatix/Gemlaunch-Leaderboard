@@ -45,6 +45,7 @@ import ReferralLeaderboard from "@/components/referrals/ReferralLeaderboard";
 import ActivitiesPanel from "@/components/activities/ActivitiesPanel";
 import ProfilePanel from "@/components/profile/ProfilePanel";
 import FeaturedProjectsCarousel from "@/components/featured/FeaturedProjectsCarousel";
+import SocialRewardsTab from "@/components/social/SocialRewardsTab";
 import { useWebSocket } from "@/hooks/useWebSocket";
 
 import Gemmy_Mascot from "@assets/Gemmy_Mascot.png";
@@ -381,7 +382,7 @@ export default function Leaderboard() {
 
             {/* Leaderboard Section */}
             <Tabs defaultValue="leaderboard" className="w-full">
-              <TabsList className="grid w-full max-w-lg grid-cols-4 bg-[#253935]">
+              <TabsList className="grid w-full max-w-lg grid-cols-5 bg-[#253935]">
                 <TabsTrigger value="leaderboard" className="data-[state=active]:bg-[#22cda6] data-[state=active]:text-black font-gilroy-light">
                   <Trophy className="h-4 w-4 mr-2" />
                   Leaderboard
@@ -393,6 +394,10 @@ export default function Leaderboard() {
                 <TabsTrigger value="activities" className="data-[state=active]:bg-[#22cda6] data-[state=active]:text-black font-gilroy-light">
                   <TrendingUp className="h-4 w-4 mr-2" />
                   Activities
+                </TabsTrigger>
+                <TabsTrigger value="social" className="data-[state=active]:bg-[#22cda6] data-[state=active]:text-black font-gilroy-light">
+                  <Send className="h-4 w-4 mr-2" />
+                  Social
                 </TabsTrigger>
                 <TabsTrigger value="profile" className="data-[state=active]:bg-[#22cda6] data-[state=active]:text-black font-gilroy-light">
                   <Settings className="h-4 w-4 mr-2" />
@@ -423,6 +428,12 @@ export default function Leaderboard() {
               <TabsContent value="activities" className="mt-6">
                 <div className="bg-[#253935] rounded-lg p-6 border border-[#3d5c4d]">
                   <ActivitiesPanel />
+                </div>
+              </TabsContent>
+
+              <TabsContent value="social" className="mt-6">
+                <div className="bg-[#253935] rounded-lg p-6 border border-[#3d5c4d]">
+                  <SocialRewardsTab />
                 </div>
               </TabsContent>
 
