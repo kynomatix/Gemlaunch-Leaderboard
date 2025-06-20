@@ -241,7 +241,14 @@ export class DatabaseStorage implements IStorage {
   async createActivity(activity: InsertActivity): Promise<Activity> {
     const [newActivity] = await db
       .insert(activities)
-      .values(activity)
+      .values({
+        userId: activity.userId,
+        activityType: activity.activityType,
+        points: activity.points,
+        transactionHash: activity.transactionHash || null,
+        blockNumber: activity.blockNumber || null,
+        metadata: activity.metadata || null
+      })
       .returning();
     
     // Update user points
