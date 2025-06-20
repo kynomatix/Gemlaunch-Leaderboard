@@ -1,11 +1,6 @@
 import Replicate from 'replicate';
 
-interface ClaudeResponse {
-  content: string;
-  confidence: number;
-}
-
-class AIService {
+class SocialMediaAnalyzer {
   private replicate: Replicate | null = null;
 
   constructor() {
@@ -16,10 +11,10 @@ class AIService {
     }
   }
 
-  async analyzeSocialContent(content: string): Promise<{
+  async analyzeMentionAuthenticity(mentionText: string, username: string): Promise<{
+    authenticityScore: number;
     isSpam: boolean;
     qualityScore: number;
-    sentiment: 'positive' | 'negative' | 'neutral';
     reasoning: string;
   }> {
     if (!this.replicate) {
@@ -27,84 +22,26 @@ class AIService {
     }
 
     try {
-      const prompt = `Analyze this social media content for the Gemlaunch platform. Rate quality (1-10), detect spam, assess sentiment, and provide reasoning.
+      const prompt = `Analyze this social media mention of Gemlaunch for authenticity and quality. Consider tone, context, and whether it seems genuine or promotional.
 
-Content: "${content}"
+Username: ${username}
+Content: "${mentionText}"
+
+Rate on these criteria:
+- Authenticity (0-100): Does this seem like a genuine user experience vs promotional content?
+- Quality (1-10): How thoughtful and valuable is this content?
+- Spam detection: Does this look like bot/farm content?
 
 Respond in JSON format:
 {
+  "authenticityScore": number (0-100),
   "isSpam": boolean,
   "qualityScore": number (1-10),
-  "sentiment": "positive|negative|neutral",
-  "reasoning": "brief explanation"
+  "reasoning": "brief explanation of assessment"
 }`;
 
       const output = await this.replicate.run(
-        "anthropic/claude-3.5-sonnet:latest",
-        {
-          input: {
-            prompt: prompt,
-            max_tokens: 500,
-            temperature: 0.1
-          }
-        }
-      ) as string[];
-
-      const response = JSON.parse(output.join(''));
-      
-      return {
-        isSpam: response.isSpam || false,
-        qualityScore: Math.max(1, Math.min(10, response.qualityScore || 5)),
-        sentiment: response.sentiment || 'neutral',
-        reasoning: response.reasoning || 'Analysis completed'
-      };
-
-    } catch (error) {
-      console.error('AI analysis error:', error);
-      // Fallback to basic analysis
-      return {
-        isSpam: content.length < 10 || /^.{1,3}$/.test(content.trim()),
-        qualityScore: Math.min(10, Math.max(1, content.length / 20)),
-        sentiment: 'neutral',
-        reasoning: 'Basic analysis due to AI service unavailable'
-      };
-    }
-  }
-
-  async validateReferralQuality(userAddress: string, refereeAddress: string): Promise<{
-    isValid: boolean;
-    riskScore: number;
-    reasoning: string;
-  }> {
-    // Basic validation without AI if service unavailable
-    if (!this.replicate) {
-      return {
-        isValid: userAddress.toLowerCase() !== refereeAddress.toLowerCase(),
-        riskScore: 0.1,
-        reasoning: 'Basic validation - addresses are different'
-      };
-    }
-
-    try {
-      const prompt = `Analyze these wallet addresses for potential sybil attack patterns:
-
-Referrer: ${userAddress}
-Referee: ${refereeAddress}
-
-Check for:
-- Similar address patterns
-- Sequential creation indicators
-- Risk assessment (0-1 scale)
-
-Respond in JSON:
-{
-  "isValid": boolean,
-  "riskScore": number (0-1),
-  "reasoning": "analysis explanation"
-}`;
-
-      const output = await this.replicate.run(
-        "anthropic/claude-3.5-sonnet:latest",
+        "mistralai/mixtral-8x7b-instruct-v0.1",
         {
           input: {
             prompt: prompt,
@@ -117,17 +54,23 @@ Respond in JSON:
       const response = JSON.parse(output.join(''));
       
       return {
-        isValid: response.isValid !== false,
-        riskScore: Math.max(0, Math.min(1, response.riskScore || 0.1)),
-        reasoning: response.reasoning || 'Address validation completed'
+        authenticityScore: Math.max(0, Math.min(100, response.authenticityScore || 50)),
+        isSpam: response.isSpam || false,
+        qualityScore: Math.max(1, Math.min(10, response.qualityScore || 5)),
+        reasoning: response.reasoning || 'Analysis completed'
       };
 
     } catch (error) {
-      console.error('Referral validation error:', error);
+      console.error('Social media analysis error:', error);
+      // Basic fallback analysis
+      const hasSpamPatterns = /🚀{2,}|moon|pump|gem|100x/gi.test(mentionText);
+      const isVeryShort = mentionText.length < 20;
+      
       return {
-        isValid: userAddress.toLowerCase() !== refereeAddress.toLowerCase(),
-        riskScore: 0.1,
-        reasoning: 'Basic validation due to AI service error'
+        authenticityScore: hasSpamPatterns ? 20 : (isVeryShort ? 40 : 70),
+        isSpam: hasSpamPatterns || isVeryShort,
+        qualityScore: Math.min(8, Math.max(2, mentionText.length / 20)),
+        reasoning: 'Basic pattern analysis due to AI service unavailable'
       };
     }
   }
@@ -137,4 +80,4 @@ Respond in JSON:
   }
 }
 
-export const aiService = new AIService();
+export const socialMediaAnalyzer = new SocialMediaAnalyzer();

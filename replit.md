@@ -261,3 +261,8 @@ Changelog:
   - Each user now displays unique achievement icons (Crown, Rocket, Star, Target, Coins) reflecting their specific accomplishments
   - Removed "No accolades yet" text display for clean interface when users have no achievements
   - System now prevents duplicate accolade assignments and maintains data integrity for fair competition
+- June 20, 2025: Social media analysis setup with Mixtral integration
+  - Added Replicate API token for cost-effective social media content analysis
+  - Implemented Mixtral 8x7B service for mention authenticity detection (~$0.0003 per analysis)
+  - Removed Claude/Anthropic dependencies to focus on budget-friendly AI solutions
+  - Social media analyzer can detect genuine mentions vs promotional/bot content with quality scoring
