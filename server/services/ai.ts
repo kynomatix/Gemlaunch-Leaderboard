@@ -41,11 +41,11 @@ Respond in JSON format:
 }`;
 
       const output = await this.replicate.run(
-        "mistralai/mixtral-8x7b-instruct-v0.1",
+        "meta/llama-2-70b-chat:02e509c789964a7ea8736978a43525956ef40397be9033abf9fd2badfe68c9e3",
         {
           input: {
             prompt: prompt,
-            max_tokens: 300,
+            max_new_tokens: 300,
             temperature: 0.1
           }
         }

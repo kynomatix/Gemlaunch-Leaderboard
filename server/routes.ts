@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { WebSocketServer, WebSocket } from "ws";
 import { storage } from "./storage";
 import { blockchainService } from "./services/blockchain";
+import { socialMediaAnalyzer } from "./services/ai";
 import { insertUserSchema, insertActivitySchema, insertPointConfigSchema } from "@shared/schema";
 import { z } from "zod";
 
