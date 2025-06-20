@@ -269,3 +269,6 @@ Changelog:
   - Social activities tracked in database with proper metadata storage
   - Added new social accolades: Social Influencer (25+ mentions), Community Voice (80+ avg authenticity)
   - System successfully detects spam vs authentic content with high accuracy
+  - Enhanced profile page to prominently feature social media accounts as required for point rewards
+  - Added validation requiring X (Twitter) or Discord usernames for social media point eligibility
+  - Social rewards system now properly checks for configured social media accounts before awarding points

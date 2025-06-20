@@ -296,6 +296,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!analysis.isSpam && analysis.authenticityScore >= 60 && analysis.qualityScore >= 5) {
         const user = await storage.getUserByWalletAddress(walletAddress);
         if (user) {
+          // Check if user has social media accounts configured
+          const hasTwitter = user.twitterHandle && user.twitterHandle.trim().length > 0;
+          const hasDiscord = user.discordHandle && user.discordHandle.trim().length > 0;
+          
+          if (!hasTwitter && !hasDiscord) {
+            res.json({
+              analysis,
+              pointsEarned: 0,
+              awarded: false,
+              error: "Please add your X (Twitter) or Discord username to your profile to earn social media points."
+            });
+            return;
+          }
+          
           try {
             await storage.createActivity({
               userId: user.id,
@@ -306,7 +320,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
                 username,
                 authenticityScore: analysis.authenticityScore,
                 qualityScore: analysis.qualityScore,
-                reasoning: analysis.reasoning
+                reasoning: analysis.reasoning,
+                verifiedAccount: hasTwitter ? user.twitterHandle : user.discordHandle
               })
             });
             awarded = true;

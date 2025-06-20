@@ -247,7 +247,110 @@ export default function Profile() {
               </CardHeader>
               <CardContent>
                 {isEditing ? (
-                  <form onSubmit={handleFormSubmit} className="space-y-4">
+                  <form onSubmit={handleFormSubmit} className="space-y-6">
+                    {/* Basic Info Section */}
+                    <div className="space-y-4">
+                      <h3 className="text-[#22cda6] font-gilroy-bold text-lg">Basic Information</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <Label htmlFor="username">Username</Label>
+                          <Input 
+                            name="username"
+                            defaultValue={profile?.username || ""}
+                            placeholder="Enter your username"
+                            className="bg-[#0f1713] border-[#22cda6]/20 text-[#22cda6] focus:border-[#22cda6]"
+                          />
+                        </div>
+                        
+                        <div>
+                          <Label htmlFor="displayName">Display Name</Label>
+                          <Input 
+                            name="displayName"
+                            defaultValue={profile?.displayName || ""}
+                            placeholder="Enter your display name"
+                            className="bg-[#0f1713] border-[#22cda6]/20 text-[#22cda6] focus:border-[#22cda6]"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <Label htmlFor="bio">Bio</Label>
+                        <Textarea 
+                          name="bio"
+                          defaultValue={profile?.bio || ""}
+                          placeholder="Tell us about yourself..."
+                          rows={3}
+                          className="bg-[#0f1713] border-[#22cda6]/20 text-[#22cda6] focus:border-[#22cda6] resize-none"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Social Media Section - Critical for Point Rewards */}
+                    <div className="space-y-4 border-t border-[#22cda6]/20 pt-6">
+                      <div className="flex items-center gap-3">
+                        <MessageCircle className="w-5 h-5 text-[#22cda6]" />
+                        <h3 className="text-[#22cda6] font-gilroy-bold text-lg">Social Media Accounts</h3>
+                        <div className="px-2 py-1 bg-[#22cda6]/10 border border-[#22cda6]/30 rounded text-xs text-[#22cda6]">
+                          Required for Social Rewards
+                        </div>
+                      </div>
+                      <p className="text-sm text-gray-400 mb-4">
+                        Add your social media usernames to earn points for authentic Gemlaunch mentions and engagement.
+                      </p>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <Label htmlFor="twitterHandle" className="flex items-center gap-2">
+                            <span>X (Twitter) Username</span>
+                            <span className="text-xs text-[#22cda6]">● Required for mention rewards</span>
+                          </Label>
+                          <Input 
+                            name="twitterHandle"
+                            defaultValue={profile?.twitterHandle || ""}
+                            placeholder="@yourhandle"
+                            className="bg-[#0f1713] border-[#22cda6]/20 text-[#22cda6] focus:border-[#22cda6]"
+                          />
+                        </div>
+                        
+                        <div>
+                          <Label htmlFor="discordHandle" className="flex items-center gap-2">
+                            <span>Discord Username</span>
+                            <span className="text-xs text-[#22cda6]">● Required for community rewards</span>
+                          </Label>
+                          <Input 
+                            name="discordHandle"
+                            defaultValue={profile?.discordHandle || ""}
+                            placeholder="username#1234"
+                            className="bg-[#0f1713] border-[#22cda6]/20 text-[#22cda6] focus:border-[#22cda6]"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Additional Contact Info */}
+                    <div className="space-y-4 border-t border-[#22cda6]/20 pt-6">
+                      <h3 className="text-[#22cda6] font-gilroy-bold text-lg">Additional Information</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <Label htmlFor="websiteUrl">Website URL</Label>
+                          <Input 
+                            name="websiteUrl"
+                            defaultValue={profile?.websiteUrl || ""}
+                            placeholder="https://yourwebsite.com"
+                            className="bg-[#0f1713] border-[#22cda6]/20 text-[#22cda6] focus:border-[#22cda6]"
+                          />
+                        </div>
+                        
+                        <div>
+                          <Label htmlFor="telegramHandle">Telegram Handle</Label>
+                          <Input 
+                            name="telegramHandle"
+                            defaultValue={profile?.telegramHandle || ""}
+                            placeholder="@telegram_username"
+                            className="bg-[#0f1713] border-[#22cda6]/20 text-[#22cda6] focus:border-[#22cda6]"
+                          />
+                        </div>
+                      </div>
+                    </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <Label htmlFor="username">Username</Label>
