@@ -299,13 +299,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
             userId: user.id,
             activityType: 'social_mention',
             points: pointsEarned,
-            metadata: {
+            metadata: JSON.stringify({
               platform: 'twitter',
               username,
               authenticityScore: analysis.authenticityScore,
               qualityScore: analysis.qualityScore,
               reasoning: analysis.reasoning
-            }
+            })
           });
           
           await storage.updateUserPoints(user.id, pointsEarned);

@@ -7,6 +7,7 @@ import NotFound from "@/pages/not-found";
 import Leaderboard from "@/pages/leaderboard";
 import Admin from "@/pages/admin";
 import Profile from "@/pages/profile";
+import SocialRewards from "@/pages/SocialRewards";
 
 
 function Router() {
@@ -15,6 +16,7 @@ function Router() {
       <Route path="/" component={Leaderboard} />
       <Route path="/leaderboard" component={Leaderboard} />
       <Route path="/profile" component={Profile} />
+      <Route path="/social" component={SocialRewards} />
       <Route path="/admin" component={Admin} />
       <Route component={NotFound} />
     </Switch>
