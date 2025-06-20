@@ -1,14 +1,8 @@
-import Replicate from 'replicate';
-
 class SocialMediaAnalyzer {
-  private replicate: Replicate | null = null;
+  private apiToken: string | null = null;
 
   constructor() {
-    if (process.env.REPLICATE_API_TOKEN) {
-      this.replicate = new Replicate({
-        auth: process.env.REPLICATE_API_TOKEN,
-      });
-    }
+    this.apiToken = process.env.HUGGINGFACE_API_TOKEN || null;
   }
 
   async analyzeMentionAuthenticity(mentionText: string, username: string): Promise<{
@@ -17,8 +11,8 @@ class SocialMediaAnalyzer {
     qualityScore: number;
     reasoning: string;
   }> {
-    if (!this.replicate) {
-      throw new Error('Replicate API not configured');
+    if (!this.apiToken) {
+      throw new Error('Hugging Face API not configured');
     }
 
     try {
@@ -40,27 +34,45 @@ Respond in JSON format:
   "reasoning": "brief explanation of assessment"
 }`;
 
-      // Try Claude first, then fallback to available models
-      let modelEndpoint = "anthropic/claude-3-5-sonnet-20241022:6a43bddd7c9238adad8cd5f2ede1b6dc9d133b1db2dc7b7cef9ec55b8d32969b";
-      
-      const output = await this.replicate.run(
-        modelEndpoint,
+      const response = await fetch(
+        "https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1",
         {
-          input: {
-            prompt: prompt,
-            max_tokens: 300,
-            temperature: 0.1
-          }
+          headers: {
+            "Authorization": `Bearer ${this.apiToken}`,
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify({
+            inputs: prompt,
+            parameters: {
+              max_new_tokens: 300,
+              temperature: 0.1,
+              return_full_text: false
+            }
+          }),
         }
-      ) as string[];
+      );
 
-      const response = JSON.parse(output.join(''));
+      if (!response.ok) {
+        throw new Error(`HuggingFace API error: ${response.status}`);
+      }
+
+      const result = await response.json();
+      const generatedText = Array.isArray(result) ? result[0]?.generated_text : result.generated_text;
+      
+      // Extract JSON from the response
+      const jsonMatch = generatedText.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) {
+        throw new Error('No JSON found in response');
+      }
+
+      const analysis = JSON.parse(jsonMatch[0]);
       
       return {
-        authenticityScore: Math.max(0, Math.min(100, response.authenticityScore || 50)),
-        isSpam: response.isSpam || false,
-        qualityScore: Math.max(1, Math.min(10, response.qualityScore || 5)),
-        reasoning: response.reasoning || 'Analysis completed'
+        authenticityScore: Math.max(0, Math.min(100, analysis.authenticityScore || 50)),
+        isSpam: analysis.isSpam || false,
+        qualityScore: Math.max(1, Math.min(10, analysis.qualityScore || 5)),
+        reasoning: analysis.reasoning || 'Analysis completed'
       };
 
     } catch (error) {
@@ -79,7 +91,7 @@ Respond in JSON format:
   }
 
   isConfigured(): boolean {
-    return this.replicate !== null;
+    return this.apiToken !== null;
   }
 }
 
