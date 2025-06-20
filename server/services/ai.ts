@@ -40,14 +40,16 @@ Respond in JSON format:
   "reasoning": "brief explanation of assessment"
 }`;
 
+      // Try Claude first, then fallback to available models
+      let modelEndpoint = "anthropic/claude-3-5-sonnet-20241022:6a43bddd7c9238adad8cd5f2ede1b6dc9d133b1db2dc7b7cef9ec55b8d32969b";
+      
       const output = await this.replicate.run(
-        "meta/llama-2-7b-chat:8e6975e5ed6174911a6ff3d60540dfd4844201974602551e10e9e87ab143d81e",
+        modelEndpoint,
         {
           input: {
             prompt: prompt,
-            max_new_tokens: 200,
-            temperature: 0.1,
-            system_prompt: "You are a helpful AI that analyzes social media content for authenticity and quality. Always respond in valid JSON format."
+            max_tokens: 300,
+            temperature: 0.1
           }
         }
       ) as string[];
