@@ -273,41 +273,43 @@ export default function ActivitiesPanel() {
               Recent Activity
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            {pointActivities && pointActivities.length > 0 ? (
-              <div className="space-y-3">
-                {pointActivities.map((activity) => {
-                  const IconComponent = getActivityIcon(activity.activityType);
-                  const formattedTime = new Date(activity.createdAt).toLocaleDateString();
-                  
-                  return (
-                    <div key={activity.id} className="flex items-start space-x-3 py-2">
-                      <div className={`w-2 h-2 rounded-full mt-2 ${
-                        getActivityColor(activity.activityType).replace('text-', 'bg-')
-                      }`} />
-                      <div className="flex-1">
-                        <div className="text-sm capitalize">
-                          {activity.activityType.replace('_', ' ')}
+          <CardContent className="p-0">
+            <div className="max-h-[320px] overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[#22CDA6] scrollbar-thumb-rounded-full">
+              <div className="p-6 space-y-3">
+                {pointActivities && pointActivities.length > 0 ? (
+                  pointActivities.slice(0, 5).map((activity) => {
+                    const IconComponent = getActivityIcon(activity.activityType);
+                    const formattedTime = new Date(activity.createdAt).toLocaleDateString();
+                    
+                    return (
+                      <div key={activity.id} className="flex items-start space-x-3 py-2">
+                        <div className={`w-2 h-2 rounded-full mt-2 ${
+                          getActivityColor(activity.activityType).replace('text-', 'bg-')
+                        }`} />
+                        <div className="flex-1">
+                          <div className="text-sm capitalize">
+                            {activity.activityType.replace('_', ' ')}
+                          </div>
+                          <div className="text-xs text-gray-400">{formattedTime}</div>
                         </div>
-                        <div className="text-xs text-gray-400">{formattedTime}</div>
+                        <Badge 
+                          variant="outline" 
+                          className={`text-sm font-medium ${getActivityColor(activity.activityType)} border-current`}
+                        >
+                          +{activity.points}
+                        </Badge>
                       </div>
-                      <Badge 
-                        variant="outline" 
-                        className={`text-sm font-medium ${getActivityColor(activity.activityType)} border-current`}
-                      >
-                        +{activity.points}
-                      </Badge>
-                    </div>
-                  );
-                })}
+                    );
+                  })
+                ) : (
+                  <div className="text-center py-8 text-gray-400">
+                    <Activity className="h-12 w-12 mx-auto mb-3 opacity-50" />
+                    <p className="text-sm">No point activities yet</p>
+                    <p className="text-xs mt-1">Start using Gemlaunch to earn points!</p>
+                  </div>
+                )}
               </div>
-            ) : (
-              <div className="text-center py-8 text-gray-400">
-                <Activity className="h-12 w-12 mx-auto mb-3 opacity-50" />
-                <p className="text-sm">No point activities yet</p>
-                <p className="text-xs mt-1">Start using Gemlaunch to earn points!</p>
-              </div>
-            )}
+            </div>
           </CardContent>
         </Card>
 

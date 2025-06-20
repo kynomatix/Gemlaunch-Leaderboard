@@ -273,3 +273,5 @@ Changelog:
   - Added validation requiring X (Twitter) or Discord usernames for social media point eligibility
   - Social rewards system now properly checks for configured social media accounts before awarding points
   - REMOVED old Replicate/Llama integration to prevent accidental API charges - now exclusively using Hugging Face Mixtral
+  - Added scrollable Recent Activity section with 5 events visible and authentic Gempad scrollbar styling
+  - Fixed database schema issues with missing qualification_amount column for referrals system
