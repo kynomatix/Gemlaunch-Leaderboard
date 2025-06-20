@@ -292,31 +292,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const pointsEarned = Math.round(basePoints * qualityMultiplier * authenticityMultiplier);
       
       // Only award points if not spam and meets minimum thresholds
+      let awarded = false;
       if (!analysis.isSpam && analysis.authenticityScore >= 60 && analysis.qualityScore >= 5) {
         const user = await storage.getUserByWalletAddress(walletAddress);
         if (user) {
-          await storage.createActivity({
-            userId: user.id,
-            activityType: 'social_mention',
-            points: pointsEarned,
-            metadata: JSON.stringify({
-              platform: 'twitter',
-              username,
-              authenticityScore: analysis.authenticityScore,
-              qualityScore: analysis.qualityScore,
-              reasoning: analysis.reasoning
-            })
-          });
-          
-          await storage.updateUserPoints(user.id, pointsEarned);
-          broadcastUpdate({ type: 'SOCIAL_ACTIVITY', user, points: pointsEarned });
+          try {
+            await storage.createActivity({
+              userId: user.id,
+              activityType: 'social_mention',
+              points: pointsEarned,
+              metadata: JSON.stringify({
+                platform: 'twitter',
+                username,
+                authenticityScore: analysis.authenticityScore,
+                qualityScore: analysis.qualityScore,
+                reasoning: analysis.reasoning
+              })
+            });
+            awarded = true;
+            broadcastUpdate({ type: 'SOCIAL_ACTIVITY', user, points: pointsEarned });
+          } catch (error) {
+            console.error("Failed to create social activity:", error);
+          }
         }
       }
       
       res.json({
         analysis,
-        pointsEarned: analysis.isSpam || analysis.authenticityScore < 60 ? 0 : pointsEarned,
-        awarded: !analysis.isSpam && analysis.authenticityScore >= 60 && analysis.qualityScore >= 5
+        pointsEarned: awarded ? pointsEarned : 0,
+        awarded
       });
       
     } catch (error) {
