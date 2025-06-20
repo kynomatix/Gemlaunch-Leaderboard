@@ -41,12 +41,13 @@ Respond in JSON format:
 }`;
 
       const output = await this.replicate.run(
-        "meta/llama-2-70b-chat:02e509c789964a7ea8736978a43525956ef40397be9033abf9fd2badfe68c9e3",
+        "meta/llama-2-7b-chat:8e6975e5ed6174911a6ff3d60540dfd4844201974602551e10e9e87ab143d81e",
         {
           input: {
             prompt: prompt,
-            max_new_tokens: 300,
-            temperature: 0.1
+            max_new_tokens: 200,
+            temperature: 0.1,
+            system_prompt: "You are a helpful AI that analyzes social media content for authenticity and quality. Always respond in valid JSON format."
           }
         }
       ) as string[];
