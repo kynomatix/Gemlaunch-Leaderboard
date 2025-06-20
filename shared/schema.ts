@@ -28,7 +28,7 @@ export const users = sqliteTable("users", {
 export const activities = sqliteTable("activities", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   userId: integer("user_id").notNull(),
-  activityType: text("activity_type").notNull(), // 'token_creation', 'fair_launch', 'presale', 'dutch_auction', 'volume_contribution', 'referral'
+  activityType: text("activity_type").notNull(), // 'token_creation', 'fair_launch', 'presale', 'dutch_auction', 'volume_contribution', 'referral', 'social_mention', 'social_share'
   points: integer("points").notNull(),
   transactionHash: text("transaction_hash"),
   blockNumber: integer("block_number"),

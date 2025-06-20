@@ -277,9 +277,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Missing required fields" });
       }
 
-      // Import the social media analyzer
-      const { socialMediaAnalyzer } = await import("../services/ai");
-      
       if (!socialMediaAnalyzer.isConfigured()) {
         return res.status(503).json({ error: "Social media analysis service not configured" });
       }
