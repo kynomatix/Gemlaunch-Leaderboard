@@ -292,10 +292,7 @@ export class DatabaseStorage implements IStorage {
 
   async getUserReferrals(userId: number): Promise<Array<Referral & { referee: User }>> {
     return await db
-      .select({
-        ...referrals,
-        referee: users
-      })
+      .select()
       .from(referrals)
       .innerJoin(users, eq(referrals.refereeId, users.id))
       .where(eq(referrals.referrerId, userId))
