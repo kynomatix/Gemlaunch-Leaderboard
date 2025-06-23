@@ -38,6 +38,8 @@ sqlite.exec(`
     referrer_id INTEGER NOT NULL,
     referee_id INTEGER NOT NULL,
     points_earned INTEGER DEFAULT 0,
+    is_qualified BOOLEAN DEFAULT 0,
+    qualification_amount REAL DEFAULT 0.00,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (referrer_id) REFERENCES users(id),
     FOREIGN KEY (referee_id) REFERENCES users(id)
