@@ -291,36 +291,57 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getUserReferrals(userId: number): Promise<Array<Referral & { referee: User }>> {
-    // Use raw SQL to avoid Drizzle ORM mapping issues
-    const result = await db.select().from(referrals)
-      .innerJoin(users, eq(referrals.refereeId, users.id))
-      .where(eq(referrals.referrerId, userId))
-      .orderBy(desc(referrals.createdAt));
+    // Use SQLite direct query
+    const { sqlite } = await import('./sqlite-db');
+    const result = sqlite.prepare(`
+      SELECT 
+        r.id,
+        r.referrer_id as referrerId,
+        r.referee_id as refereeId, 
+        r.points_earned as pointsEarned,
+        r.is_qualified as isQualified,
+        r.qualification_amount as qualificationAmount,
+        r.created_at as createdAt,
+        u.id as referee_id,
+        u.wallet_address as referee_walletAddress,
+        u.username as referee_username,
+        u.total_points as referee_totalPoints
+      FROM referrals r
+      JOIN users u ON r.referee_id = u.id  
+      WHERE r.referrer_id = ?
+      ORDER BY r.created_at DESC
+    `).all(userId);
     
     return result.map((row: any) => ({
-      id: row.referrals.id,
-      referrerId: row.referrals.referrer_id,
-      refereeId: row.referrals.referee_id,
-      pointsEarned: row.referrals.points_earned,
-      isQualified: row.referrals.is_qualified,
-      qualificationAmount: row.referrals.qualification_amount,
-      createdAt: row.referrals.created_at,
-      referee: row.users
+      id: row.id,
+      referrerId: row.referrerId,
+      refereeId: row.refereeId,
+      pointsEarned: row.pointsEarned,
+      isQualified: Boolean(row.isQualified),
+      qualificationAmount: row.qualificationAmount,
+      createdAt: row.createdAt,
+      referee: {
+        id: row.referee_id,
+        walletAddress: row.referee_walletAddress,
+        username: row.referee_username,
+        totalPoints: row.referee_totalPoints
+      }
     }));
   }
 
   async getReferralStats(userId: number): Promise<{ count: number; totalPoints: number }> {
-    const result = await db
-      .select({
-        count: count(),
-        totalPoints: sum(referrals.pointsEarned)
-      })
-      .from(referrals)
-      .where(eq(referrals.referrerId, userId));
+    const { sqlite } = await import('./sqlite-db');
+    const result = sqlite.prepare(`
+      SELECT 
+        COUNT(*) as count,
+        COALESCE(SUM(points_earned), 0) as totalPoints
+      FROM referrals 
+      WHERE referrer_id = ?
+    `).get(userId);
     
     return {
-      count: result[0]?.count || 0,
-      totalPoints: Number(result[0]?.totalPoints) || 0
+      count: result?.count || 0,
+      totalPoints: Number(result?.totalPoints) || 0
     };
   }
 
@@ -357,37 +378,36 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getReferralLeaderboard(limit = 100): Promise<Array<{ user: User; qualifiedReferrals: number; totalReferralPoints: number; rank: number }>> {
-    // Get referrers with qualified referrals count and total points
-    const referrerStats = await db
-      .select({
-        referrerId: referrals.referrerId,
-        qualifiedReferrals: count(referrals.id),
-        totalReferralPoints: sum(referrals.pointsEarned)
-      })
-      .from(referrals)
-      .where(eq(referrals.isQualified, true))
-      .groupBy(referrals.referrerId)
-      .orderBy(desc(count(referrals.id)), desc(sum(referrals.pointsEarned)))
-      .limit(limit);
-
-    // Get user details for each referrer
-    const leaderboard = await Promise.all(
-      referrerStats.map(async (stats, index) => {
-        const [user] = await db
-          .select()
-          .from(users)
-          .where(eq(users.id, stats.referrerId));
-        
-        return {
-          user,
-          qualifiedReferrals: stats.qualifiedReferrals,
-          totalReferralPoints: Number(stats.totalReferralPoints) || 0,
-          rank: index + 1
-        };
-      })
-    );
-
-    return leaderboard;
+    const { sqlite } = await import('./sqlite-db');
+    const result = sqlite.prepare(`
+      SELECT 
+        r.referrer_id,
+        COUNT(*) as qualifiedReferrals,
+        SUM(r.points_earned) as totalReferralPoints,
+        u.id, u.wallet_address, u.username, u.total_points, u.referral_code,
+        u.display_name, u.avatar
+      FROM referrals r
+      JOIN users u ON r.referrer_id = u.id  
+      WHERE r.is_qualified = true
+      GROUP BY r.referrer_id
+      ORDER BY COUNT(*) DESC, SUM(r.points_earned) DESC
+      LIMIT ?
+    `).all(limit);
+    
+    return result.map((row: any, index: number) => ({
+      user: {
+        id: row.id,
+        walletAddress: row.wallet_address,
+        username: row.username,
+        totalPoints: row.total_points,
+        referralCode: row.referral_code,
+        displayName: row.display_name,
+        avatar: row.avatar
+      },
+      qualifiedReferrals: row.qualifiedReferrals,
+      totalReferralPoints: Number(row.totalReferralPoints) || 0,
+      rank: index + 1
+    }));
   }
 
   async createBlockchainEvent(event: InsertBlockchainEvent): Promise<BlockchainEvent> {
