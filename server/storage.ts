@@ -300,7 +300,7 @@ export class DatabaseStorage implements IStorage {
         r.referee_id as refereeId, 
         r.points_earned as pointsEarned,
         r.is_qualified as isQualified,
-        r.qualification_amount as qualificationAmount,
+        COALESCE(r.qualification_amount, 0) as qualificationAmount,
         r.created_at as createdAt,
         u.id as referee_id,
         u.wallet_address as referee_walletAddress,
