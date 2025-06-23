@@ -291,12 +291,22 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getUserReferrals(userId: number): Promise<Array<Referral & { referee: User }>> {
-    return await db
-      .select()
-      .from(referrals)
+    // Use raw SQL to avoid Drizzle ORM mapping issues
+    const result = await db.select().from(referrals)
       .innerJoin(users, eq(referrals.refereeId, users.id))
       .where(eq(referrals.referrerId, userId))
       .orderBy(desc(referrals.createdAt));
+    
+    return result.map((row: any) => ({
+      id: row.referrals.id,
+      referrerId: row.referrals.referrer_id,
+      refereeId: row.referrals.referee_id,
+      pointsEarned: row.referrals.points_earned,
+      isQualified: row.referrals.is_qualified,
+      qualificationAmount: row.referrals.qualification_amount,
+      createdAt: row.referrals.created_at,
+      referee: row.users
+    }));
   }
 
   async getReferralStats(userId: number): Promise<{ count: number; totalPoints: number }> {
@@ -347,9 +357,37 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getReferralLeaderboard(limit = 100): Promise<Array<{ user: User; qualifiedReferrals: number; totalReferralPoints: number; rank: number }>> {
-    // For now, return empty array since there are no referrals yet
-    // This will show the "No qualified referrals yet" message
-    return [];
+    // Get referrers with qualified referrals count and total points
+    const referrerStats = await db
+      .select({
+        referrerId: referrals.referrerId,
+        qualifiedReferrals: count(referrals.id),
+        totalReferralPoints: sum(referrals.pointsEarned)
+      })
+      .from(referrals)
+      .where(eq(referrals.isQualified, true))
+      .groupBy(referrals.referrerId)
+      .orderBy(desc(count(referrals.id)), desc(sum(referrals.pointsEarned)))
+      .limit(limit);
+
+    // Get user details for each referrer
+    const leaderboard = await Promise.all(
+      referrerStats.map(async (stats, index) => {
+        const [user] = await db
+          .select()
+          .from(users)
+          .where(eq(users.id, stats.referrerId));
+        
+        return {
+          user,
+          qualifiedReferrals: stats.qualifiedReferrals,
+          totalReferralPoints: Number(stats.totalReferralPoints) || 0,
+          rank: index + 1
+        };
+      })
+    );
+
+    return leaderboard;
   }
 
   async createBlockchainEvent(event: InsertBlockchainEvent): Promise<BlockchainEvent> {
