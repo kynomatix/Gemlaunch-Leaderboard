@@ -279,3 +279,5 @@ Changelog:
   - Social media analysis system now properly accessible through main interface instead of hidden page
   - Cleaned up redundant SocialRewards page and removed /social route since functionality moved to main tabs
   - Removed temporary migration and scanning scripts to keep codebase clean and focused
+  - Added 5 qualified referrals for Kryptoman user (0x2d9b...7592) with authentic referee data and qualification amounts
+  - Total referral points earned: 355 points from qualified referrals meeting $20+ investment threshold
