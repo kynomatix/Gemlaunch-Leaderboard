@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { WebSocketServer, WebSocket } from "ws";
 import { storage } from "./storage";
 import { blockchainService } from "./services/blockchain";
-import { socialMediaAnalyzer } from "./services/ai";
+// Social services removed - Sweep Widget integration will replace X API functionality
 import { insertUserSchema, insertActivitySchema, insertPointConfigSchema } from "@shared/schema";
 import { z } from "zod";
 
@@ -573,6 +573,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error fixing accolades:', error);
       res.status(500).json({ message: 'Failed to fix accolades' });
+    }
+  });
+
+  // Social campaigns endpoint (Sweep Widget integration area)
+  app.get('/api/social/campaigns', async (req, res) => {
+    try {
+      res.json({
+        status: 'coming_soon',
+        message: 'Social campaigns will be available mid-season',
+        integrationReady: true,
+        estimatedLaunch: 'Mid Season 1',
+        features: {
+          xCampaigns: { enabled: false, maxPoints: 500 },
+          discordTasks: { enabled: false, maxPoints: 300 },
+          communityGoals: { enabled: false, multipliers: true }
+        }
+      });
+    } catch (error) {
+      console.error('Error fetching social campaigns:', error);
+      res.status(500).json({ error: 'Failed to fetch campaigns' });
     }
   });
 
