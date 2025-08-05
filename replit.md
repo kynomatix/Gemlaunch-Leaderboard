@@ -35,7 +35,7 @@ The application employs a full-stack architecture with distinct frontend, backen
 - **Admin Dashboard**: For managing point configurations and system settings.
 - **Wallet Integration**: Supports Web3 wallet connections (e.g., MetaMask).
 - **Blockchain Scanner**: Identifies real Gemlaunch users from BNB Chain by monitoring specific contract addresses (Fair Launch, Dutch Auction, Private Sale, Token Factory).
-- **Social Campaigns**: Integration area prepared for Sweep Widget deployment. Replaces X API integration due to cost considerations. Will launch mid-season with cost-effective social engagement tracking.
+- **Social Campaigns**: Integration area prepared for Sweep Widget deployment. Replaced X API social mentions with cost-effective Sweep Widget task system. Database migrated from social_mention activities to sweep_widget_task format for mid-season launch.
 
 ### System Design Choices
 - **Database**: PostgreSQL with Drizzle ORM.

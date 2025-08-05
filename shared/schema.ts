@@ -187,3 +187,15 @@ export type BlockchainEvent = typeof blockchainEvents.$inferSelect;
 export type InsertBlockchainEvent = z.infer<typeof insertBlockchainEventSchema>;
 export type UserWallet = typeof userWallets.$inferSelect;
 export type InsertUserWallet = z.infer<typeof insertUserWalletSchema>;
+
+// Activity type enum for better type safety
+export type ActivityType = 
+  | "token_creation"
+  | "fair_launch"
+  | "presale_launch" 
+  | "dutch_auction"
+  | "project_funding"
+  | "referral_bonus"
+  | "welcome_bonus"
+  | "sweep_widget_task"
+  | "sweep_widget_preparation";
